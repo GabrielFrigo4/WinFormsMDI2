@@ -1,7 +1,7 @@
 ﻿
 namespace WinFormsMDI2
 {
-    partial class MdiControI2
+    partial class MdiControI
     {
         /// <summary>
         /// Required designer variable.

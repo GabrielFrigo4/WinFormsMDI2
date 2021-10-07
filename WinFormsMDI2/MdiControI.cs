@@ -5,11 +5,11 @@ using System.Windows.Forms;
 
 namespace WinFormsMDI2
 {
-    public partial class MdiControI2 : UserControl
+    public partial class MdiControI : UserControl
     {
         public List<MdiWin> mdiWins = new List<MdiWin>();
 
-        public MdiControI2()
+        public MdiControI()
         {
             BackColor = Color.LightGray;
             InitializeComponent();

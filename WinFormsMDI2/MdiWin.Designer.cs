@@ -111,7 +111,7 @@ namespace WinFormsMDI2
             // 
             // panelFloor
             // 
-            this.panelFloor.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panelFloor.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panelFloor.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelFloor.Location = new System.Drawing.Point(0, 395);
             this.panelFloor.Name = "panelFloor";
@@ -125,7 +125,7 @@ namespace WinFormsMDI2
             // 
             // panelLeft
             // 
-            this.panelLeft.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panelLeft.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 32);
             this.panelLeft.Name = "panelLeft";
@@ -139,7 +139,7 @@ namespace WinFormsMDI2
             // 
             // panelRight
             // 
-            this.panelRight.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panelRight.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelRight.Location = new System.Drawing.Point(595, 32);
             this.panelRight.Name = "panelRight";

@@ -29,7 +29,8 @@ namespace WinFormsMDI2_Test
         /// </summary>
         private void InitializeComponent()
         {
-            this.mdiControl = new WinFormsMDI2.MdiControI2();
+            this.mdiControl = new WinFormsMDI2.MdiControI();
+            this.createMDI = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // mdiControl
@@ -38,10 +39,20 @@ namespace WinFormsMDI2_Test
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mdiControl.BackColor = System.Drawing.SystemColors.Control;
-            this.mdiControl.Location = new System.Drawing.Point(12, 12);
+            this.mdiControl.Location = new System.Drawing.Point(12, 46);
             this.mdiControl.Name = "mdiControl";
-            this.mdiControl.Size = new System.Drawing.Size(776, 426);
+            this.mdiControl.Size = new System.Drawing.Size(776, 392);
             this.mdiControl.TabIndex = 0;
+            // 
+            // createMDI
+            // 
+            this.createMDI.Location = new System.Drawing.Point(12, 12);
+            this.createMDI.Name = "createMDI";
+            this.createMDI.Size = new System.Drawing.Size(104, 29);
+            this.createMDI.TabIndex = 1;
+            this.createMDI.Text = "create mdi";
+            this.createMDI.UseVisualStyleBackColor = true;
+            this.createMDI.Click += new System.EventHandler(this.createMDI_Click);
             // 
             // Form1
             // 
@@ -49,6 +60,7 @@ namespace WinFormsMDI2_Test
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.createMDI);
             this.Controls.Add(this.mdiControl);
             this.DoubleBuffered = true;
             this.Name = "Form1";
@@ -59,7 +71,8 @@ namespace WinFormsMDI2_Test
 
         #endregion
 
-        private WinFormsMDI2.MdiControI2 mdiControl;
+        private WinFormsMDI2.MdiControI mdiControl;
+        private System.Windows.Forms.Button createMDI;
     }
 }
 

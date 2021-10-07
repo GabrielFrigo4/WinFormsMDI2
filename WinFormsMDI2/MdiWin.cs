@@ -12,7 +12,7 @@ namespace WinFormsMDI2
 {
     public partial class MdiWin : UserControl
     {
-        public MdiControI2 mdiControl;
+        public MdiControI mdiControl;
 
         const string max = "[//]", min = "__", normal = @"[\\]", exit = "X";
         bool isMove = false, isMin = false, isResize = false;

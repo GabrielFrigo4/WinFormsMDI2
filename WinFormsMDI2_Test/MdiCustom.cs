@@ -10,18 +10,11 @@ using System.Windows.Forms;
 
 namespace WinFormsMDI2_Test
 {
-    public partial class Form1 : Form
+    public partial class MdiCustom : WinFormsMDI2.MdiWin
     {
-        public Form1()
+        public MdiCustom()
         {
             InitializeComponent();
-            mdiControl.CreateMdiWin();
-            mdiControl.CreateMdiWin();
-        }
-
-        private void createMDI_Click(object sender, EventArgs e)
-        {
-            mdiControl.CreateMdiWin<MdiCustom>();
         }
     }
 }
