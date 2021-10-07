@@ -163,6 +163,7 @@ namespace WinFormsMDI2
             this.MinimumSize = new System.Drawing.Size(300, 200);
             this.Name = "MdiWin";
             this.Size = new System.Drawing.Size(600, 400);
+            this.Load += new System.EventHandler(this.MdiWin_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mdiwin_Down);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();

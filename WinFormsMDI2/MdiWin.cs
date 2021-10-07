@@ -25,14 +25,8 @@ namespace WinFormsMDI2
             Init();
         }
 
-        private void Init()
+        private void MdiWin_Load(object sender, EventArgs e)
         {
-            BackColor = Color.LightGray;
-            InitializeComponent();
-            labelTitle.MouseDown += panelTop_MouseDown;
-            labelTitle.MouseUp += panelTop_MouseUp;
-            labelTitle.MouseMove += panelTop_MouseMove;
-            labelTitle.DoubleClick += panelTop_DoubleClick;
             foreach (Control cont in Controls)
             {
                 cont.MouseDown += mdiwin_Down;
@@ -41,6 +35,16 @@ namespace WinFormsMDI2
             {
                 cont.MouseDown += mdiwin_Down;
             }
+        }
+
+        private void Init()
+        {
+            BackColor = Color.LightGray;
+            InitializeComponent();
+            labelTitle.MouseDown += panelTop_MouseDown;
+            labelTitle.MouseUp += panelTop_MouseUp;
+            labelTitle.MouseMove += panelTop_MouseMove;
+            labelTitle.DoubleClick += panelTop_DoubleClick;
             labelTitle.Select();
         }
 
