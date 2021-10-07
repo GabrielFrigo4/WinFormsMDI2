@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Permissions;
 using System.Windows.Forms;
 
 namespace WinFormsMDI2
@@ -17,27 +13,10 @@ namespace WinFormsMDI2
         const string max = "[//]", min = "__", normal = @"[\\]", exit = "X";
         bool isMove = false, isMin = false, isResize = false;
         int mx, my, rx, ry;
-        Point lastLocation;
+        Point lastLocation, minPos;
         Size lastSize, lastMinSize;
 
         public MdiWin()
-        {
-            Init();
-        }
-
-        private void MdiWin_Load(object sender, EventArgs e)
-        {
-            foreach (Control cont in Controls)
-            {
-                cont.MouseDown += mdiwin_Down;
-            }
-            foreach (Control cont in panelTop.Controls)
-            {
-                cont.MouseDown += mdiwin_Down;
-            }
-        }
-
-        private void Init()
         {
             BackColor = Color.LightGray;
             InitializeComponent();
@@ -48,12 +27,36 @@ namespace WinFormsMDI2
             labelTitle.Select();
         }
 
-        private void mdiwin_Down(object sender, MouseEventArgs e)
+        private void MdiWin_MouseDown()
         {
             mdiControl.FocusMdiWin(this);
         }
 
         #region behaviors
+#pragma warning disable SYSLIB0003 // O tipo ou membro é obsoleto
+        [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
+#pragma warning restore SYSLIB0003 // O tipo ou membro é obsoleto
+        protected override void WndProc(ref Message m)
+        {
+            // 0x210 is WM_PARENTNOTIFY
+            // 513 is WM_LBUTTONCLICK
+            if (m.Msg == 0x210 && m.WParam.ToInt32() == 513)
+            {
+                // get the clicked position
+                var x = (int)(m.LParam.ToInt32() & 0xFFFF);
+                var y = (int)(m.LParam.ToInt32() >> 16);
+
+                // get the clicked control
+                var childControl = this.GetChildAtPoint(new Point(x, y));
+
+                // call onClick (which fires Click event)
+                MdiWin_MouseDown();
+
+            // do something else...
+            }
+            base.WndProc(ref m);
+        }
+
         [DefaultValue("MdiWin")]
         [Description("Is MdiWin Title")]
         public string Title { get { return labelTitle.Text; } set { labelTitle.Text = value; } }
@@ -135,6 +138,8 @@ namespace WinFormsMDI2
                 isResize = true;
                 rx = -MousePosition.X - Size.Width;
                 mx = MousePosition.X - Location.X;
+
+                minPos = new Point(Location.X + Size.Width - MinimumSize.Width, Location.Y + Size.Height - MinimumSize.Height);
             }
         }
 
@@ -148,8 +153,17 @@ namespace WinFormsMDI2
             if (isResize)
             {
                 Size = new Size(-MousePosition.X - rx, Size.Height);
-                if(Size.Width > MinimumSize.Width)
-                    Location = new Point(MousePosition.X - mx, Location.Y);
+                if (Size.Width >= MinimumSize.Width)
+                {
+                    if (minPos.X >= MousePosition.X - mx)
+                    {
+                        Location = new Point(MousePosition.X - mx, Location.Y);
+                    }
+                    else
+                    {
+                        Location = new Point(minPos.X, Location.Y);
+                    }
+                }
             }
             Cursor.Current = Cursors.SizeWE;
         }
@@ -187,6 +201,82 @@ namespace WinFormsMDI2
         private void panelRight_MouseEnter(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.SizeWE;
+        }
+        #endregion
+
+        #region panelRightFloor
+        private void panelRightFloor_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (Dock != DockStyle.Fill)
+            {
+                isResize = true;
+                rx = MousePosition.X - Size.Width;
+                ry = MousePosition.Y - Size.Height;
+            }
+        }
+
+        private void panelRightFloor_MouseUp(object sender, MouseEventArgs e)
+        {
+            isResize = false;
+        }
+
+        private void panelRightFloor_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isResize)
+            {
+                Size = new Size(MousePosition.X - rx, MousePosition.Y - ry);
+            }
+            Cursor.Current = Cursors.SizeNWSE;
+        }
+
+        private void panelRightFloor_MouseEnter(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.SizeNWSE;
+        }
+        #endregion
+
+        #region panelLeftFloor
+        private void panelLeftFloor_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (Dock != DockStyle.Fill)
+            {
+                isResize = true;
+                rx = -MousePosition.X - Size.Width;
+                ry = MousePosition.Y - Size.Height;
+                mx = MousePosition.X - Location.X;
+
+                minPos = new Point(Location.X + Size.Width - MinimumSize.Width, Location.Y + Size.Height - MinimumSize.Height);
+            }
+        }
+
+        private void panelLeftFloor_MouseUp(object sender, MouseEventArgs e)
+        {
+            isResize = false;
+        }
+
+        private void panelLeftFloor_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isResize)
+            {
+                Size = new Size(-MousePosition.X - rx, MousePosition.Y - ry);
+                if (Size.Width >= MinimumSize.Width)
+                {
+                    if (minPos.X >= MousePosition.X - mx)
+                    {
+                        Location = new Point(MousePosition.X - mx, Location.Y);
+                    }
+                    else
+                    {
+                        Location = new Point(minPos.X, Location.Y);
+                    }
+                }
+            }
+            Cursor.Current = Cursors.SizeNESW;
+        }
+
+        private void panelLeftFloor_MouseEnter(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.SizeNESW;
         }
         #endregion
 
@@ -285,17 +375,50 @@ namespace WinFormsMDI2
         private void bExit_MouseLeave(object sender, EventArgs e)
         {
             labelTitle.Select();
+            bExit.BackColor = Color.White;
         }
 
         private void bMax_MouseLeave(object sender, EventArgs e)
         {
             labelTitle.Select();
+            bMax.BackColor = Color.White;
 
         }
 
         private void bMin_MouseLeave(object sender, EventArgs e)
         {
             labelTitle.Select();
+            bMin.BackColor = Color.White;
+        }
+
+        private void bMin_MouseEnter(object sender, EventArgs e)
+        {
+            bMin.BackColor = Color.LightGray;
+        }
+
+        private void bMax_MouseEnter(object sender, EventArgs e)
+        {
+            bMax.BackColor = Color.LightGray;
+        }
+
+        private void bExit_MouseEnter(object sender, EventArgs e)
+        {
+            bExit.BackColor = Color.FromArgb(255,90,90);
+        }
+
+        private void bMin_MouseDown(object sender, MouseEventArgs e)
+        {
+            bMin.BackColor = Color.Gray;
+        }
+
+        private void bMax_MouseDown(object sender, MouseEventArgs e)
+        {
+            bMax.BackColor = Color.Gray;
+        }
+
+        private void bExit_MouseDown(object sender, MouseEventArgs e)
+        {
+            bExit.BackColor = Color.FromArgb(255, 20, 20);
         }
         #endregion
     }

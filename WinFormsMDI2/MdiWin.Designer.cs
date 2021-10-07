@@ -35,9 +35,12 @@ namespace WinFormsMDI2
             this.bExit = new System.Windows.Forms.Button();
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelFloor = new System.Windows.Forms.Panel();
+            this.panelLeftFloor = new System.Windows.Forms.Panel();
+            this.panelRightFloor = new System.Windows.Forms.Panel();
             this.panelLeft = new System.Windows.Forms.Panel();
             this.panelRight = new System.Windows.Forms.Panel();
             this.panelTop.SuspendLayout();
+            this.panelFloor.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTop
@@ -60,6 +63,7 @@ namespace WinFormsMDI2
             // bMin
             // 
             this.bMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bMin.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bMin.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.bMin.Location = new System.Drawing.Point(462, 0);
             this.bMin.Name = "bMin";
@@ -69,11 +73,14 @@ namespace WinFormsMDI2
             this.bMin.Text = "__";
             this.bMin.UseVisualStyleBackColor = true;
             this.bMin.Click += new System.EventHandler(this.bMin_Click);
+            this.bMin.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bMin_MouseDown);
+            this.bMin.MouseEnter += new System.EventHandler(this.bMin_MouseEnter);
             this.bMin.MouseLeave += new System.EventHandler(this.bMin_MouseLeave);
             // 
             // bMax
             // 
             this.bMax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bMax.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bMax.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.bMax.Location = new System.Drawing.Point(508, 0);
             this.bMax.Name = "bMax";
@@ -83,11 +90,14 @@ namespace WinFormsMDI2
             this.bMax.Text = "[//]";
             this.bMax.UseVisualStyleBackColor = true;
             this.bMax.Click += new System.EventHandler(this.bMax_Click);
+            this.bMax.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bMax_MouseDown);
+            this.bMax.MouseEnter += new System.EventHandler(this.bMax_MouseEnter);
             this.bMax.MouseLeave += new System.EventHandler(this.bMax_MouseLeave);
             // 
             // bExit
             // 
             this.bExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bExit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bExit.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.bExit.Location = new System.Drawing.Point(554, 0);
             this.bExit.Name = "bExit";
@@ -97,6 +107,8 @@ namespace WinFormsMDI2
             this.bExit.Text = "X";
             this.bExit.UseVisualStyleBackColor = true;
             this.bExit.Click += new System.EventHandler(this.bExit_Click);
+            this.bExit.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bExit_MouseDown);
+            this.bExit.MouseEnter += new System.EventHandler(this.bExit_MouseEnter);
             this.bExit.MouseLeave += new System.EventHandler(this.bExit_MouseLeave);
             // 
             // labelTitle
@@ -112,6 +124,8 @@ namespace WinFormsMDI2
             // panelFloor
             // 
             this.panelFloor.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panelFloor.Controls.Add(this.panelLeftFloor);
+            this.panelFloor.Controls.Add(this.panelRightFloor);
             this.panelFloor.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelFloor.Location = new System.Drawing.Point(0, 395);
             this.panelFloor.Name = "panelFloor";
@@ -122,6 +136,32 @@ namespace WinFormsMDI2
             this.panelFloor.MouseLeave += new System.EventHandler(this.panelAll_MouseLeave);
             this.panelFloor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelFloor_MouseMove);
             this.panelFloor.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelFloor_MouseUp);
+            // 
+            // panelLeftFloor
+            // 
+            this.panelLeftFloor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.panelLeftFloor.Location = new System.Drawing.Point(0, 0);
+            this.panelLeftFloor.Name = "panelLeftFloor";
+            this.panelLeftFloor.Size = new System.Drawing.Size(5, 5);
+            this.panelLeftFloor.TabIndex = 2;
+            this.panelLeftFloor.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelLeftFloor_MouseDown);
+            this.panelLeftFloor.MouseEnter += new System.EventHandler(this.panelLeftFloor_MouseEnter);
+            this.panelLeftFloor.MouseLeave += new System.EventHandler(this.panelAll_MouseLeave);
+            this.panelLeftFloor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelLeftFloor_MouseMove);
+            this.panelLeftFloor.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelLeftFloor_MouseUp);
+            // 
+            // panelRightFloor
+            // 
+            this.panelRightFloor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelRightFloor.Location = new System.Drawing.Point(595, 0);
+            this.panelRightFloor.Name = "panelRightFloor";
+            this.panelRightFloor.Size = new System.Drawing.Size(5, 5);
+            this.panelRightFloor.TabIndex = 1;
+            this.panelRightFloor.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelRightFloor_MouseDown);
+            this.panelRightFloor.MouseEnter += new System.EventHandler(this.panelRightFloor_MouseEnter);
+            this.panelRightFloor.MouseLeave += new System.EventHandler(this.panelAll_MouseLeave);
+            this.panelRightFloor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelRightFloor_MouseMove);
+            this.panelRightFloor.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelRightFloor_MouseUp);
             // 
             // panelLeft
             // 
@@ -163,10 +203,9 @@ namespace WinFormsMDI2
             this.MinimumSize = new System.Drawing.Size(300, 200);
             this.Name = "MdiWin";
             this.Size = new System.Drawing.Size(600, 400);
-            this.Load += new System.EventHandler(this.MdiWin_Load);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mdiwin_Down);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
+            this.panelFloor.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -181,5 +220,7 @@ namespace WinFormsMDI2
         private System.Windows.Forms.Panel panelFloor;
         private System.Windows.Forms.Panel panelLeft;
         private System.Windows.Forms.Panel panelRight;
+        private System.Windows.Forms.Panel panelRightFloor;
+        private System.Windows.Forms.Panel panelLeftFloor;
     }
 }
