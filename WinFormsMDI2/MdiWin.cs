@@ -18,7 +18,7 @@ namespace WinFormsMDI2
         bool isMove = false, isMin = false, isResize = false;
         int mx, my, rx, ry;
         Point lastLocation;
-        Size lastSize;
+        Size lastSize, lastMinSize;
 
         public MdiWin(MdiControI2 mdiControl)
         {
@@ -64,14 +64,9 @@ namespace WinFormsMDI2
         #region panelTop
         private void panelTop_MouseDown(object sender, MouseEventArgs e)
         {
-            isMove = true;
-            if (Dock == DockStyle.Fill)
+            if (Dock != DockStyle.Fill)
             {
-                mx = MousePosition.X - Location.X;
-                my = MousePosition.Y - Location.Y;
-            }
-            else
-            {
+                isMove = true;
                 mx = MousePosition.X - Location.X;
                 my = MousePosition.Y - Location.Y;
             }
@@ -86,10 +81,6 @@ namespace WinFormsMDI2
         {
             if (isMove)
             {
-                if (Dock == DockStyle.Fill)
-                {
-                    Dock = DockStyle.None;
-                }
                 Location = new Point(MousePosition.X - mx, MousePosition.Y - my);
             }
         }
@@ -129,6 +120,12 @@ namespace WinFormsMDI2
             {
                 Size = new Size(Size.Width, MousePosition.Y - ry);
             }
+            Cursor.Current = Cursors.SizeNS;
+        }
+
+        private void panelFloor_MouseEnter(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.SizeNS;
         }
         #endregion
 
@@ -156,6 +153,12 @@ namespace WinFormsMDI2
                 if(Size.Width > MinimumSize.Width)
                     Location = new Point(MousePosition.X - mx, Location.Y);
             }
+            Cursor.Current = Cursors.SizeWE;
+        }
+
+        private void panelLeft_MouseEnter(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.SizeWE;
         }
         #endregion
 
@@ -180,6 +183,19 @@ namespace WinFormsMDI2
             {
                 Size = new Size(MousePosition.X - rx, Size.Height);
             }
+            Cursor.Current = Cursors.SizeWE;
+        }
+
+        private void panelRight_MouseEnter(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.SizeWE;
+        }
+        #endregion
+
+        #region panelAll
+        private void panelAll_MouseLeave(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.Default;
         }
         #endregion
 
@@ -187,6 +203,7 @@ namespace WinFormsMDI2
         private void bExit_Click(object sender, EventArgs e)
         {
             mdiControl.Controls.Remove(this);
+            mdiControl.mdiWins.Remove(this);
             Dispose();
             labelTitle.Select();
         }
@@ -203,6 +220,7 @@ namespace WinFormsMDI2
                 if (isMin)
                 {
                     Size = lastSize;
+                    MinimumSize = lastMinSize;
                     Location = lastLocation;
                     bMin.Text = min;
                     isMin = false;
@@ -217,6 +235,27 @@ namespace WinFormsMDI2
         {
             if (!isMin)
             {
+                int x = 0;
+
+                MdiWin[] wins = new MdiWin[] { };
+                wins = mdiControl.mdiWins.ToArray();
+
+                Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
+                    return mw1.Location.X.CompareTo(mw2.Location.X);
+                });
+
+                foreach (Control cont in wins)
+                {
+                    if(cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32)
+                    {
+                        x += 224;
+                    }
+                    if(cont.Location.X > x)
+                    {
+                        break;
+                    }
+                }
+
                 if (Dock == DockStyle.Fill)
                 {
                     Dock = DockStyle.None;
@@ -224,16 +263,19 @@ namespace WinFormsMDI2
                 }
 
                 lastSize = Size;
+                lastMinSize = MinimumSize;
                 lastLocation = Location;
 
-                Size = new Size(224, 32);
-                Location = new Point(0, mdiControl.Height - 32);
+                MinimumSize = new Size(0, 0);
+                Size = new Size(224, 37);
+                Location = new Point(x, mdiControl.Height - 32);
                 bMin.Text = normal;
                 isMin = true;
             }
             else
             {
                 Size = lastSize;
+                MinimumSize = lastMinSize;
                 Location = lastLocation;
                 bMin.Text = min;
                 isMin = false;

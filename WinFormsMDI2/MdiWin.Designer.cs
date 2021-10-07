@@ -118,6 +118,8 @@ namespace WinFormsMDI2
             this.panelFloor.Size = new System.Drawing.Size(600, 5);
             this.panelFloor.TabIndex = 0;
             this.panelFloor.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelFloor_MouseDown);
+            this.panelFloor.MouseEnter += new System.EventHandler(this.panelFloor_MouseEnter);
+            this.panelFloor.MouseLeave += new System.EventHandler(this.panelAll_MouseLeave);
             this.panelFloor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelFloor_MouseMove);
             this.panelFloor.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelFloor_MouseUp);
             // 
@@ -130,6 +132,8 @@ namespace WinFormsMDI2
             this.panelLeft.Size = new System.Drawing.Size(5, 363);
             this.panelLeft.TabIndex = 0;
             this.panelLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelLeft_MouseDown);
+            this.panelLeft.MouseEnter += new System.EventHandler(this.panelLeft_MouseEnter);
+            this.panelLeft.MouseLeave += new System.EventHandler(this.panelAll_MouseLeave);
             this.panelLeft.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelLeft_MouseMove);
             this.panelLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelLeft_MouseUp);
             // 
@@ -142,6 +146,8 @@ namespace WinFormsMDI2
             this.panelRight.Size = new System.Drawing.Size(5, 363);
             this.panelRight.TabIndex = 0;
             this.panelRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelRight_MouseDown);
+            this.panelRight.MouseEnter += new System.EventHandler(this.panelRight_MouseEnter);
+            this.panelRight.MouseLeave += new System.EventHandler(this.panelAll_MouseLeave);
             this.panelRight.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelRight_MouseMove);
             this.panelRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelRight_MouseUp);
             // 
