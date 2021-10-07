@@ -17,9 +17,35 @@ namespace WinFormsMDI2
 
         public MdiWin CreateMdiWin()
         {
+            int x = 0, y = 0;
             var win = new MdiWin(this);
+
+            MdiWin[] wins = new MdiWin[] { };
+            wins = mdiWins.ToArray();
+
+            Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
+                return mw1.Location.X.CompareTo(mw2.Location.X);
+            });
+
+            foreach (Control cont in wins)
+            {
+                if (cont.Location.X == x && cont.Location.Y == y)
+                {
+                    x += 48;
+                    y += 48;
+                }
+                if (cont.Location.X > x || cont.Location.Y > y)
+                {
+                    break;
+                }
+            }
+
+            win.Location = new Point(x, y);
+
             Controls.Add(win);
             mdiWins.Add(win);
+
+            FocusMdiWin(win);
             return win;
         }
 
