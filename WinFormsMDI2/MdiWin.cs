@@ -20,12 +20,6 @@ namespace WinFormsMDI2
         Point lastLocation;
         Size lastSize, lastMinSize;
 
-        public MdiWin(MdiControI2 mdiControl)
-        {
-            Init();
-            this.mdiControl = mdiControl;
-        }
-
         public MdiWin()
         {
             Init();
