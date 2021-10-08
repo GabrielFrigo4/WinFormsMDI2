@@ -111,7 +111,7 @@ namespace WinFormsMDI2
             return win;
         }
 
-        public MdiWin CreateMdiWinWithForm(Form form)
+        public MdiWin CreateMdiWinWithForm(Form form, bool useFormIcon = true, bool useFormText= true)
         {
             form.FormBorderStyle = FormBorderStyle.None;
             form.TopLevel = false;
@@ -119,6 +119,10 @@ namespace WinFormsMDI2
             int x = 0, y = 0;
 
             var win = new MdiWin();
+            if(useFormIcon)
+                win.Ico = form.Icon.ToBitmap();
+            if (useFormText)
+                win.Title = form.Text;
             form.Dock = DockStyle.Fill;
             win.Controls.Add(form);
             form.BringToFront();
