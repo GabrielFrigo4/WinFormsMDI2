@@ -41,12 +41,13 @@ namespace WinFormsMDI2_Test
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
             // 
-            // UserControl1
+            // MdiCustom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.richTextBox1);
-            this.Name = "UserControl1";
+            this.Ico = global::WinFormsMDI2_Test.Properties.Resources.Text;
+            this.Name = "MdiCustom";
             this.Title = "MdiWinTextBox";
             this.Controls.SetChildIndex(this.richTextBox1, 0);
             this.ResumeLayout(false);

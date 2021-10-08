@@ -15,21 +15,34 @@ namespace WinFormsMDI2
         int mx, my, rx, ry;
         Point lastLocation, minPos;
         Size lastSize, lastMinSize;
+        string lastTitle;
 
         public MdiWin()
         {
             BackColor = Color.LightGray;
             InitializeComponent();
+            //labelTitle
             labelTitle.MouseDown += panelTop_MouseDown;
             labelTitle.MouseUp += panelTop_MouseUp;
             labelTitle.MouseMove += panelTop_MouseMove;
             labelTitle.DoubleClick += panelTop_DoubleClick;
-            labelTitle.Select();
+            //pictureBoxIco
+            pictureBoxIco.MouseDown += panelTop_MouseDown;
+            pictureBoxIco.MouseUp += panelTop_MouseUp;
+            pictureBoxIco.MouseMove += panelTop_MouseMove;
+            pictureBoxIco.DoubleClick += panelTop_DoubleClick;
+            pictureBoxIco.Select();
+            lastTitle = Title;
         }
 
         private void MdiWin_MouseDown()
         {
             mdiControl.FocusMdiWin(this);
+        }
+
+        private void MdiWin_MouseDown(object sender, MouseEventArgs e)
+        {
+            MdiWin_MouseDown();
         }
 
         #region behaviors
@@ -52,7 +65,7 @@ namespace WinFormsMDI2
                 // call onClick (which fires Click event)
                 MdiWin_MouseDown();
 
-            // do something else...
+                // do something else...
             }
             base.WndProc(ref m);
         }
@@ -60,6 +73,9 @@ namespace WinFormsMDI2
         [DefaultValue("MdiWin")]
         [Description("Is MdiWin Title")]
         public string Title { get { return labelTitle.Text; } set { labelTitle.Text = value; } }
+
+        [Description("Is MdiWin Ico")]
+        public Image Ico { get { return pictureBoxIco.Image; } set { pictureBoxIco.Image = value; } }
         #endregion
 
         #region panelTop
@@ -307,6 +323,7 @@ namespace WinFormsMDI2
             {
                 if (isMin)
                 {
+                    Title = lastTitle;
                     Size = lastSize;
                     MinimumSize = lastMinSize;
                     Location = lastLocation;
@@ -336,7 +353,7 @@ namespace WinFormsMDI2
                 {
                     if(cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32)
                     {
-                        x += 224;
+                        x += 226;
                     }
                     if(cont.Location.X > x)
                     {
@@ -350,18 +367,21 @@ namespace WinFormsMDI2
                     bMax.Text = max;
                 }
 
+                lastTitle = Title;
                 lastSize = Size;
                 lastMinSize = MinimumSize;
                 lastLocation = Location;
 
+                Title = Title.Substring(0,3)+"...";
                 MinimumSize = new Size(0, 0);
-                Size = new Size(224, 37);
+                Size = new Size(226, 37);
                 Location = new Point(x, mdiControl.Height - 32);
                 bMin.Text = normal;
                 isMin = true;
             }
             else
             {
+                Title = lastTitle;
                 Size = lastSize;
                 MinimumSize = lastMinSize;
                 Location = lastLocation;

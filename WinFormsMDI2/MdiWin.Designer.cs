@@ -30,6 +30,7 @@ namespace WinFormsMDI2
         private void InitializeComponent()
         {
             this.panelTop = new System.Windows.Forms.Panel();
+            this.pictureBoxIco = new System.Windows.Forms.PictureBox();
             this.bMin = new System.Windows.Forms.Button();
             this.bMax = new System.Windows.Forms.Button();
             this.bExit = new System.Windows.Forms.Button();
@@ -40,12 +41,14 @@ namespace WinFormsMDI2
             this.panelLeft = new System.Windows.Forms.Panel();
             this.panelRight = new System.Windows.Forms.Panel();
             this.panelTop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIco)).BeginInit();
             this.panelFloor.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTop
             // 
             this.panelTop.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panelTop.Controls.Add(this.pictureBoxIco);
             this.panelTop.Controls.Add(this.bMin);
             this.panelTop.Controls.Add(this.bMax);
             this.panelTop.Controls.Add(this.bExit);
@@ -59,6 +62,15 @@ namespace WinFormsMDI2
             this.panelTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelTop_MouseDown);
             this.panelTop.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelTop_MouseMove);
             this.panelTop.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelTop_MouseUp);
+            // 
+            // pictureBoxIco
+            // 
+            this.pictureBoxIco.Image = Properties.Resources.Arquivo;
+            this.pictureBoxIco.Location = new System.Drawing.Point(4, 4);
+            this.pictureBoxIco.Name = "pictureBoxIco";
+            this.pictureBoxIco.Size = new System.Drawing.Size(24, 24);
+            this.pictureBoxIco.TabIndex = 1;
+            this.pictureBoxIco.TabStop = false;
             // 
             // bMin
             // 
@@ -115,7 +127,7 @@ namespace WinFormsMDI2
             // 
             this.labelTitle.AutoSize = true;
             this.labelTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelTitle.Location = new System.Drawing.Point(5, 5);
+            this.labelTitle.Location = new System.Drawing.Point(32, 5);
             this.labelTitle.Name = "labelTitle";
             this.labelTitle.Size = new System.Drawing.Size(69, 23);
             this.labelTitle.TabIndex = 0;
@@ -203,8 +215,10 @@ namespace WinFormsMDI2
             this.MinimumSize = new System.Drawing.Size(300, 200);
             this.Name = "MdiWin";
             this.Size = new System.Drawing.Size(600, 400);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MdiWin_MouseDown);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIco)).EndInit();
             this.panelFloor.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -222,5 +236,6 @@ namespace WinFormsMDI2
         private System.Windows.Forms.Panel panelRight;
         private System.Windows.Forms.Panel panelRightFloor;
         private System.Windows.Forms.Panel panelLeftFloor;
+        private System.Windows.Forms.PictureBox pictureBoxIco;
     }
 }
