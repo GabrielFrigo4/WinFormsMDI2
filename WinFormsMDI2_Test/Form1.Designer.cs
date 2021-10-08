@@ -38,7 +38,6 @@ namespace WinFormsMDI2_Test
             this.mdiControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.mdiControl.BackColor = System.Drawing.SystemColors.Control;
             this.mdiControl.Location = new System.Drawing.Point(12, 46);
             this.mdiControl.Name = "mdiControl";
             this.mdiControl.Size = new System.Drawing.Size(776, 392);

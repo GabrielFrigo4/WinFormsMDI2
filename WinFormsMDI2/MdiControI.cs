@@ -11,7 +11,7 @@ namespace WinFormsMDI2
 
         public MdiControI()
         {
-            BackColor = Color.LightGray;
+            BackColor = Color.FromArgb(230, 230, 230);
             InitializeComponent();
         }
 

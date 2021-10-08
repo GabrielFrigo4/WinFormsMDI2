@@ -20,7 +20,7 @@ namespace WinFormsMDI2
 
         public MdiWin()
         {
-            BackColor = Color.LightGray;
+            BackColor = Color.FromArgb(240,240,240);
             InitializeComponent();
             //labelTitle
             labelTitle.MouseDown += panelTop_MouseDown;
