@@ -65,7 +65,7 @@ namespace WinFormsMDI2
             // 
             // pictureBoxIco
             // 
-            this.pictureBoxIco.Image = Properties.Resources.Arquivo;
+            this.pictureBoxIco.Image = global::WinFormsMDI2.Properties.Resources.Arquivo;
             this.pictureBoxIco.Location = new System.Drawing.Point(4, 4);
             this.pictureBoxIco.Name = "pictureBoxIco";
             this.pictureBoxIco.Size = new System.Drawing.Size(24, 24);

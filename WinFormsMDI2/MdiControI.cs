@@ -25,19 +25,32 @@ namespace WinFormsMDI2
             wins = mdiWins.ToArray();
 
             Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
-                return mw1.Location.X.CompareTo(mw2.Location.X);
+                if (mw1.Location.X - mw1.Location.Y == mw2.Location.X - mw2.Location.Y)
+                    return mw1.Location.X.CompareTo(mw2.Location.X);
+                else
+                    return (mw1.Location.X - mw1.Location.Y).CompareTo(mw2.Location.X - mw2.Location.Y);
             });
 
+            int cil = 0;
             foreach (Control cont in wins)
             {
-                if (cont.Location.X == x && cont.Location.Y == y)
+                if (y + win.Height > Height)
                 {
-                    x += 48;
-                    y += 48;
+                    cil++;
+                    x = 48 * cil;
+                    y = 0;
                 }
-                if (cont.Location.X > x || cont.Location.Y > y)
+                else
                 {
-                    break;
+                    if (cont.Location.X == x && cont.Location.Y == y)
+                    {
+                        x += 48;
+                        y += 48;
+                    }
+                    if (cont.Location.X > x || cont.Location.Y > y)
+                    {
+                        break;
+                    }
                 }
             }
 
@@ -60,19 +73,32 @@ namespace WinFormsMDI2
             wins = mdiWins.ToArray();
 
             Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
-                return mw1.Location.X.CompareTo(mw2.Location.X);
+                if (mw1.Location.X - mw1.Location.Y == mw2.Location.X - mw2.Location.Y)
+                    return mw1.Location.X.CompareTo(mw2.Location.X);
+                else
+                    return (mw1.Location.X - mw1.Location.Y).CompareTo(mw2.Location.X - mw2.Location.Y);
             });
 
+            int cil = 0;
             foreach (Control cont in wins)
             {
-                if (cont.Location.X == x && cont.Location.Y == y)
+                if (y + win.Height > Height)
                 {
-                    x += 48;
-                    y += 48;
+                    cil++;
+                    x = 48 * cil;
+                    y = 0;
                 }
-                if (cont.Location.X > x || cont.Location.Y > y)
+                else
                 {
-                    break;
+                    if (cont.Location.X == x && cont.Location.Y == y)
+                    {
+                        x += 48;
+                        y += 48;
+                    }
+                    if (cont.Location.X > x || cont.Location.Y > y)
+                    {
+                        break;
+                    }
                 }
             }
 
@@ -103,19 +129,32 @@ namespace WinFormsMDI2
             wins = mdiWins.ToArray();
 
             Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
-                return mw1.Location.X.CompareTo(mw2.Location.X);
+                if (mw1.Location.X - mw1.Location.Y == mw2.Location.X - mw2.Location.Y)
+                    return mw1.Location.X.CompareTo(mw2.Location.X);
+                else
+                    return (mw1.Location.X - mw1.Location.Y).CompareTo(mw2.Location.X - mw2.Location.Y);
             });
 
+            int cil = 0;
             foreach (Control cont in wins)
             {
-                if (cont.Location.X == x && cont.Location.Y == y)
+                if (y + win.Height > Height)
                 {
-                    x += 48;
-                    y += 48;
+                    cil++;
+                    x = 48 * cil;
+                    y = 0;
                 }
-                if (cont.Location.X > x || cont.Location.Y > y)
+                else
                 {
-                    break;
+                    if (cont.Location.X == x && cont.Location.Y == y)
+                    {
+                        x += 48;
+                        y += 48;
+                    }
+                    if (cont.Location.X > x || cont.Location.Y > y)
+                    {
+                        break;
+                    }
                 }
             }
 
