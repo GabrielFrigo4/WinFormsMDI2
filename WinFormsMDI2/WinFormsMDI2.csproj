@@ -3,6 +3,11 @@
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <Description>As we know the winforms mdi is outdated, this project aims to bring a simple to use replacement</Description>
+    <RepositoryUrl>https://github.com/GabrielFrigo4/WinFormsMDI2</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
+    <PackageTags>#form #mdi #WinFormsMDI</PackageTags>
+    <Copyright>MIT</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
