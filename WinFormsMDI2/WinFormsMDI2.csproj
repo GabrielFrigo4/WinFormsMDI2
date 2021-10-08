@@ -8,6 +8,8 @@
     <RepositoryType>github</RepositoryType>
     <PackageTags>#form #mdi #WinFormsMDI</PackageTags>
     <Copyright>MIT</Copyright>
+    <PackageIcon>Arquivo.png</PackageIcon>
+    <PackageIconUrl />
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +25,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\..\..\OneDrive\Imagens\Saved Pictures\Ico\24\Arquivo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
