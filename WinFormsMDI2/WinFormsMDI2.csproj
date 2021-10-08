@@ -6,11 +6,15 @@
     <Description>As we know the winforms mdi is outdated, this project aims to bring a simple to use replacement</Description>
     <RepositoryUrl>https://github.com/GabrielFrigo4/WinFormsMDI2</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
-    <PackageTags>#form #mdi #WinFormsMDI</PackageTags>
+    <PackageTags>#form #mdi #WinFormsMDI #.netcore #.net5</PackageTags>
     <Copyright>MIT</Copyright>
-    <PackageIcon>Arquivo.png</PackageIcon>
+    <PackageIcon></PackageIcon>
     <PackageIconUrl />
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Arquivo.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -28,10 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\..\..\..\OneDrive\Imagens\Saved Pictures\Ico\24\Arquivo.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
+    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>
