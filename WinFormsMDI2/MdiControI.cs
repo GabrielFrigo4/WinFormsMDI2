@@ -15,7 +15,7 @@ namespace WinFormsMDI2
             InitializeComponent();
         }
 
-        public MdiWin CreateMdiWin<MdiWinType>()
+        public MdiWinType CreateMdiWin<MdiWinType>()
         {
             int x = 0, y = 0;
             var win = Activator.CreateInstance(typeof(MdiWinType)) as MdiWin;
@@ -47,7 +47,7 @@ namespace WinFormsMDI2
             mdiWins.Add(win);
 
             FocusMdiWin(win);
-            return win;
+            return (MdiWinType)(object)win;
         }
 
         public MdiWin CreateMdiWin()
@@ -88,6 +88,17 @@ namespace WinFormsMDI2
         public void FocusMdiWin(MdiWin win)
         {
             Controls.SetChildIndex(win,0);
+        }
+
+        private void MdiControI_Resize(object sender, EventArgs e)
+        {
+            foreach (MdiWin win in mdiWins)
+            {
+                if (win.isMinNotMove)
+                {
+                    win.Location = new Point(win.Location.X, Height - 32);
+                }
+            }
         }
     }
 }

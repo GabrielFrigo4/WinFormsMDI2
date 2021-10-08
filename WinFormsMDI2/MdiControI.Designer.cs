@@ -31,13 +31,14 @@ namespace WinFormsMDI2
         {
             this.SuspendLayout();
             // 
-            // MdiControI2
+            // MdiControI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.DoubleBuffered = true;
-            this.Name = "MdiControI2";
+            this.Name = "MdiControI";
             this.Size = new System.Drawing.Size(200, 200);
+            this.Resize += new System.EventHandler(this.MdiControI_Resize);
             this.ResumeLayout(false);
 
         }

@@ -9,6 +9,7 @@ namespace WinFormsMDI2
     public partial class MdiWin : UserControl
     {
         public MdiControI mdiControl;
+        public bool isMinNotMove = false;
 
         const string max = "[//]", min = "__", normal = @"[\\]", exit = "X";
         bool isMove = false, isMin = false, isResize = false;
@@ -84,6 +85,7 @@ namespace WinFormsMDI2
             if (Dock != DockStyle.Fill)
             {
                 isMove = true;
+                isMinNotMove = false;
                 mx = MousePosition.X - Location.X;
                 my = MousePosition.Y - Location.Y;
             }
@@ -323,12 +325,19 @@ namespace WinFormsMDI2
             {
                 if (isMin)
                 {
+                    panelFloor.Visible = true;
+                    panelLeft.Visible = true;
+                    panelLeftFloor.Visible = true;
+                    panelRight.Visible = true;
+                    panelRightFloor.Visible = true;
+
                     Title = lastTitle;
                     Size = lastSize;
                     MinimumSize = lastMinSize;
                     Location = lastLocation;
                     bMin.Text = min;
                     isMin = false;
+                    isMinNotMove = false;
                 }
                 Dock = DockStyle.Fill;
                 bMax.Text = normal;
@@ -372,21 +381,35 @@ namespace WinFormsMDI2
                 lastMinSize = MinimumSize;
                 lastLocation = Location;
 
+                panelFloor.Visible = false;
+                panelLeft.Visible = false;
+                panelLeftFloor.Visible = false;
+                panelRight.Visible = false;
+                panelRightFloor.Visible = false;
+
                 Title = Title.Substring(0,3)+"...";
                 MinimumSize = new Size(0, 0);
-                Size = new Size(226, 37);
+                Size = new Size(226, 32);
                 Location = new Point(x, mdiControl.Height - 32);
                 bMin.Text = normal;
                 isMin = true;
+                isMinNotMove = true;
             }
             else
             {
+                panelFloor.Visible = true;
+                panelLeft.Visible = true;
+                panelLeftFloor.Visible = true;
+                panelRight.Visible = true;
+                panelRightFloor.Visible = true;
+
                 Title = lastTitle;
                 Size = lastSize;
                 MinimumSize = lastMinSize;
                 Location = lastLocation;
                 bMin.Text = min;
                 isMin = false;
+                isMinNotMove = false;
             }
             
             labelTitle.Select();
