@@ -123,7 +123,7 @@ namespace WinFormsMDI2
                 win.Ico = form.Icon.ToBitmap();
             if (useFormText)
                 win.Title = form.Text;
-            win.MinimumSize = new Size(form.MinimumSize.Width+10, form.MinimumSize.Height + 37); 
+            win.MinimumSize = new Size(form.MinimumSize.Width + 10, form.MinimumSize.Height + 42);
             form.Dock = DockStyle.Fill;
             win.Controls.Add(form);
             form.BringToFront();

@@ -29,39 +29,43 @@ namespace WinFormsMDI2
         /// </summary>
         private void InitializeComponent()
         {
-            this.panelTop = new System.Windows.Forms.Panel();
+            this.panelMain = new System.Windows.Forms.Panel();
             this.pictureBoxIco = new System.Windows.Forms.PictureBox();
             this.bMin = new System.Windows.Forms.Button();
             this.bMax = new System.Windows.Forms.Button();
             this.bExit = new System.Windows.Forms.Button();
             this.labelTitle = new System.Windows.Forms.Label();
+            this.panelLeftTop = new System.Windows.Forms.Panel();
             this.panelFloor = new System.Windows.Forms.Panel();
             this.panelLeftFloor = new System.Windows.Forms.Panel();
             this.panelRightFloor = new System.Windows.Forms.Panel();
             this.panelLeft = new System.Windows.Forms.Panel();
             this.panelRight = new System.Windows.Forms.Panel();
-            this.panelTop.SuspendLayout();
+            this.panelRightTop = new System.Windows.Forms.Panel();
+            this.panelTop = new System.Windows.Forms.Panel();
+            this.panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIco)).BeginInit();
             this.panelFloor.SuspendLayout();
+            this.panelTop.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panelTop
+            // panelMain
             // 
-            this.panelTop.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.panelTop.Controls.Add(this.pictureBoxIco);
-            this.panelTop.Controls.Add(this.bMin);
-            this.panelTop.Controls.Add(this.bMax);
-            this.panelTop.Controls.Add(this.bExit);
-            this.panelTop.Controls.Add(this.labelTitle);
-            this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTop.Location = new System.Drawing.Point(0, 0);
-            this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(600, 32);
-            this.panelTop.TabIndex = 0;
-            this.panelTop.DoubleClick += new System.EventHandler(this.panelTop_DoubleClick);
-            this.panelTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelTop_MouseDown);
-            this.panelTop.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelTop_MouseMove);
-            this.panelTop.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelTop_MouseUp);
+            this.panelMain.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panelMain.Controls.Add(this.pictureBoxIco);
+            this.panelMain.Controls.Add(this.bMin);
+            this.panelMain.Controls.Add(this.bMax);
+            this.panelMain.Controls.Add(this.bExit);
+            this.panelMain.Controls.Add(this.labelTitle);
+            this.panelMain.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelMain.Location = new System.Drawing.Point(5, 5);
+            this.panelMain.Name = "panelMain";
+            this.panelMain.Size = new System.Drawing.Size(590, 32);
+            this.panelMain.TabIndex = 0;
+            this.panelMain.DoubleClick += new System.EventHandler(this.panelMain_DoubleClick);
+            this.panelMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelMain_MouseDown);
+            this.panelMain.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelMain_MouseMove);
+            this.panelMain.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelMain_MouseUp);
             // 
             // pictureBoxIco
             // 
@@ -78,7 +82,7 @@ namespace WinFormsMDI2
             this.bMin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bMin.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.bMin.Image = global::WinFormsMDI2.Properties.Resources.Minimisar;
-            this.bMin.Location = new System.Drawing.Point(462, 0);
+            this.bMin.Location = new System.Drawing.Point(452, 0);
             this.bMin.Name = "bMin";
             this.bMin.Size = new System.Drawing.Size(46, 32);
             this.bMin.TabIndex = 0;
@@ -95,7 +99,7 @@ namespace WinFormsMDI2
             this.bMax.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bMax.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.bMax.Image = global::WinFormsMDI2.Properties.Resources.Maximisar;
-            this.bMax.Location = new System.Drawing.Point(508, 0);
+            this.bMax.Location = new System.Drawing.Point(498, 0);
             this.bMax.Name = "bMax";
             this.bMax.Size = new System.Drawing.Size(46, 32);
             this.bMax.TabIndex = 0;
@@ -112,7 +116,7 @@ namespace WinFormsMDI2
             this.bExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bExit.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.bExit.Image = global::WinFormsMDI2.Properties.Resources.Fechar;
-            this.bExit.Location = new System.Drawing.Point(554, 0);
+            this.bExit.Location = new System.Drawing.Point(544, 0);
             this.bExit.Name = "bExit";
             this.bExit.Size = new System.Drawing.Size(46, 32);
             this.bExit.TabIndex = 0;
@@ -132,6 +136,18 @@ namespace WinFormsMDI2
             this.labelTitle.Size = new System.Drawing.Size(69, 23);
             this.labelTitle.TabIndex = 0;
             this.labelTitle.Text = "MdiWin";
+            // 
+            // panelLeftTop
+            // 
+            this.panelLeftTop.Location = new System.Drawing.Point(0, 0);
+            this.panelLeftTop.Name = "panelLeftTop";
+            this.panelLeftTop.Size = new System.Drawing.Size(5, 5);
+            this.panelLeftTop.TabIndex = 2;
+            this.panelLeftTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelLeftTop_MouseDown);
+            this.panelLeftTop.MouseEnter += new System.EventHandler(this.panelLeftTop_MouseEnter);
+            this.panelLeftTop.MouseLeave += new System.EventHandler(this.panelAll_MouseLeave);
+            this.panelLeftTop.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelLeftTop_MouseMove);
+            this.panelLeftTop.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelLeftTop_MouseUp);
             // 
             // panelFloor
             // 
@@ -179,9 +195,9 @@ namespace WinFormsMDI2
             // 
             this.panelLeft.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelLeft.Location = new System.Drawing.Point(0, 32);
+            this.panelLeft.Location = new System.Drawing.Point(0, 5);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(5, 363);
+            this.panelLeft.Size = new System.Drawing.Size(5, 390);
             this.panelLeft.TabIndex = 0;
             this.panelLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelLeft_MouseDown);
             this.panelLeft.MouseEnter += new System.EventHandler(this.panelLeft_MouseEnter);
@@ -193,9 +209,9 @@ namespace WinFormsMDI2
             // 
             this.panelRight.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelRight.Location = new System.Drawing.Point(595, 32);
+            this.panelRight.Location = new System.Drawing.Point(595, 5);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(5, 363);
+            this.panelRight.Size = new System.Drawing.Size(5, 390);
             this.panelRight.TabIndex = 0;
             this.panelRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelRight_MouseDown);
             this.panelRight.MouseEnter += new System.EventHandler(this.panelRight_MouseEnter);
@@ -203,38 +219,72 @@ namespace WinFormsMDI2
             this.panelRight.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelRight_MouseMove);
             this.panelRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelRight_MouseUp);
             // 
+            // panelRightTop
+            // 
+            this.panelRightTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelRightTop.Location = new System.Drawing.Point(595, 0);
+            this.panelRightTop.Name = "panelRightTop";
+            this.panelRightTop.Size = new System.Drawing.Size(5, 5);
+            this.panelRightTop.TabIndex = 0;
+            this.panelRightTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelRightTop_MouseDown);
+            this.panelRightTop.MouseEnter += new System.EventHandler(this.panelRightTop_MouseEnter);
+            this.panelRightTop.MouseLeave += new System.EventHandler(this.panelAll_MouseLeave);
+            this.panelRightTop.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelRightTop_MouseMove);
+            this.panelRightTop.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelRightTop_MouseUp);
+            // 
+            // panelTop
+            // 
+            this.panelTop.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panelTop.Controls.Add(this.panelLeftTop);
+            this.panelTop.Controls.Add(this.panelRightTop);
+            this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelTop.Location = new System.Drawing.Point(0, 0);
+            this.panelTop.Name = "panelTop";
+            this.panelTop.Size = new System.Drawing.Size(600, 5);
+            this.panelTop.TabIndex = 1;
+            this.panelTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelTop_MouseDown);
+            this.panelTop.MouseEnter += new System.EventHandler(this.panelTop_MouseEnter);
+            this.panelTop.MouseLeave += new System.EventHandler(this.panelAll_MouseLeave);
+            this.panelTop.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelTop_MouseMove);
+            this.panelTop.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelTop_MouseUp);
+            // 
             // MdiWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.panelMain);
             this.Controls.Add(this.panelRight);
             this.Controls.Add(this.panelLeft);
-            this.Controls.Add(this.panelFloor);
             this.Controls.Add(this.panelTop);
+            this.Controls.Add(this.panelFloor);
             this.DoubleBuffered = true;
             this.Name = "MdiWin";
             this.Size = new System.Drawing.Size(600, 400);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MdiWin_MouseDown);
-            this.panelTop.ResumeLayout(false);
-            this.panelTop.PerformLayout();
+            this.panelMain.ResumeLayout(false);
+            this.panelMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIco)).EndInit();
             this.panelFloor.ResumeLayout(false);
+            this.panelTop.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panelTop;
+        private System.Windows.Forms.Panel panelMain;
         private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.Button bMin;
         private System.Windows.Forms.Button bMax;
         private System.Windows.Forms.Button bExit;
+        private System.Windows.Forms.Panel panelTop;
         private System.Windows.Forms.Panel panelFloor;
         private System.Windows.Forms.Panel panelLeft;
         private System.Windows.Forms.Panel panelRight;
         private System.Windows.Forms.Panel panelRightFloor;
         private System.Windows.Forms.Panel panelLeftFloor;
         private System.Windows.Forms.PictureBox pictureBoxIco;
+        private System.Windows.Forms.Panel panelLeftTop;
+        private System.Windows.Forms.Panel panelRightTop;
     }
 }

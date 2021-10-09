@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Security.Permissions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace WinFormsMDI2
@@ -11,6 +12,7 @@ namespace WinFormsMDI2
         public MdiControl mdiControl;
         public bool isMinNotMove = false;
 
+        PictureBox pictureBoxResize = new PictureBox();
         Image max = Properties.Resources.Maximisar, min = Properties.Resources.Minimisar, normal = Properties.Resources.Normalisar;
         bool isMove = false, isMin = false, isResize = false;
         int mx, my, rx, ry;
@@ -21,17 +23,18 @@ namespace WinFormsMDI2
         public MdiWin()
         {
             BackColor = Color.FromArgb(240,240,240);
+            pictureBoxResize.BackColor = Color.DarkGray;
             InitializeComponent();
             //labelTitle
-            labelTitle.MouseDown += panelTop_MouseDown;
-            labelTitle.MouseUp += panelTop_MouseUp;
-            labelTitle.MouseMove += panelTop_MouseMove;
-            labelTitle.DoubleClick += panelTop_DoubleClick;
+            labelTitle.MouseDown += panelMain_MouseDown;
+            labelTitle.MouseUp += panelMain_MouseUp;
+            labelTitle.MouseMove += panelMain_MouseMove;
+            labelTitle.DoubleClick += panelMain_DoubleClick;
             //pictureBoxIco
-            pictureBoxIco.MouseDown += panelTop_MouseDown;
-            pictureBoxIco.MouseUp += panelTop_MouseUp;
-            pictureBoxIco.MouseMove += panelTop_MouseMove;
-            pictureBoxIco.DoubleClick += panelTop_DoubleClick;
+            pictureBoxIco.MouseDown += panelMain_MouseDown;
+            pictureBoxIco.MouseUp += panelMain_MouseUp;
+            pictureBoxIco.MouseMove += panelMain_MouseMove;
+            pictureBoxIco.DoubleClick += panelMain_DoubleClick;
             pictureBoxIco.Select();
             lastTitle = Title;
         }
@@ -79,8 +82,8 @@ namespace WinFormsMDI2
         public Image Ico { get { return pictureBoxIco.Image; } set { pictureBoxIco.Image = value; } }
         #endregion
 
-        #region panelTop
-        private void panelTop_MouseDown(object sender, MouseEventArgs e)
+        #region panelMain
+        private void panelMain_MouseDown(object sender, MouseEventArgs e)
         {
             if (Dock != DockStyle.Fill)
             {
@@ -91,12 +94,12 @@ namespace WinFormsMDI2
             }
         }
 
-        private void panelTop_MouseUp(object sender, MouseEventArgs e)
+        private void panelMain_MouseUp(object sender, MouseEventArgs e)
         {
             isMove = false;
         }
 
-        private void panelTop_MouseMove(object sender, MouseEventArgs e)
+        private void panelMain_MouseMove(object sender, MouseEventArgs e)
         {
             if (isMove)
             {
@@ -104,17 +107,101 @@ namespace WinFormsMDI2
             }
         }
 
-        private void panelTop_DoubleClick(object sender, EventArgs e)
+        private void panelMain_DoubleClick(object sender, EventArgs e)
         {
             if(Dock == DockStyle.Fill)
             {
                 Dock = DockStyle.None;
+                bMax.Image = max;
+
+                panelTop.Visible = true;
+                panelFloor.Visible = true;
+                panelLeft.Visible = true;
+                panelLeftFloor.Visible = true;
+                panelRight.Visible = true;
+                panelRightFloor.Visible = true;
             }
             else
             {
+                if (isMin)
+                {
+                    Title = lastTitle;
+                    Size = lastSize;
+                    MinimumSize = lastMinSize;
+                    Location = lastLocation;
+                    bMin.Image = min;
+                    isMin = false;
+                    isMinNotMove = false;
+                }
+                else
+                {
+                    panelTop.Visible = false;
+                    panelFloor.Visible = false;
+                    panelLeft.Visible = false;
+                    panelLeftFloor.Visible = false;
+                    panelRight.Visible = false;
+                    panelRightFloor.Visible = false;
+                }
+
                 Dock = DockStyle.Fill;
+                bMax.Image = normal;
             }
             labelTitle.Select();
+        }
+        #endregion
+
+        #region panelTop
+        private void panelTop_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (Dock != DockStyle.Fill)
+            {
+                isResize = true;
+                ry = -MousePosition.Y - Size.Height;
+                my = MousePosition.Y - Location.Y;
+
+                minPos = new Point(Location.X + Size.Width - MinimumSize.Width, Location.Y + Size.Height - MinimumSize.Height);
+            }
+            panelAll_StartPictureBoxResize();
+        }
+
+        private void panelTop_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (isResize)
+            {
+                Size = new Size(Size.Width, -MousePosition.Y - ry);
+                if (minPos.Y >= MousePosition.Y - my)
+                {
+                    Location = new Point(Location.X, MousePosition.Y - my);
+                }
+                else
+                {
+                    Location = new Point(Location.X, minPos.Y);
+                }
+            }
+            panelAll_EndPictureBoxResize();
+            isResize = false;
+        }
+
+        private void panelTop_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isResize)
+            {
+                pictureBoxResize.Size = new Size(pictureBoxResize.Size.Width, -MousePosition.Y - ry);
+                if (minPos.Y >= MousePosition.Y - my)
+                {
+                    pictureBoxResize.Location = new Point(pictureBoxResize.Location.X, MousePosition.Y - my);
+                }
+                else
+                {
+                    pictureBoxResize.Location = new Point(pictureBoxResize.Location.X, minPos.Y);
+                }
+            }
+            Cursor.Current = Cursors.SizeNS;
+        }
+
+        private void panelTop_MouseEnter(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.SizeNS;
         }
         #endregion
 
@@ -126,10 +213,16 @@ namespace WinFormsMDI2
                 isResize = true;
                 ry = MousePosition.Y - Size.Height;
             }
+            panelAll_StartPictureBoxResize();
         }
 
         private void panelFloor_MouseUp(object sender, MouseEventArgs e)
         {
+            if (isResize)
+            {
+                Size = new Size(Size.Width, MousePosition.Y - ry);
+            }
+            panelAll_EndPictureBoxResize();
             isResize = false;
         }
 
@@ -137,7 +230,7 @@ namespace WinFormsMDI2
         {
             if (isResize)
             {
-                Size = new Size(Size.Width, MousePosition.Y - ry);
+                pictureBoxResize.Size = new Size(pictureBoxResize.Size.Width, MousePosition.Y - ry);
             }
             Cursor.Current = Cursors.SizeNS;
         }
@@ -159,28 +252,39 @@ namespace WinFormsMDI2
 
                 minPos = new Point(Location.X + Size.Width - MinimumSize.Width, Location.Y + Size.Height - MinimumSize.Height);
             }
+            panelAll_StartPictureBoxResize();
         }
 
         private void panelLeft_MouseUp(object sender, MouseEventArgs e)
         {
-            isResize = false;
+            if (isResize)
+            {
+                Size = new Size(-MousePosition.X - rx, Size.Height);
+                if (minPos.X >= MousePosition.X - mx)
+                {
+                    Location = new Point(MousePosition.X - mx, Location.Y);
+                }
+                else
+                {
+                    Location = new Point(minPos.X, Location.Y);
+                }
+            }
+            panelAll_EndPictureBoxResize();
+            Visible = true;
         }
 
         private void panelLeft_MouseMove(object sender, MouseEventArgs e)
         {
             if (isResize)
             {
-                Size = new Size(-MousePosition.X - rx, Size.Height);
-                if (Size.Width >= MinimumSize.Width)
+                pictureBoxResize.Size = new Size(-MousePosition.X - rx, pictureBoxResize.Size.Height);
+                if (minPos.X >= MousePosition.X - mx)
                 {
-                    if (minPos.X >= MousePosition.X - mx)
-                    {
-                        Location = new Point(MousePosition.X - mx, Location.Y);
-                    }
-                    else
-                    {
-                        Location = new Point(minPos.X, Location.Y);
-                    }
+                    pictureBoxResize.Location = new Point(MousePosition.X - mx, pictureBoxResize.Location.Y);
+                }
+                else
+                {
+                    pictureBoxResize.Location = new Point(minPos.X, pictureBoxResize.Location.Y);
                 }
             }
             Cursor.Current = Cursors.SizeWE;
@@ -200,10 +304,16 @@ namespace WinFormsMDI2
                 isResize = true;
                 rx = MousePosition.X - Size.Width;
             }
+            panelAll_StartPictureBoxResize();
         }
 
         private void panelRight_MouseUp(object sender, MouseEventArgs e)
         {
+            if (isResize)
+            {
+                Size = new Size(MousePosition.X - rx, Size.Height);
+            }
+            panelAll_EndPictureBoxResize();
             isResize = false;
         }
 
@@ -211,7 +321,7 @@ namespace WinFormsMDI2
         {
             if (isResize)
             {
-                Size = new Size(MousePosition.X - rx, Size.Height);
+                pictureBoxResize.Size = new Size(MousePosition.X - rx, pictureBoxResize.Size.Height);
             }
             Cursor.Current = Cursors.SizeWE;
         }
@@ -219,6 +329,135 @@ namespace WinFormsMDI2
         private void panelRight_MouseEnter(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.SizeWE;
+        }
+        #endregion
+
+        #region panelLeftTop
+        private void panelLeftTop_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (Dock != DockStyle.Fill)
+            {
+                isResize = true;
+                ry = -MousePosition.Y - Size.Height;
+                my = MousePosition.Y - Location.Y;
+                rx = -MousePosition.X - Size.Width;
+                mx = MousePosition.X - Location.X;
+
+                minPos = new Point(Location.X + Size.Width - MinimumSize.Width, Location.Y + Size.Height - MinimumSize.Height);
+            }
+            panelAll_StartPictureBoxResize();
+        }
+
+        private void panelLeftTop_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (isResize)
+            {
+                Size = new Size(-MousePosition.X - rx, -MousePosition.Y - ry);
+                if (minPos.Y >= MousePosition.Y - my && minPos.X >= MousePosition.X - mx)
+                {
+                    Location = new Point(MousePosition.X - mx, MousePosition.Y - my);
+                }
+                else if (minPos.Y >= MousePosition.Y - my)
+                {
+                    Location = new Point(minPos.X, MousePosition.Y - my);
+                }
+                else if (minPos.X >= MousePosition.X - mx)
+                {
+                    Location = new Point(MousePosition.X - mx, minPos.Y);
+                }
+                else
+                {
+                    Location = new Point(minPos.X, minPos.Y);
+                }
+                panelAll_EndPictureBoxResize();
+                isResize = false;
+            }
+        }
+
+        private void panelLeftTop_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isResize)
+            {
+                pictureBoxResize.Size = new Size(-MousePosition.X - rx, -MousePosition.Y - ry);
+                if (minPos.Y >= MousePosition.Y - my && minPos.X >= MousePosition.X - mx)
+                {
+                    pictureBoxResize.Location = new Point(MousePosition.X - mx, MousePosition.Y - my);
+                }
+                else if(minPos.Y >= MousePosition.Y - my)
+                {
+                    pictureBoxResize.Location = new Point(minPos.X, MousePosition.Y - my);
+                }
+                else if (minPos.X >= MousePosition.X - mx)
+                {
+                    pictureBoxResize.Location = new Point(MousePosition.X - mx, minPos.Y);
+                }
+                else
+                {
+                    pictureBoxResize.Location = new Point(minPos.X, minPos.Y);
+                }
+            }
+            Cursor.Current = Cursors.SizeNWSE;
+        }
+
+        private void panelLeftTop_MouseEnter(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.SizeNWSE;
+        }
+        #endregion
+
+        #region panelRightTop
+        private void panelRightTop_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (Dock != DockStyle.Fill)
+            {
+                isResize = true;
+                ry = -MousePosition.Y - Size.Height;
+                rx = MousePosition.X - Size.Width;
+                my = MousePosition.Y - Location.Y;
+
+                minPos = new Point(Location.X + Size.Width - MinimumSize.Width, Location.Y + Size.Height - MinimumSize.Height);
+                panelAll_StartPictureBoxResize();
+            }
+        }
+
+        private void panelRightTop_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (isResize)
+            {
+                Size = new Size(MousePosition.X - rx, -MousePosition.Y - ry);
+                if (minPos.Y >= MousePosition.Y - my)
+                {
+                    Location = new Point(Location.X, MousePosition.Y - my);
+                }
+                else
+                {
+                    Location = new Point(Location.X, minPos.Y);
+                }
+            }
+            panelAll_EndPictureBoxResize();
+            isResize = false;
+        }
+
+        private void panelRightTop_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isResize)
+            {
+                pictureBoxResize.Size = new Size(MousePosition.X - rx, -MousePosition.Y - ry);
+                if (minPos.Y >= MousePosition.Y - my)
+                {
+                    pictureBoxResize.Location = new Point(pictureBoxResize.Location.X, MousePosition.Y - my);
+                }
+                else
+                {
+                    pictureBoxResize.Location = new Point(pictureBoxResize.Location.X, minPos.Y);
+                }
+            }
+            Cursor.Current = Cursors.SizeNESW;
+        }
+
+        private void panelRightTop_MouseEnter(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.SizeNESW;
         }
         #endregion
 
@@ -231,10 +470,16 @@ namespace WinFormsMDI2
                 rx = MousePosition.X - Size.Width;
                 ry = MousePosition.Y - Size.Height;
             }
+            panelAll_StartPictureBoxResize();
         }
 
         private void panelRightFloor_MouseUp(object sender, MouseEventArgs e)
         {
+            if (isResize)
+            {
+                Size = new Size(MousePosition.X - rx, MousePosition.Y - ry);
+            }
+            panelAll_EndPictureBoxResize();
             isResize = false;
         }
 
@@ -242,7 +487,7 @@ namespace WinFormsMDI2
         {
             if (isResize)
             {
-                Size = new Size(MousePosition.X - rx, MousePosition.Y - ry);
+                pictureBoxResize.Size = new Size(MousePosition.X - rx, MousePosition.Y - ry);
             }
             Cursor.Current = Cursors.SizeNWSE;
         }
@@ -265,10 +510,24 @@ namespace WinFormsMDI2
 
                 minPos = new Point(Location.X + Size.Width - MinimumSize.Width, Location.Y + Size.Height - MinimumSize.Height);
             }
+            panelAll_StartPictureBoxResize();
         }
 
         private void panelLeftFloor_MouseUp(object sender, MouseEventArgs e)
         {
+            if (isResize)
+            {
+                Size = new Size(-MousePosition.X - rx, MousePosition.Y - ry);
+                if (minPos.X >= MousePosition.X - mx)
+                {
+                    Location = new Point(MousePosition.X - mx, Location.Y);
+                }
+                else
+                {
+                    Location = new Point(minPos.X, Location.Y);
+                }
+            }
+            panelAll_EndPictureBoxResize();
             isResize = false;
         }
 
@@ -276,17 +535,14 @@ namespace WinFormsMDI2
         {
             if (isResize)
             {
-                Size = new Size(-MousePosition.X - rx, MousePosition.Y - ry);
-                if (Size.Width >= MinimumSize.Width)
+                pictureBoxResize.Size = new Size(-MousePosition.X - rx, MousePosition.Y - ry);
+                if (minPos.X >= MousePosition.X - mx)
                 {
-                    if (minPos.X >= MousePosition.X - mx)
-                    {
-                        Location = new Point(MousePosition.X - mx, Location.Y);
-                    }
-                    else
-                    {
-                        Location = new Point(minPos.X, Location.Y);
-                    }
+                    pictureBoxResize.Location = new Point(MousePosition.X - mx, pictureBoxResize.Location.Y);
+                }
+                else
+                {
+                    pictureBoxResize.Location = new Point(minPos.X, pictureBoxResize.Location.Y);
                 }
             }
             Cursor.Current = Cursors.SizeNESW;
@@ -302,6 +558,22 @@ namespace WinFormsMDI2
         private void panelAll_MouseLeave(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.Default;
+        }
+
+        void panelAll_StartPictureBoxResize()
+        {
+            pictureBoxResize.Location = Location;
+            pictureBoxResize.Size = Size;
+            pictureBoxResize.MinimumSize = MinimumSize;
+            mdiControl.Controls.Add(pictureBoxResize);
+            mdiControl.Controls.SetChildIndex(pictureBoxResize, 0);
+            Visible = false;
+        }
+
+        void panelAll_EndPictureBoxResize()
+        {
+            mdiControl.Controls.Remove(pictureBoxResize);
+            Visible = true;
         }
         #endregion
 
@@ -320,17 +592,18 @@ namespace WinFormsMDI2
             {
                 Dock = DockStyle.None;
                 bMax.Image = max;
+
+                panelTop.Visible = true;
+                panelFloor.Visible = true;
+                panelLeft.Visible = true;
+                panelLeftFloor.Visible = true;
+                panelRight.Visible = true;
+                panelRightFloor.Visible = true;
             }
             else
             {
                 if (isMin)
                 {
-                    panelFloor.Visible = true;
-                    panelLeft.Visible = true;
-                    panelLeftFloor.Visible = true;
-                    panelRight.Visible = true;
-                    panelRightFloor.Visible = true;
-
                     Title = lastTitle;
                     Size = lastSize;
                     MinimumSize = lastMinSize;
@@ -339,6 +612,16 @@ namespace WinFormsMDI2
                     isMin = false;
                     isMinNotMove = false;
                 }
+                else
+                {
+                    panelTop.Visible = false;
+                    panelFloor.Visible = false;
+                    panelLeft.Visible = false;
+                    panelLeftFloor.Visible = false;
+                    panelRight.Visible = false;
+                    panelRightFloor.Visible = false;
+                }
+
                 Dock = DockStyle.Fill;
                 bMax.Image = normal;
             }
@@ -381,6 +664,7 @@ namespace WinFormsMDI2
                 lastMinSize = MinimumSize;
                 lastLocation = Location;
 
+                panelTop.Visible = false;
                 panelFloor.Visible = false;
                 panelLeft.Visible = false;
                 panelLeftFloor.Visible = false;
@@ -397,6 +681,7 @@ namespace WinFormsMDI2
             }
             else
             {
+                panelTop.Visible = true;
                 panelFloor.Visible = true;
                 panelLeft.Visible = true;
                 panelLeftFloor.Visible = true;
