@@ -12,7 +12,6 @@ namespace WinFormsMDI2
         public MdiControl mdiControl;
         public bool isMinNotMove = false;
 
-        PictureBox pictureBoxResize = new PictureBox();
         Image max = Properties.Resources.Maximisar, min = Properties.Resources.Minimisar, normal = Properties.Resources.Normalisar;
         bool isMove = false, isMin = false, isResize = false;
         int mx, my, rx, ry;
@@ -23,7 +22,6 @@ namespace WinFormsMDI2
         public MdiWin()
         {
             BackColor = Color.FromArgb(240,240,240);
-            pictureBoxResize.BackColor = Color.DarkGray;
             InitializeComponent();
             //labelTitle
             labelTitle.MouseDown += panelMain_MouseDown;
@@ -161,24 +159,10 @@ namespace WinFormsMDI2
 
                 minPos = new Point(Location.X + Size.Width - MinimumSize.Width, Location.Y + Size.Height - MinimumSize.Height);
             }
-            panelAll_StartPictureBoxResize();
         }
 
         private void panelTop_MouseUp(object sender, MouseEventArgs e)
         {
-            if (isResize)
-            {
-                Size = new Size(Size.Width, -MousePosition.Y - ry);
-                if (minPos.Y >= MousePosition.Y - my)
-                {
-                    Location = new Point(Location.X, MousePosition.Y - my);
-                }
-                else
-                {
-                    Location = new Point(Location.X, minPos.Y);
-                }
-            }
-            panelAll_EndPictureBoxResize();
             isResize = false;
         }
 
@@ -186,14 +170,13 @@ namespace WinFormsMDI2
         {
             if (isResize)
             {
-                pictureBoxResize.Size = new Size(pictureBoxResize.Size.Width, -MousePosition.Y - ry);
                 if (minPos.Y >= MousePosition.Y - my)
                 {
-                    pictureBoxResize.Location = new Point(pictureBoxResize.Location.X, MousePosition.Y - my);
+                    Bounds = new Rectangle(Location.X, MousePosition.Y - my, Size.Width, -MousePosition.Y - ry);
                 }
                 else
                 {
-                    pictureBoxResize.Location = new Point(pictureBoxResize.Location.X, minPos.Y);
+                    Bounds = new Rectangle(Location.X, minPos.Y, Size.Width, -MousePosition.Y - ry);
                 }
             }
             Cursor.Current = Cursors.SizeNS;
@@ -213,16 +196,10 @@ namespace WinFormsMDI2
                 isResize = true;
                 ry = MousePosition.Y - Size.Height;
             }
-            panelAll_StartPictureBoxResize();
         }
 
         private void panelFloor_MouseUp(object sender, MouseEventArgs e)
         {
-            if (isResize)
-            {
-                Size = new Size(Size.Width, MousePosition.Y - ry);
-            }
-            panelAll_EndPictureBoxResize();
             isResize = false;
         }
 
@@ -230,7 +207,7 @@ namespace WinFormsMDI2
         {
             if (isResize)
             {
-                pictureBoxResize.Size = new Size(pictureBoxResize.Size.Width, MousePosition.Y - ry);
+                Size = new Size(Size.Width, MousePosition.Y - ry);
             }
             Cursor.Current = Cursors.SizeNS;
         }
@@ -252,39 +229,24 @@ namespace WinFormsMDI2
 
                 minPos = new Point(Location.X + Size.Width - MinimumSize.Width, Location.Y + Size.Height - MinimumSize.Height);
             }
-            panelAll_StartPictureBoxResize();
         }
 
         private void panelLeft_MouseUp(object sender, MouseEventArgs e)
         {
-            if (isResize)
-            {
-                Size = new Size(-MousePosition.X - rx, Size.Height);
-                if (minPos.X >= MousePosition.X - mx)
-                {
-                    Location = new Point(MousePosition.X - mx, Location.Y);
-                }
-                else
-                {
-                    Location = new Point(minPos.X, Location.Y);
-                }
-            }
-            panelAll_EndPictureBoxResize();
-            Visible = true;
+            isResize = false;
         }
 
         private void panelLeft_MouseMove(object sender, MouseEventArgs e)
         {
             if (isResize)
             {
-                pictureBoxResize.Size = new Size(-MousePosition.X - rx, pictureBoxResize.Size.Height);
                 if (minPos.X >= MousePosition.X - mx)
                 {
-                    pictureBoxResize.Location = new Point(MousePosition.X - mx, pictureBoxResize.Location.Y);
+                    Bounds = new Rectangle(MousePosition.X - mx, Location.Y, -MousePosition.X - rx, Size.Height);
                 }
                 else
                 {
-                    pictureBoxResize.Location = new Point(minPos.X, pictureBoxResize.Location.Y);
+                    Bounds = new Rectangle(minPos.X, Location.Y, -MousePosition.X - rx, Size.Height);
                 }
             }
             Cursor.Current = Cursors.SizeWE;
@@ -304,16 +266,10 @@ namespace WinFormsMDI2
                 isResize = true;
                 rx = MousePosition.X - Size.Width;
             }
-            panelAll_StartPictureBoxResize();
         }
 
         private void panelRight_MouseUp(object sender, MouseEventArgs e)
         {
-            if (isResize)
-            {
-                Size = new Size(MousePosition.X - rx, Size.Height);
-            }
-            panelAll_EndPictureBoxResize();
             isResize = false;
         }
 
@@ -321,7 +277,7 @@ namespace WinFormsMDI2
         {
             if (isResize)
             {
-                pictureBoxResize.Size = new Size(MousePosition.X - rx, pictureBoxResize.Size.Height);
+                Size = new Size(MousePosition.X - rx, Size.Height);
             }
             Cursor.Current = Cursors.SizeWE;
         }
@@ -345,55 +301,32 @@ namespace WinFormsMDI2
 
                 minPos = new Point(Location.X + Size.Width - MinimumSize.Width, Location.Y + Size.Height - MinimumSize.Height);
             }
-            panelAll_StartPictureBoxResize();
         }
 
         private void panelLeftTop_MouseUp(object sender, MouseEventArgs e)
         {
-            if (isResize)
-            {
-                Size = new Size(-MousePosition.X - rx, -MousePosition.Y - ry);
-                if (minPos.Y >= MousePosition.Y - my && minPos.X >= MousePosition.X - mx)
-                {
-                    Location = new Point(MousePosition.X - mx, MousePosition.Y - my);
-                }
-                else if (minPos.Y >= MousePosition.Y - my)
-                {
-                    Location = new Point(minPos.X, MousePosition.Y - my);
-                }
-                else if (minPos.X >= MousePosition.X - mx)
-                {
-                    Location = new Point(MousePosition.X - mx, minPos.Y);
-                }
-                else
-                {
-                    Location = new Point(minPos.X, minPos.Y);
-                }
-                panelAll_EndPictureBoxResize();
-                isResize = false;
-            }
+            isResize = false;
         }
 
         private void panelLeftTop_MouseMove(object sender, MouseEventArgs e)
         {
             if (isResize)
             {
-                pictureBoxResize.Size = new Size(-MousePosition.X - rx, -MousePosition.Y - ry);
                 if (minPos.Y >= MousePosition.Y - my && minPos.X >= MousePosition.X - mx)
                 {
-                    pictureBoxResize.Location = new Point(MousePosition.X - mx, MousePosition.Y - my);
+                    Bounds = new Rectangle(MousePosition.X - mx, MousePosition.Y - my, -MousePosition.X - rx, -MousePosition.Y - ry);
                 }
-                else if(minPos.Y >= MousePosition.Y - my)
+                else if (minPos.Y >= MousePosition.Y - my)
                 {
-                    pictureBoxResize.Location = new Point(minPos.X, MousePosition.Y - my);
+                    Bounds = new Rectangle(minPos.X, MousePosition.Y - my, -MousePosition.X - rx, -MousePosition.Y - ry);
                 }
                 else if (minPos.X >= MousePosition.X - mx)
                 {
-                    pictureBoxResize.Location = new Point(MousePosition.X - mx, minPos.Y);
+                    Bounds = new Rectangle(MousePosition.X - mx, minPos.Y, -MousePosition.X - rx, -MousePosition.Y - ry);
                 }
                 else
                 {
-                    pictureBoxResize.Location = new Point(minPos.X, minPos.Y);
+                    Bounds = new Rectangle(minPos.X, minPos.Y, -MousePosition.X - rx, -MousePosition.Y - ry);
                 }
             }
             Cursor.Current = Cursors.SizeNWSE;
@@ -416,25 +349,11 @@ namespace WinFormsMDI2
                 my = MousePosition.Y - Location.Y;
 
                 minPos = new Point(Location.X + Size.Width - MinimumSize.Width, Location.Y + Size.Height - MinimumSize.Height);
-                panelAll_StartPictureBoxResize();
             }
         }
 
         private void panelRightTop_MouseUp(object sender, MouseEventArgs e)
         {
-            if (isResize)
-            {
-                Size = new Size(MousePosition.X - rx, -MousePosition.Y - ry);
-                if (minPos.Y >= MousePosition.Y - my)
-                {
-                    Location = new Point(Location.X, MousePosition.Y - my);
-                }
-                else
-                {
-                    Location = new Point(Location.X, minPos.Y);
-                }
-            }
-            panelAll_EndPictureBoxResize();
             isResize = false;
         }
 
@@ -442,14 +361,13 @@ namespace WinFormsMDI2
         {
             if (isResize)
             {
-                pictureBoxResize.Size = new Size(MousePosition.X - rx, -MousePosition.Y - ry);
                 if (minPos.Y >= MousePosition.Y - my)
                 {
-                    pictureBoxResize.Location = new Point(pictureBoxResize.Location.X, MousePosition.Y - my);
+                    Bounds = new Rectangle(Location.X, MousePosition.Y - my, MousePosition.X - rx, -MousePosition.Y - ry);
                 }
                 else
                 {
-                    pictureBoxResize.Location = new Point(pictureBoxResize.Location.X, minPos.Y);
+                    Bounds = new Rectangle(Location.X, minPos.Y, MousePosition.X - rx, -MousePosition.Y - ry);
                 }
             }
             Cursor.Current = Cursors.SizeNESW;
@@ -470,16 +388,10 @@ namespace WinFormsMDI2
                 rx = MousePosition.X - Size.Width;
                 ry = MousePosition.Y - Size.Height;
             }
-            panelAll_StartPictureBoxResize();
         }
 
         private void panelRightFloor_MouseUp(object sender, MouseEventArgs e)
         {
-            if (isResize)
-            {
-                Size = new Size(MousePosition.X - rx, MousePosition.Y - ry);
-            }
-            panelAll_EndPictureBoxResize();
             isResize = false;
         }
 
@@ -487,7 +399,7 @@ namespace WinFormsMDI2
         {
             if (isResize)
             {
-                pictureBoxResize.Size = new Size(MousePosition.X - rx, MousePosition.Y - ry);
+                Size = new Size(MousePosition.X - rx, MousePosition.Y - ry);
             }
             Cursor.Current = Cursors.SizeNWSE;
         }
@@ -510,24 +422,10 @@ namespace WinFormsMDI2
 
                 minPos = new Point(Location.X + Size.Width - MinimumSize.Width, Location.Y + Size.Height - MinimumSize.Height);
             }
-            panelAll_StartPictureBoxResize();
         }
 
         private void panelLeftFloor_MouseUp(object sender, MouseEventArgs e)
         {
-            if (isResize)
-            {
-                Size = new Size(-MousePosition.X - rx, MousePosition.Y - ry);
-                if (minPos.X >= MousePosition.X - mx)
-                {
-                    Location = new Point(MousePosition.X - mx, Location.Y);
-                }
-                else
-                {
-                    Location = new Point(minPos.X, Location.Y);
-                }
-            }
-            panelAll_EndPictureBoxResize();
             isResize = false;
         }
 
@@ -535,14 +433,13 @@ namespace WinFormsMDI2
         {
             if (isResize)
             {
-                pictureBoxResize.Size = new Size(-MousePosition.X - rx, MousePosition.Y - ry);
                 if (minPos.X >= MousePosition.X - mx)
                 {
-                    pictureBoxResize.Location = new Point(MousePosition.X - mx, pictureBoxResize.Location.Y);
+                    Bounds = new Rectangle(MousePosition.X - mx, Location.Y, -MousePosition.X - rx, MousePosition.Y - ry);
                 }
                 else
                 {
-                    pictureBoxResize.Location = new Point(minPos.X, pictureBoxResize.Location.Y);
+                    Bounds = new Rectangle(minPos.X, Location.Y, -MousePosition.X - rx, MousePosition.Y - ry);
                 }
             }
             Cursor.Current = Cursors.SizeNESW;
@@ -558,22 +455,6 @@ namespace WinFormsMDI2
         private void panelAll_MouseLeave(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.Default;
-        }
-
-        void panelAll_StartPictureBoxResize()
-        {
-            pictureBoxResize.Location = Location;
-            pictureBoxResize.Size = Size;
-            pictureBoxResize.MinimumSize = MinimumSize;
-            mdiControl.Controls.Add(pictureBoxResize);
-            mdiControl.Controls.SetChildIndex(pictureBoxResize, 0);
-            Visible = false;
-        }
-
-        void panelAll_EndPictureBoxResize()
-        {
-            mdiControl.Controls.Remove(pictureBoxResize);
-            Visible = true;
         }
         #endregion
 
