@@ -124,9 +124,8 @@ namespace WinFormsMDI2
                 if (isMin)
                 {
                     Title = lastTitle;
-                    Size = lastSize;
                     MinimumSize = lastMinSize;
-                    Location = lastLocation;
+                    Bounds = new Rectangle(lastLocation, lastSize);
                     bMin.Image = min;
                     isMin = false;
                     isMinNotMove = false;
@@ -486,9 +485,8 @@ namespace WinFormsMDI2
                 if (isMin)
                 {
                     Title = lastTitle;
-                    Size = lastSize;
                     MinimumSize = lastMinSize;
-                    Location = lastLocation;
+                    Bounds = new Rectangle(lastLocation, lastSize);
                     bMin.Image = min;
                     isMin = false;
                     isMinNotMove = false;
@@ -554,8 +552,7 @@ namespace WinFormsMDI2
 
                 Title = Title.Substring(0,3)+"...";
                 MinimumSize = new Size(0, 0);
-                Size = new Size(226, 32);
-                Location = new Point(x, mdiControl.Height - 32);
+                Bounds = new Rectangle(x, mdiControl.Height - 32, 226, 32);
                 bMin.Image = normal;
                 isMin = true;
                 isMinNotMove = true;
@@ -570,9 +567,8 @@ namespace WinFormsMDI2
                 panelRightFloor.Visible = true;
 
                 Title = lastTitle;
-                Size = lastSize;
                 MinimumSize = lastMinSize;
-                Location = lastLocation;
+                Bounds = new Rectangle(lastLocation, lastSize);
                 bMin.Image = min;
                 isMin = false;
                 isMinNotMove = false;

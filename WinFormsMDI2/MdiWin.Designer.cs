@@ -52,10 +52,10 @@ namespace WinFormsMDI2
             // panelMain
             // 
             this.panelMain.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.panelMain.Controls.Add(this.pictureBoxIco);
             this.panelMain.Controls.Add(this.bMin);
             this.panelMain.Controls.Add(this.bMax);
             this.panelMain.Controls.Add(this.bExit);
+            this.panelMain.Controls.Add(this.pictureBoxIco);
             this.panelMain.Controls.Add(this.labelTitle);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMain.Location = new System.Drawing.Point(5, 5);
