@@ -11,7 +11,7 @@ namespace WinFormsMDI2
         public MdiControl mdiControl;
         public bool isMinNotMove = false;
 
-        const string max = "[//]", min = "__", normal = @"[\\]", exit = "X";
+        Image max = Properties.Resources.Maximisar, min = Properties.Resources.Minimisar, normal = Properties.Resources.Normalisar;
         bool isMove = false, isMin = false, isResize = false;
         int mx, my, rx, ry;
         Point lastLocation, minPos;
@@ -319,7 +319,7 @@ namespace WinFormsMDI2
             if (Dock == DockStyle.Fill)
             {
                 Dock = DockStyle.None;
-                bMax.Text = max;
+                bMax.Image = max;
             }
             else
             {
@@ -335,12 +335,12 @@ namespace WinFormsMDI2
                     Size = lastSize;
                     MinimumSize = lastMinSize;
                     Location = lastLocation;
-                    bMin.Text = min;
+                    bMin.Image = min;
                     isMin = false;
                     isMinNotMove = false;
                 }
                 Dock = DockStyle.Fill;
-                bMax.Text = normal;
+                bMax.Image = normal;
             }
             labelTitle.Select();
         }
@@ -373,7 +373,7 @@ namespace WinFormsMDI2
                 if (Dock == DockStyle.Fill)
                 {
                     Dock = DockStyle.None;
-                    bMax.Text = max;
+                    bMax.Image = max;
                 }
 
                 lastTitle = Title;
@@ -391,7 +391,7 @@ namespace WinFormsMDI2
                 MinimumSize = new Size(0, 0);
                 Size = new Size(226, 32);
                 Location = new Point(x, mdiControl.Height - 32);
-                bMin.Text = normal;
+                bMin.Image = normal;
                 isMin = true;
                 isMinNotMove = true;
             }
@@ -407,7 +407,7 @@ namespace WinFormsMDI2
                 Size = lastSize;
                 MinimumSize = lastMinSize;
                 Location = lastLocation;
-                bMin.Text = min;
+                bMin.Image = min;
                 isMin = false;
                 isMinNotMove = false;
             }

@@ -75,14 +75,14 @@ namespace WinFormsMDI2
             // bMin
             // 
             this.bMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bMin.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.bMin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bMin.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.bMin.Image = global::WinFormsMDI2.Properties.Resources.Minimisar;
             this.bMin.Location = new System.Drawing.Point(462, 0);
             this.bMin.Name = "bMin";
             this.bMin.Size = new System.Drawing.Size(46, 32);
             this.bMin.TabIndex = 0;
             this.bMin.TabStop = false;
-            this.bMin.Text = "__";
             this.bMin.UseVisualStyleBackColor = true;
             this.bMin.Click += new System.EventHandler(this.bMin_Click);
             this.bMin.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bMin_MouseDown);
@@ -92,14 +92,14 @@ namespace WinFormsMDI2
             // bMax
             // 
             this.bMax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bMax.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.bMax.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bMax.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.bMax.Image = global::WinFormsMDI2.Properties.Resources.Maximisar;
             this.bMax.Location = new System.Drawing.Point(508, 0);
             this.bMax.Name = "bMax";
             this.bMax.Size = new System.Drawing.Size(46, 32);
             this.bMax.TabIndex = 0;
             this.bMax.TabStop = false;
-            this.bMax.Text = "[//]";
             this.bMax.UseVisualStyleBackColor = true;
             this.bMax.Click += new System.EventHandler(this.bMax_Click);
             this.bMax.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bMax_MouseDown);
@@ -109,14 +109,14 @@ namespace WinFormsMDI2
             // bExit
             // 
             this.bExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bExit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.bExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bExit.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.bExit.Image = global::WinFormsMDI2.Properties.Resources.Fechar;
             this.bExit.Location = new System.Drawing.Point(554, 0);
             this.bExit.Name = "bExit";
             this.bExit.Size = new System.Drawing.Size(46, 32);
             this.bExit.TabIndex = 0;
             this.bExit.TabStop = false;
-            this.bExit.Text = "X";
             this.bExit.UseVisualStyleBackColor = true;
             this.bExit.Click += new System.EventHandler(this.bExit_Click);
             this.bExit.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bExit_MouseDown);
