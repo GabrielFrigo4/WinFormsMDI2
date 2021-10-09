@@ -60,6 +60,7 @@ namespace WinFormsMDI2_Test
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.richTextBox1);
+            this.MinimumSize = new System.Drawing.Size(300, 200);
             this.Name = "FormForMDI";
             this.Text = "FormFotMDI";
             this.ResumeLayout(false);
