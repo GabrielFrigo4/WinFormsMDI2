@@ -29,7 +29,7 @@ namespace WinFormsMDI2_Test
         /// </summary>
         private void InitializeComponent()
         {
-            this.mdiControl = new WinFormsMDI2.MdiControI();
+            this.mdiControl = new WinFormsMDI2.MdiControl();
             this.createMDI = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -72,7 +72,7 @@ namespace WinFormsMDI2_Test
 
         #endregion
 
-        private WinFormsMDI2.MdiControI mdiControl;
+        private WinFormsMDI2.MdiControl mdiControl;
         private System.Windows.Forms.Button createMDI;
     }
 }

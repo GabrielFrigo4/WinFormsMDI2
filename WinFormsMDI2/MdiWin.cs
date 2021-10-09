@@ -8,7 +8,7 @@ namespace WinFormsMDI2
 {
     public partial class MdiWin : UserControl
     {
-        public MdiControI mdiControl;
+        public MdiControl mdiControl;
         public bool isMinNotMove = false;
 
         const string max = "[//]", min = "__", normal = @"[\\]", exit = "X";
