@@ -10,7 +10,8 @@ namespace WinFormsMDI2
     public partial class MdiWin : UserControl
     {
         public MdiControl mdiControl;
-        public bool isMinNotMove = false;
+        internal bool isMinNotMove = false, notMove = true;
+        internal int minInd;
 
         Image max = Properties.Resources.Maximisar, min = Properties.Resources.Minimisar, normal = Properties.Resources.Normalisar;
         bool isMove = false, isMin = false, isResize = false;
@@ -102,6 +103,10 @@ namespace WinFormsMDI2
             if (isMove)
             {
                 Location = new Point(MousePosition.X - mx, MousePosition.Y - my);
+                if (notMove)
+                {
+                    notMove = false;
+                }  
             }
         }
 
@@ -512,23 +517,43 @@ namespace WinFormsMDI2
             if (!isMin)
             {
                 int x = 0;
+                minInd = 1;
 
                 MdiWin[] wins = new MdiWin[] { };
                 wins = mdiControl.mdiWins.ToArray();
 
                 Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
-                    return mw1.Location.X.CompareTo(mw2.Location.X);
+                    if(mw1.Location.Y == mw2.Location.Y)
+                        return mw1.Location.X.CompareTo(mw2.Location.X);
+                    else
+                        return -mw1.Location.Y.CompareTo(mw2.Location.Y);
                 });
 
                 foreach (Control cont in wins)
                 {
-                    if(cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32)
+                    if(x + 226 <= mdiControl.Width)
                     {
-                        x += 226;
+                        if (cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32 * minInd)
+                        {
+                            x += 226;
+                        }
+                        if (cont.Location.X > x)
+                        {
+                            break;
+                        }
                     }
-                    if(cont.Location.X > x)
+                    else
                     {
-                        break;
+                        x = 0;
+                        minInd++;
+                        if (cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32 * minInd)
+                        {
+                            x += 226;
+                        }
+                        if (cont.Location.X > x)
+                        {
+                            break;
+                        }
                     }
                 }
 
@@ -552,10 +577,15 @@ namespace WinFormsMDI2
 
                 Title = Title.Substring(0,3)+"...";
                 MinimumSize = new Size(0, 0);
-                Bounds = new Rectangle(x, mdiControl.Height - 32, 226, 32);
+                Bounds = new Rectangle(x, mdiControl.Height - 32* minInd, 226, 32);
                 bMin.Image = normal;
                 isMin = true;
                 isMinNotMove = true;
+
+                if (notMove)
+                {
+                    notMove = false;
+                }
             }
             else
             {

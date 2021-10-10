@@ -27,8 +27,10 @@ namespace WinFormsMDI2
             Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
                 if (mw1.Location.X - mw1.Location.Y == mw2.Location.X - mw2.Location.Y)
                     return mw1.Location.X.CompareTo(mw2.Location.X);
-                else
+                else if (mw1.notMove && mw2.notMove)
                     return (mw1.Location.X - mw1.Location.Y).CompareTo(mw2.Location.X - mw2.Location.Y);
+                else
+                    return -Convert.ToInt32(mw1.notMove).CompareTo(Convert.ToInt32(mw2.notMove));
             });
 
             int cil = 0;
@@ -183,7 +185,7 @@ namespace WinFormsMDI2
             {
                 if (win.isMinNotMove)
                 {
-                    win.Location = new Point(win.Location.X, Height - 32);
+                    win.Location = new Point(win.Location.X, Height - 32 * win.minInd);
                 }
             }
         }
