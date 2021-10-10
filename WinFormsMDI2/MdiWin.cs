@@ -35,7 +35,6 @@ namespace WinFormsMDI2
             pictureBoxIco.MouseMove += panelMain_MouseMove;
             pictureBoxIco.DoubleClick += panelMain_DoubleClick;
             pictureBoxIco.Select();
-            lastTitle = Title;
         }
 
         private void MdiWin_MouseDown()
