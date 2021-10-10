@@ -18,6 +18,7 @@ namespace WinFormsMDI2_Test
             mdiControl.CreateMdiWin();
             mdiControl.CreateMdiWin();
             mdiControl.CreateMdiWinWithForm(new FormForMDI());
+            mdiControl.CreateMdiWinWithForm<MdiStyle>(new FormForMDI());
         }
 
         private void createMDI_Click(object sender, EventArgs e)

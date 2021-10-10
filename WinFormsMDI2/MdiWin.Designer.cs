@@ -30,10 +30,10 @@ namespace WinFormsMDI2
         private void InitializeComponent()
         {
             this.panelMain = new System.Windows.Forms.Panel();
-            this.pictureBoxIco = new System.Windows.Forms.PictureBox();
             this.bMin = new System.Windows.Forms.Button();
             this.bMax = new System.Windows.Forms.Button();
             this.bExit = new System.Windows.Forms.Button();
+            this.pictureBoxIco = new System.Windows.Forms.PictureBox();
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelLeftTop = new System.Windows.Forms.Panel();
             this.panelFloor = new System.Windows.Forms.Panel();
@@ -67,18 +67,10 @@ namespace WinFormsMDI2
             this.panelMain.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelMain_MouseMove);
             this.panelMain.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelMain_MouseUp);
             // 
-            // pictureBoxIco
-            // 
-            this.pictureBoxIco.Image = global::WinFormsMDI2.Properties.Resources.Arquivo;
-            this.pictureBoxIco.Location = new System.Drawing.Point(4, 4);
-            this.pictureBoxIco.Name = "pictureBoxIco";
-            this.pictureBoxIco.Size = new System.Drawing.Size(24, 24);
-            this.pictureBoxIco.TabIndex = 1;
-            this.pictureBoxIco.TabStop = false;
-            // 
             // bMin
             // 
             this.bMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bMin.BackColor = System.Drawing.Color.White;
             this.bMin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bMin.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.bMin.Image = global::WinFormsMDI2.Properties.Resources.Minimisar;
@@ -87,7 +79,7 @@ namespace WinFormsMDI2
             this.bMin.Size = new System.Drawing.Size(46, 32);
             this.bMin.TabIndex = 0;
             this.bMin.TabStop = false;
-            this.bMin.UseVisualStyleBackColor = true;
+            this.bMin.UseVisualStyleBackColor = false;
             this.bMin.Click += new System.EventHandler(this.bMin_Click);
             this.bMin.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bMin_MouseDown);
             this.bMin.MouseEnter += new System.EventHandler(this.bMin_MouseEnter);
@@ -96,6 +88,7 @@ namespace WinFormsMDI2
             // bMax
             // 
             this.bMax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bMax.BackColor = System.Drawing.Color.White;
             this.bMax.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bMax.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.bMax.Image = global::WinFormsMDI2.Properties.Resources.Maximisar;
@@ -104,7 +97,7 @@ namespace WinFormsMDI2
             this.bMax.Size = new System.Drawing.Size(46, 32);
             this.bMax.TabIndex = 0;
             this.bMax.TabStop = false;
-            this.bMax.UseVisualStyleBackColor = true;
+            this.bMax.UseVisualStyleBackColor = false;
             this.bMax.Click += new System.EventHandler(this.bMax_Click);
             this.bMax.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bMax_MouseDown);
             this.bMax.MouseEnter += new System.EventHandler(this.bMax_MouseEnter);
@@ -113,6 +106,7 @@ namespace WinFormsMDI2
             // bExit
             // 
             this.bExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bExit.BackColor = System.Drawing.Color.White;
             this.bExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bExit.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.bExit.Image = global::WinFormsMDI2.Properties.Resources.Fechar;
@@ -121,11 +115,20 @@ namespace WinFormsMDI2
             this.bExit.Size = new System.Drawing.Size(46, 32);
             this.bExit.TabIndex = 0;
             this.bExit.TabStop = false;
-            this.bExit.UseVisualStyleBackColor = true;
+            this.bExit.UseVisualStyleBackColor = false;
             this.bExit.Click += new System.EventHandler(this.bExit_Click);
             this.bExit.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bExit_MouseDown);
             this.bExit.MouseEnter += new System.EventHandler(this.bExit_MouseEnter);
             this.bExit.MouseLeave += new System.EventHandler(this.bExit_MouseLeave);
+            // 
+            // pictureBoxIco
+            // 
+            this.pictureBoxIco.Image = global::WinFormsMDI2.Properties.Resources.Arquivo;
+            this.pictureBoxIco.Location = new System.Drawing.Point(4, 4);
+            this.pictureBoxIco.Name = "pictureBoxIco";
+            this.pictureBoxIco.Size = new System.Drawing.Size(24, 24);
+            this.pictureBoxIco.TabIndex = 1;
+            this.pictureBoxIco.TabStop = false;
             // 
             // labelTitle
             // 

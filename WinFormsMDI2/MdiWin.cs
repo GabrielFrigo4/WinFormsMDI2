@@ -22,7 +22,7 @@ namespace WinFormsMDI2
 
         public MdiWin()
         {
-            BackColor = Color.FromArgb(240,240,240);
+            BackColor = Color.FromArgb(240, 240, 240);
             InitializeComponent();
             //labelTitle
             labelTitle.MouseDown += panelMain_MouseDown;
@@ -78,6 +78,14 @@ namespace WinFormsMDI2
 
         [Description("Is MdiWin Ico")]
         public Image Ico { get { return pictureBoxIco.Image; } set { pictureBoxIco.Image = value; } }
+
+        [DefaultValue(typeof(Color), "White")]
+        [Description("Is MdiWin Title")]
+        public Color BorderColor { get { return panelTop.BackColor; } set { panelTop.BackColor = panelFloor.BackColor = panelLeft.BackColor = panelRight.BackColor = panelLeftTop.BackColor = panelRightTop.BackColor = panelLeftFloor.BackColor = panelRightFloor.BackColor = value; } }
+
+        [DefaultValue(typeof(Color), "White")]
+        [Description("Is MdiWin Title")]
+        public Color ControlBarColor { get { return panelMain.BackColor; } set { panelMain.BackColor = value; } }
         #endregion
 
         #region panelMain

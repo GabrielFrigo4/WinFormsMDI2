@@ -57,6 +57,8 @@ namespace WinFormsMDI2_Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BorderColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.ControlBarColor = System.Drawing.SystemColors.ActiveBorder;
             this.Controls.Add(this.button1);
             this.Controls.Add(this.richTextBox1);
             this.Ico = global::WinFormsMDI2_Test.Properties.Resources.Text;
