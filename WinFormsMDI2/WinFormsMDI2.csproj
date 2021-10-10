@@ -8,12 +8,16 @@
     <RepositoryType>github</RepositoryType>
     <PackageTags>#form #mdi #WinFormsMDI #.netcore #.net5</PackageTags>
     <Copyright>MIT</Copyright>
-    <PackageIcon></PackageIcon>
+    <PackageIcon>WinFormsMDI2.png</PackageIcon>
     <PackageIconUrl />
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\Arquivo.png" />
+    <None Include="..\..\..\..\..\..\OneDrive\Imagens\Saved Pictures\Ico\WinFormsMDI2.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -29,10 +33,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>
