@@ -63,9 +63,9 @@ namespace WinFormsMDI2.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Arquivo {
+        internal static System.Drawing.Bitmap Close {
             get {
-                object obj = ResourceManager.GetObject("Arquivo", resourceCulture);
+                object obj = ResourceManager.GetObject("Close", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace WinFormsMDI2.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Fechar {
+        internal static System.Drawing.Bitmap File {
             get {
-                object obj = ResourceManager.GetObject("Fechar", resourceCulture);
+                object obj = ResourceManager.GetObject("File", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace WinFormsMDI2.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Maximisar {
+        internal static System.Drawing.Bitmap Maximize {
             get {
-                object obj = ResourceManager.GetObject("Maximisar", resourceCulture);
+                object obj = ResourceManager.GetObject("Maximize", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace WinFormsMDI2.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Minimisar {
+        internal static System.Drawing.Bitmap Minimize {
             get {
-                object obj = ResourceManager.GetObject("Minimisar", resourceCulture);
+                object obj = ResourceManager.GetObject("Minimize", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace WinFormsMDI2.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Normalisar {
+        internal static System.Drawing.Bitmap Normalize {
             get {
-                object obj = ResourceManager.GetObject("Normalisar", resourceCulture);
+                object obj = ResourceManager.GetObject("Normalize", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,7 +1,7 @@
 ﻿
 namespace WinFormsMDI2_Test
 {
-    partial class MdiStyle
+    partial class MdiDarkStyle
     {
         /// <summary> 
         /// Variável de designer necessária.
@@ -35,8 +35,14 @@ namespace WinFormsMDI2_Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BorderColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ControlBarColor = System.Drawing.SystemColors.ControlDark;
+            this.BackColor = System.Drawing.Color.DarkGray;
+            this.BorderColor = System.Drawing.Color.DimGray;
+            this.CloseLeaveColor = System.Drawing.Color.Gray;
+            this.ControlBarColor = System.Drawing.Color.Gray;
+            this.MaximizeDownColor = System.Drawing.Color.White;
+            this.MaximizeLeaveColor = System.Drawing.Color.Gray;
+            this.MinimizeDownColor = System.Drawing.Color.White;
+            this.MinimizeLeaveColor = System.Drawing.Color.Gray;
             this.Name = "MdiStyle";
             this.ResumeLayout(false);
 

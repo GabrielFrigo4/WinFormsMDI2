@@ -13,7 +13,12 @@ namespace WinFormsMDI2
         internal bool isMinNotMove = false, notMove = true;
         internal int minInd;
 
-        Image max = Properties.Resources.Maximisar, min = Properties.Resources.Minimisar, normal = Properties.Resources.Normalisar;
+        private Image max = Properties.Resources.Maximize, min = Properties.Resources.Minimize, normal = Properties.Resources.Normalize, close = Properties.Resources.Close;
+        private Color minEnterColor = Color.LightGray, minDownColor = Color.Gray, minLeaveColor;
+        private Color maxEnterColor = Color.LightGray, maxDownColor = Color.Gray, maxLeaveColor;
+        private Color closeEnterColor = Color.FromArgb(255, 90, 90), closeDownColor = Color.FromArgb(255, 20, 20), closeLeaveColor;
+        private Color borderColor;
+
         bool isMove = false, isMin = false, isResize = false;
         int mx, my, rx, ry;
         Point lastLocation, minPos;
@@ -79,9 +84,51 @@ namespace WinFormsMDI2
         [Description("Is MdiWin Ico")]
         public Image Ico { get { return pictureBoxIco.Image; } set { pictureBoxIco.Image = value; } }
 
+        [Description("Is Close Image")]
+        public Image CloseImage { get { return close; } set { close = bClose.Image = value; } }
+
+        [Description("Is Normalize Image")]
+        public Image NormalizeImage { get { return normal; } set { normal = value; } }
+
+        [Description("Is Minimize Image")]
+        public Image MinimizeImage { get { return min; } set { min = bMin.Image = value; } }
+
+        [Description("Is Maximize Image")]
+        public Image MaximizeImage { get { return max; } set { max = bMax.Image = value; } }
+
+        [Description("Is Minimize Enter Color")]
+        public Color MinimizeEnterColor { get { return minEnterColor; } set { minEnterColor = value; } }
+
+        [Description("Is Minimize Down Color")]
+        public Color MinimizeDownColor { get { return minDownColor; } set { minDownColor = value; } }
+
         [DefaultValue(typeof(Color), "White")]
+        [Description("Is Minimize Leave Color")]
+        public Color MinimizeLeaveColor { get { return minLeaveColor; } set { minLeaveColor = value; } }
+
+        [Description("Is Maximize Enter Color")]
+        public Color MaximizeEnterColor { get { return maxEnterColor; } set { maxEnterColor = value; } }
+
+        [Description("Is Maximize Down Color")]
+        public Color MaximizeDownColor { get { return maxDownColor; } set { maxDownColor = value; } }
+
+        [DefaultValue(typeof(Color), "White")]
+        [Description("Is Maximize Leave Color")]
+        public Color MaximizeLeaveColor { get { return maxLeaveColor; } set { maxLeaveColor = value; } }
+
+        [Description("Is Close Enter Color")]
+        public Color CloseEnterColor { get { return closeEnterColor; } set { closeEnterColor = value; } }
+
+        [Description("Is Close Down Color")]
+        public Color CloseDownColor { get { return closeDownColor; } set { closeDownColor = value; } }
+
+        [DefaultValue(typeof(Color), "White")]
+        [Description("Is Close Leave Color")]
+        public Color CloseLeaveColor { get { return closeLeaveColor; } set { closeLeaveColor = value; } }
+
+        [DefaultValue(typeof(Color), "LightGray")]
         [Description("Is MdiWin Title")]
-        public Color BorderColor { get { return panelTop.BackColor; } set { panelTop.BackColor = panelFloor.BackColor = panelLeft.BackColor = panelRight.BackColor = panelLeftTop.BackColor = panelRightTop.BackColor = panelLeftFloor.BackColor = panelRightFloor.BackColor = value; } }
+        public Color BorderColor { get { return borderColor; } set { borderColor = panelTop.BackColor = panelFloor.BackColor = panelLeft.BackColor = panelRight.BackColor = panelLeftTop.BackColor = panelRightTop.BackColor = panelLeftFloor.BackColor = panelRightFloor.BackColor = value; } }
 
         [DefaultValue(typeof(Color), "White")]
         [Description("Is MdiWin Title")]
@@ -470,11 +517,98 @@ namespace WinFormsMDI2
         #endregion
 
         #region buttons
-        private void bExit_Click(object sender, EventArgs e)
+        private void bMin_Click(object sender, EventArgs e)
         {
-            mdiControl.Controls.Remove(this);
-            mdiControl.mdiWins.Remove(this);
-            Dispose();
+            if (!isMin)
+            {
+                int x = 0;
+                minInd = 1;
+
+                MdiWin[] wins = new MdiWin[] { };
+                wins = mdiControl.mdiWins.ToArray();
+
+                Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
+                    if (mw1.Location.Y == mw2.Location.Y)
+                        return mw1.Location.X.CompareTo(mw2.Location.X);
+                    else
+                        return -mw1.Location.Y.CompareTo(mw2.Location.Y);
+                });
+
+                foreach (Control cont in wins)
+                {
+                    if (x + 226 <= mdiControl.Width)
+                    {
+                        if (cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32 * minInd)
+                        {
+                            x += 226;
+                        }
+                        if (cont.Location.X > x)
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        x = 0;
+                        minInd++;
+                        if (cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32 * minInd)
+                        {
+                            x += 226;
+                        }
+                        if (cont.Location.X > x)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                if (Dock == DockStyle.Fill)
+                {
+                    Dock = DockStyle.None;
+                    bMax.Image = max;
+                }
+
+                lastTitle = Title;
+                lastSize = Size;
+                lastMinSize = MinimumSize;
+                lastLocation = Location;
+
+                panelTop.Visible = false;
+                panelFloor.Visible = false;
+                panelLeft.Visible = false;
+                panelLeftFloor.Visible = false;
+                panelRight.Visible = false;
+                panelRightFloor.Visible = false;
+
+                Title = Title.Substring(0, 3) + "...";
+                MinimumSize = new Size(0, 0);
+                Bounds = new Rectangle(x, mdiControl.Height - 32 * minInd, 226, 32);
+                bMin.Image = normal;
+                isMin = true;
+                isMinNotMove = true;
+
+                if (notMove)
+                {
+                    notMove = false;
+                }
+            }
+            else
+            {
+                panelTop.Visible = true;
+                panelFloor.Visible = true;
+                panelLeft.Visible = true;
+                panelLeftFloor.Visible = true;
+                panelRight.Visible = true;
+                panelRightFloor.Visible = true;
+
+                Title = lastTitle;
+                MinimumSize = lastMinSize;
+                Bounds = new Rectangle(lastLocation, lastSize);
+                bMin.Image = min;
+                isMin = false;
+                isMinNotMove = false;
+            }
+
             labelTitle.Select();
         }
 
@@ -519,148 +653,61 @@ namespace WinFormsMDI2
             labelTitle.Select();
         }
 
-        private void bMin_Click(object sender, EventArgs e)
+        private void bClose_Click(object sender, EventArgs e)
         {
-            if (!isMin)
-            {
-                int x = 0;
-                minInd = 1;
-
-                MdiWin[] wins = new MdiWin[] { };
-                wins = mdiControl.mdiWins.ToArray();
-
-                Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
-                    if(mw1.Location.Y == mw2.Location.Y)
-                        return mw1.Location.X.CompareTo(mw2.Location.X);
-                    else
-                        return -mw1.Location.Y.CompareTo(mw2.Location.Y);
-                });
-
-                foreach (Control cont in wins)
-                {
-                    if(x + 226 <= mdiControl.Width)
-                    {
-                        if (cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32 * minInd)
-                        {
-                            x += 226;
-                        }
-                        if (cont.Location.X > x)
-                        {
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        x = 0;
-                        minInd++;
-                        if (cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32 * minInd)
-                        {
-                            x += 226;
-                        }
-                        if (cont.Location.X > x)
-                        {
-                            break;
-                        }
-                    }
-                }
-
-                if (Dock == DockStyle.Fill)
-                {
-                    Dock = DockStyle.None;
-                    bMax.Image = max;
-                }
-
-                lastTitle = Title;
-                lastSize = Size;
-                lastMinSize = MinimumSize;
-                lastLocation = Location;
-
-                panelTop.Visible = false;
-                panelFloor.Visible = false;
-                panelLeft.Visible = false;
-                panelLeftFloor.Visible = false;
-                panelRight.Visible = false;
-                panelRightFloor.Visible = false;
-
-                Title = Title.Substring(0,3)+"...";
-                MinimumSize = new Size(0, 0);
-                Bounds = new Rectangle(x, mdiControl.Height - 32* minInd, 226, 32);
-                bMin.Image = normal;
-                isMin = true;
-                isMinNotMove = true;
-
-                if (notMove)
-                {
-                    notMove = false;
-                }
-            }
-            else
-            {
-                panelTop.Visible = true;
-                panelFloor.Visible = true;
-                panelLeft.Visible = true;
-                panelLeftFloor.Visible = true;
-                panelRight.Visible = true;
-                panelRightFloor.Visible = true;
-
-                Title = lastTitle;
-                MinimumSize = lastMinSize;
-                Bounds = new Rectangle(lastLocation, lastSize);
-                bMin.Image = min;
-                isMin = false;
-                isMinNotMove = false;
-            }
-            
+            mdiControl.Controls.Remove(this);
+            mdiControl.mdiWins.Remove(this);
+            Dispose();
             labelTitle.Select();
-        }
-
-        private void bExit_MouseLeave(object sender, EventArgs e)
-        {
-            labelTitle.Select();
-            bExit.BackColor = Color.White;
-        }
-
-        private void bMax_MouseLeave(object sender, EventArgs e)
-        {
-            labelTitle.Select();
-            bMax.BackColor = Color.White;
-
         }
 
         private void bMin_MouseLeave(object sender, EventArgs e)
         {
             labelTitle.Select();
-            bMin.BackColor = Color.White;
+            bMin.BackColor = minLeaveColor;
+        }
+
+        private void bMax_MouseLeave(object sender, EventArgs e)
+        {
+            labelTitle.Select();
+            bMax.BackColor = maxLeaveColor;
+
+        }
+
+        private void bClose_MouseLeave(object sender, EventArgs e)
+        {
+            labelTitle.Select();
+            bClose.BackColor = closeLeaveColor;
         }
 
         private void bMin_MouseEnter(object sender, EventArgs e)
         {
-            bMin.BackColor = Color.LightGray;
+            bMin.BackColor = minEnterColor;
         }
 
         private void bMax_MouseEnter(object sender, EventArgs e)
         {
-            bMax.BackColor = Color.LightGray;
+            bMax.BackColor = maxEnterColor;
         }
 
-        private void bExit_MouseEnter(object sender, EventArgs e)
+        private void bClose_MouseEnter(object sender, EventArgs e)
         {
-            bExit.BackColor = Color.FromArgb(255,90,90);
+            bClose.BackColor = closeEnterColor;
         }
 
         private void bMin_MouseDown(object sender, MouseEventArgs e)
         {
-            bMin.BackColor = Color.Gray;
+            bMin.BackColor = minDownColor;
         }
 
         private void bMax_MouseDown(object sender, MouseEventArgs e)
         {
-            bMax.BackColor = Color.Gray;
+            bMax.BackColor = maxDownColor;
         }
 
-        private void bExit_MouseDown(object sender, MouseEventArgs e)
+        private void bClose_MouseDown(object sender, MouseEventArgs e)
         {
-            bExit.BackColor = Color.FromArgb(255, 20, 20);
+            bClose.BackColor = closeDownColor;
         }
         #endregion
     }

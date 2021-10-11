@@ -15,56 +15,6 @@ namespace WinFormsMDI2
             InitializeComponent();
         }
 
-        public MdiWinType CreateMdiWin<MdiWinType>()
-        {
-            int x = 0, y = 0;
-            var win = Activator.CreateInstance(typeof(MdiWinType)) as MdiWin;
-            win.mdiControl = this;
-
-            MdiWin[] wins = new MdiWin[] { };
-            wins = mdiWins.ToArray();
-
-            Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
-                if (mw1.Location.X - mw1.Location.Y == mw2.Location.X - mw2.Location.Y)
-                    return mw1.Location.X.CompareTo(mw2.Location.X);
-                else if (mw1.notMove && mw2.notMove)
-                    return (mw1.Location.X - mw1.Location.Y).CompareTo(mw2.Location.X - mw2.Location.Y);
-                else
-                    return -Convert.ToInt32(mw1.notMove).CompareTo(Convert.ToInt32(mw2.notMove));
-            });
-
-            int cil = 0;
-            foreach (Control cont in wins)
-            {
-                if (y + win.Height > Height)
-                {
-                    cil++;
-                    x = 48 * cil;
-                    y = 0;
-                }
-                else
-                {
-                    if (cont.Location.X == x && cont.Location.Y == y)
-                    {
-                        x += 48;
-                        y += 48;
-                    }
-                    if (cont.Location.X > x || cont.Location.Y > y)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            win.Location = new Point(x, y);
-
-            Controls.Add(win);
-            mdiWins.Add(win);
-
-            FocusMdiWin(win);
-            return (MdiWinType)(object)win;
-        }
-
         public MdiWin CreateMdiWin()
         {
             int x = 0, y = 0;
@@ -111,6 +61,62 @@ namespace WinFormsMDI2
 
             FocusMdiWin(win);
             return win;
+        }
+
+        public MdiWin CreateMdiWin(Type mdiWinType)
+        {
+            int x = 0, y = 0;
+            var win = Activator.CreateInstance(mdiWinType) as MdiWin;
+            win.mdiControl = this;
+
+            MdiWin[] wins = new MdiWin[] { };
+            wins = mdiWins.ToArray();
+
+            Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
+                if (mw1.Location.X - mw1.Location.Y == mw2.Location.X - mw2.Location.Y)
+                    return mw1.Location.X.CompareTo(mw2.Location.X);
+                else if (mw1.notMove && mw2.notMove)
+                    return (mw1.Location.X - mw1.Location.Y).CompareTo(mw2.Location.X - mw2.Location.Y);
+                else
+                    return -Convert.ToInt32(mw1.notMove).CompareTo(Convert.ToInt32(mw2.notMove));
+            });
+
+            int cil = 0;
+            foreach (Control cont in wins)
+            {
+                if (y + win.Height > Height)
+                {
+                    cil++;
+                    x = 48 * cil;
+                    y = 0;
+                }
+                else
+                {
+                    if (cont.Location.X == x && cont.Location.Y == y)
+                    {
+                        x += 48;
+                        y += 48;
+                    }
+                    if (cont.Location.X > x || cont.Location.Y > y)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            win.Location = new Point(x, y);
+
+            Controls.Add(win);
+            mdiWins.Add(win);
+
+            FocusMdiWin(win);
+            return win;
+        }
+
+        public MdiWinType CreateMdiWin<MdiWinType>()
+        {
+            var win = CreateMdiWin(typeof(MdiWinType));
+            return (MdiWinType)(object)win;
         }
 
         public MdiWin CreateMdiWinWithForm(Form form, bool useFormIcon = true, bool useFormText= true)
@@ -174,14 +180,14 @@ namespace WinFormsMDI2
             return win;
         }
 
-        public MdiWinStyle CreateMdiWinWithForm<MdiWinStyle>(Form form, bool useFormIcon = true, bool useFormText = true)
+        public MdiWin CreateMdiWinWithForm(Type mdiWinStyle, Form form, bool useFormIcon = true, bool useFormText = true)
         {
             form.FormBorderStyle = FormBorderStyle.None;
             form.TopLevel = false;
 
             int x = 0, y = 0;
 
-            var win = Activator.CreateInstance(typeof(MdiWinStyle)) as MdiWin;
+            var win = Activator.CreateInstance(mdiWinStyle) as MdiWin;
             if (useFormIcon)
                 win.Ico = form.Icon.ToBitmap();
             if (useFormText)
@@ -232,6 +238,12 @@ namespace WinFormsMDI2
             mdiWins.Add(win);
 
             FocusMdiWin(win);
+            return win;
+        }
+
+        public MdiWinStyle CreateMdiWinWithForm<MdiWinStyle>(Form form, bool useFormIcon = true, bool useFormText = true)
+        {
+            var win = CreateMdiWinWithForm(typeof(MdiWinStyle), form, useFormIcon, useFormText);
             return (MdiWinStyle)(object)win;
         }
 

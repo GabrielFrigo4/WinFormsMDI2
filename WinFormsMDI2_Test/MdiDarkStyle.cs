@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace WinFormsMDI2_Test
 {
-    public partial class MdiStyle : WinFormsMDI2.MdiWin
+    public partial class MdiDarkStyle : WinFormsMDI2.MdiWin
     {
-        public MdiStyle()
+        public MdiDarkStyle()
         {
             InitializeComponent();
         }

@@ -30,9 +30,9 @@ namespace WinFormsMDI2
         private void InitializeComponent()
         {
             this.panelMain = new System.Windows.Forms.Panel();
-            this.bMin = new System.Windows.Forms.Button();
-            this.bMax = new System.Windows.Forms.Button();
-            this.bExit = new System.Windows.Forms.Button();
+            this.bMin = new System.Windows.Forms.PictureBox();
+            this.bMax = new System.Windows.Forms.PictureBox();
+            this.bClose = new System.Windows.Forms.PictureBox();
             this.pictureBoxIco = new System.Windows.Forms.PictureBox();
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelLeftTop = new System.Windows.Forms.Panel();
@@ -44,6 +44,9 @@ namespace WinFormsMDI2
             this.panelRightTop = new System.Windows.Forms.Panel();
             this.panelTop = new System.Windows.Forms.Panel();
             this.panelMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bClose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIco)).BeginInit();
             this.panelFloor.SuspendLayout();
             this.panelTop.SuspendLayout();
@@ -54,7 +57,7 @@ namespace WinFormsMDI2
             this.panelMain.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panelMain.Controls.Add(this.bMin);
             this.panelMain.Controls.Add(this.bMax);
-            this.panelMain.Controls.Add(this.bExit);
+            this.panelMain.Controls.Add(this.bClose);
             this.panelMain.Controls.Add(this.pictureBoxIco);
             this.panelMain.Controls.Add(this.labelTitle);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Top;
@@ -70,16 +73,13 @@ namespace WinFormsMDI2
             // bMin
             // 
             this.bMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bMin.BackColor = System.Drawing.Color.White;
-            this.bMin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bMin.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.bMin.Image = global::WinFormsMDI2.Properties.Resources.Minimisar;
+            this.bMin.Image = global::WinFormsMDI2.Properties.Resources.Minimize;
             this.bMin.Location = new System.Drawing.Point(452, 0);
             this.bMin.Name = "bMin";
             this.bMin.Size = new System.Drawing.Size(46, 32);
             this.bMin.TabIndex = 0;
             this.bMin.TabStop = false;
-            this.bMin.UseVisualStyleBackColor = false;
             this.bMin.Click += new System.EventHandler(this.bMin_Click);
             this.bMin.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bMin_MouseDown);
             this.bMin.MouseEnter += new System.EventHandler(this.bMin_MouseEnter);
@@ -88,42 +88,36 @@ namespace WinFormsMDI2
             // bMax
             // 
             this.bMax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bMax.BackColor = System.Drawing.Color.White;
-            this.bMax.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bMax.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.bMax.Image = global::WinFormsMDI2.Properties.Resources.Maximisar;
+            this.bMax.Image = global::WinFormsMDI2.Properties.Resources.Maximize;
             this.bMax.Location = new System.Drawing.Point(498, 0);
             this.bMax.Name = "bMax";
             this.bMax.Size = new System.Drawing.Size(46, 32);
             this.bMax.TabIndex = 0;
             this.bMax.TabStop = false;
-            this.bMax.UseVisualStyleBackColor = false;
             this.bMax.Click += new System.EventHandler(this.bMax_Click);
             this.bMax.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bMax_MouseDown);
             this.bMax.MouseEnter += new System.EventHandler(this.bMax_MouseEnter);
             this.bMax.MouseLeave += new System.EventHandler(this.bMax_MouseLeave);
             // 
-            // bExit
+            // bClose
             // 
-            this.bExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bExit.BackColor = System.Drawing.Color.White;
-            this.bExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bExit.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.bExit.Image = global::WinFormsMDI2.Properties.Resources.Fechar;
-            this.bExit.Location = new System.Drawing.Point(544, 0);
-            this.bExit.Name = "bExit";
-            this.bExit.Size = new System.Drawing.Size(46, 32);
-            this.bExit.TabIndex = 0;
-            this.bExit.TabStop = false;
-            this.bExit.UseVisualStyleBackColor = false;
-            this.bExit.Click += new System.EventHandler(this.bExit_Click);
-            this.bExit.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bExit_MouseDown);
-            this.bExit.MouseEnter += new System.EventHandler(this.bExit_MouseEnter);
-            this.bExit.MouseLeave += new System.EventHandler(this.bExit_MouseLeave);
+            this.bClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bClose.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.bClose.Image = global::WinFormsMDI2.Properties.Resources.Close;
+            this.bClose.Location = new System.Drawing.Point(544, 0);
+            this.bClose.Name = "bClose";
+            this.bClose.Size = new System.Drawing.Size(46, 32);
+            this.bClose.TabIndex = 0;
+            this.bClose.TabStop = false;
+            this.bClose.Click += new System.EventHandler(this.bClose_Click);
+            this.bClose.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bClose_MouseDown);
+            this.bClose.MouseEnter += new System.EventHandler(this.bClose_MouseEnter);
+            this.bClose.MouseLeave += new System.EventHandler(this.bClose_MouseLeave);
             // 
             // pictureBoxIco
             // 
-            this.pictureBoxIco.Image = global::WinFormsMDI2.Properties.Resources.Arquivo;
+            this.pictureBoxIco.Image = global::WinFormsMDI2.Properties.Resources.File;
             this.pictureBoxIco.Location = new System.Drawing.Point(4, 4);
             this.pictureBoxIco.Name = "pictureBoxIco";
             this.pictureBoxIco.Size = new System.Drawing.Size(24, 24);
@@ -154,7 +148,7 @@ namespace WinFormsMDI2
             // 
             // panelFloor
             // 
-            this.panelFloor.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panelFloor.BackColor = System.Drawing.Color.LightGray;
             this.panelFloor.Controls.Add(this.panelLeftFloor);
             this.panelFloor.Controls.Add(this.panelRightFloor);
             this.panelFloor.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -196,7 +190,7 @@ namespace WinFormsMDI2
             // 
             // panelLeft
             // 
-            this.panelLeft.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panelLeft.BackColor = System.Drawing.Color.LightGray;
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 5);
             this.panelLeft.Name = "panelLeft";
@@ -210,7 +204,7 @@ namespace WinFormsMDI2
             // 
             // panelRight
             // 
-            this.panelRight.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panelRight.BackColor = System.Drawing.Color.LightGray;
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelRight.Location = new System.Drawing.Point(595, 5);
             this.panelRight.Name = "panelRight";
@@ -237,7 +231,7 @@ namespace WinFormsMDI2
             // 
             // panelTop
             // 
-            this.panelTop.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panelTop.BackColor = System.Drawing.Color.LightGray;
             this.panelTop.Controls.Add(this.panelLeftTop);
             this.panelTop.Controls.Add(this.panelRightTop);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
@@ -266,6 +260,9 @@ namespace WinFormsMDI2
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MdiWin_MouseDown);
             this.panelMain.ResumeLayout(false);
             this.panelMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bClose)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIco)).EndInit();
             this.panelFloor.ResumeLayout(false);
             this.panelTop.ResumeLayout(false);
@@ -277,9 +274,9 @@ namespace WinFormsMDI2
 
         private System.Windows.Forms.Panel panelMain;
         private System.Windows.Forms.Label labelTitle;
-        private System.Windows.Forms.Button bMin;
-        private System.Windows.Forms.Button bMax;
-        private System.Windows.Forms.Button bExit;
+        private System.Windows.Forms.PictureBox bMin;
+        private System.Windows.Forms.PictureBox bMax;
+        private System.Windows.Forms.PictureBox bClose;
         private System.Windows.Forms.Panel panelTop;
         private System.Windows.Forms.Panel panelFloor;
         private System.Windows.Forms.Panel panelLeft;
