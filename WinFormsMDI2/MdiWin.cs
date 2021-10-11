@@ -39,7 +39,6 @@ namespace WinFormsMDI2
             pictureBoxIco.MouseUp += panelMain_MouseUp;
             pictureBoxIco.MouseMove += panelMain_MouseMove;
             pictureBoxIco.DoubleClick += panelMain_DoubleClick;
-            pictureBoxIco.Select();
         }
 
         private void MdiWin_MouseDown()
@@ -612,8 +611,6 @@ namespace WinFormsMDI2
                 isMin = false;
                 isMinNotMove = false;
             }
-
-            labelTitle.Select();
         }
 
         private void bMax_Click(object sender, EventArgs e)
@@ -654,7 +651,6 @@ namespace WinFormsMDI2
                 Dock = DockStyle.Fill;
                 bMax.Image = normal;
             }
-            labelTitle.Select();
         }
 
         private void bClose_Click(object sender, EventArgs e)
@@ -662,25 +658,20 @@ namespace WinFormsMDI2
             mdiControl.Controls.Remove(this);
             mdiControl.mdiWins.Remove(this);
             Dispose();
-            labelTitle.Select();
         }
 
         private void bMin_MouseLeave(object sender, EventArgs e)
         {
-            labelTitle.Select();
             bMin.BackColor = minLeaveColor;
         }
 
         private void bMax_MouseLeave(object sender, EventArgs e)
         {
-            labelTitle.Select();
             bMax.BackColor = maxLeaveColor;
-
         }
 
         private void bClose_MouseLeave(object sender, EventArgs e)
         {
-            labelTitle.Select();
             bClose.BackColor = closeLeaveColor;
         }
 
