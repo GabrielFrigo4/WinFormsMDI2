@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WinFormsMDI2_Test
+namespace WinFormsMDI2.Themes
 {
-    public partial class MdiDarkStyle : WinFormsMDI2.MdiWin
+    public partial class MdiDarkTheme : MdiWin
     {
-        public MdiDarkStyle()
+        public MdiDarkTheme()
         {
             InitializeComponent();
         }

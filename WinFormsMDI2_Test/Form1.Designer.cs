@@ -41,7 +41,7 @@ namespace WinFormsMDI2_Test
             this.mdiControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.mdiControl.Location = new System.Drawing.Point(12, 46);
             this.mdiControl.Name = "mdiControl";
-            this.mdiControl.Size = new System.Drawing.Size(940, 543);
+            this.mdiControl.Size = new System.Drawing.Size(1158, 695);
             this.mdiControl.TabIndex = 0;
             // 
             // createMDI
@@ -59,7 +59,7 @@ namespace WinFormsMDI2_Test
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(964, 601);
+            this.ClientSize = new System.Drawing.Size(1182, 753);
             this.Controls.Add(this.createMDI);
             this.Controls.Add(this.mdiControl);
             this.DoubleBuffered = true;

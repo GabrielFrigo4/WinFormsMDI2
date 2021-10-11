@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormsMDI2.Themes;
 
 namespace WinFormsMDI2_Test
 {
@@ -16,9 +17,11 @@ namespace WinFormsMDI2_Test
         {
             InitializeComponent();
             mdiControl.CreateMdiWin();
-            mdiControl.CreateMdiWin();
+            mdiControl.CreateMdiWin(typeof(MdiCustom));
+            mdiControl.CreateMdiWin<MdiCustom>();
             mdiControl.CreateMdiWinWithForm(new FormForMDI());
-            mdiControl.CreateMdiWinWithForm<MdiDarkStyle>(new FormForMDI());
+            mdiControl.CreateMdiWinWithForm(typeof(MdiDarkTheme), new FormForMDI());
+            mdiControl.CreateMdiWinWithForm<MdiDarkTheme>(new FormForMDI());
         }
 
         private void createMDI_Click(object sender, EventArgs e)

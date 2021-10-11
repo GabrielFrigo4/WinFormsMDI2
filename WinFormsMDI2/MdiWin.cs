@@ -133,6 +133,10 @@ namespace WinFormsMDI2
         [DefaultValue(typeof(Color), "White")]
         [Description("Is MdiWin Title")]
         public Color ControlBarColor { get { return panelMain.BackColor; } set { panelMain.BackColor = value; } }
+
+        [DefaultValue(typeof(Color), "Black")]
+        [Description("Is MdiWin Title")]
+        public Color TitleColor { get { return labelTitle.ForeColor; } set { labelTitle.ForeColor = value; } }
         #endregion
 
         #region panelMain
