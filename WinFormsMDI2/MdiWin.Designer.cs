@@ -148,7 +148,7 @@ namespace WinFormsMDI2
             // 
             // panelFloor
             // 
-            this.panelFloor.BackColor = System.Drawing.Color.LightGray;
+            this.panelFloor.BackColor = System.Drawing.Color.DarkGray;
             this.panelFloor.Controls.Add(this.panelLeftFloor);
             this.panelFloor.Controls.Add(this.panelRightFloor);
             this.panelFloor.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -190,7 +190,7 @@ namespace WinFormsMDI2
             // 
             // panelLeft
             // 
-            this.panelLeft.BackColor = System.Drawing.Color.LightGray;
+            this.panelLeft.BackColor = System.Drawing.Color.DarkGray;
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 5);
             this.panelLeft.Name = "panelLeft";
@@ -204,7 +204,7 @@ namespace WinFormsMDI2
             // 
             // panelRight
             // 
-            this.panelRight.BackColor = System.Drawing.Color.LightGray;
+            this.panelRight.BackColor = System.Drawing.Color.DarkGray;
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelRight.Location = new System.Drawing.Point(595, 5);
             this.panelRight.Name = "panelRight";
@@ -231,7 +231,7 @@ namespace WinFormsMDI2
             // 
             // panelTop
             // 
-            this.panelTop.BackColor = System.Drawing.Color.LightGray;
+            this.panelTop.BackColor = System.Drawing.Color.DarkGray;
             this.panelTop.Controls.Add(this.panelLeftTop);
             this.panelTop.Controls.Add(this.panelRightTop);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;

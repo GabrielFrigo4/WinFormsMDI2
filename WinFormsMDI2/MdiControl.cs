@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -263,13 +264,28 @@ namespace WinFormsMDI2
             }
         }
 
+        private bool removeScreenFlickering = true;
+
+        #region behaviors
+        [DefaultValue(true)]
+        [Description("Is Remove Screen Flickering")]
+        public bool RemoveScreenFlickering { get { return removeScreenFlickering; } set { removeScreenFlickering = value; } }
+        #endregion
+
         protected override CreateParams CreateParams
         {
             get
             {
-                CreateParams handleparam = base.CreateParams;
-                handleparam.ExStyle |= 0x02000000;
-                return handleparam;
+                if (removeScreenFlickering)
+                {
+                    CreateParams handleparam = base.CreateParams;
+                    handleparam.ExStyle |= 0x02000000;
+                    return handleparam;
+                }
+                else
+                {
+                    return base.CreateParams;
+                }
             }
         }
     }
