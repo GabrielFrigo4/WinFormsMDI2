@@ -539,6 +539,9 @@ namespace WinFormsMDI2
 
                 foreach (Control cont in wins)
                 {
+                    if (cont.Location.X + 226 > mdiControl.Width)
+                        continue;
+
                     if (x + 226 <= mdiControl.Width)
                     {
                         if (cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32 * minInd)

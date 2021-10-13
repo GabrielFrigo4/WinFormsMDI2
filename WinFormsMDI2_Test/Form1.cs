@@ -26,7 +26,7 @@ namespace WinFormsMDI2_Test
 
         private void createMDI_Click(object sender, EventArgs e)
         {
-            mdiControl.CreateMdiWin<MdiCustom>();
+            mdiControl.CreateMdiWinWithForm(new FormForMDI());
         }
 
         protected override CreateParams CreateParams
