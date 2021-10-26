@@ -61,9 +61,9 @@ namespace WinFormsMDI2
             this.panelMain.Controls.Add(this.pictureBoxIco);
             this.panelMain.Controls.Add(this.labelTitle);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelMain.Location = new System.Drawing.Point(5, 5);
+            this.panelMain.Location = new System.Drawing.Point(6, 6);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(590, 32);
+            this.panelMain.Size = new System.Drawing.Size(588, 32);
             this.panelMain.TabIndex = 0;
             this.panelMain.DoubleClick += new System.EventHandler(this.panelMain_DoubleClick);
             this.panelMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelMain_MouseDown);
@@ -75,7 +75,7 @@ namespace WinFormsMDI2
             this.bMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bMin.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.bMin.Image = global::WinFormsMDI2.Properties.Resources.Minimize;
-            this.bMin.Location = new System.Drawing.Point(452, 0);
+            this.bMin.Location = new System.Drawing.Point(450, 0);
             this.bMin.Name = "bMin";
             this.bMin.Size = new System.Drawing.Size(46, 32);
             this.bMin.TabIndex = 0;
@@ -90,7 +90,7 @@ namespace WinFormsMDI2
             this.bMax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bMax.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.bMax.Image = global::WinFormsMDI2.Properties.Resources.Maximize;
-            this.bMax.Location = new System.Drawing.Point(498, 0);
+            this.bMax.Location = new System.Drawing.Point(496, 0);
             this.bMax.Name = "bMax";
             this.bMax.Size = new System.Drawing.Size(46, 32);
             this.bMax.TabIndex = 0;
@@ -105,7 +105,7 @@ namespace WinFormsMDI2
             this.bClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bClose.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.bClose.Image = global::WinFormsMDI2.Properties.Resources.Close;
-            this.bClose.Location = new System.Drawing.Point(544, 0);
+            this.bClose.Location = new System.Drawing.Point(542, 0);
             this.bClose.Name = "bClose";
             this.bClose.Size = new System.Drawing.Size(46, 32);
             this.bClose.TabIndex = 0;
@@ -138,7 +138,7 @@ namespace WinFormsMDI2
             // 
             this.panelLeftTop.Location = new System.Drawing.Point(0, 0);
             this.panelLeftTop.Name = "panelLeftTop";
-            this.panelLeftTop.Size = new System.Drawing.Size(5, 5);
+            this.panelLeftTop.Size = new System.Drawing.Size(6, 6);
             this.panelLeftTop.TabIndex = 2;
             this.panelLeftTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelLeftTop_MouseDown);
             this.panelLeftTop.MouseEnter += new System.EventHandler(this.panelLeftTop_MouseEnter);
@@ -152,9 +152,9 @@ namespace WinFormsMDI2
             this.panelFloor.Controls.Add(this.panelLeftFloor);
             this.panelFloor.Controls.Add(this.panelRightFloor);
             this.panelFloor.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelFloor.Location = new System.Drawing.Point(0, 395);
+            this.panelFloor.Location = new System.Drawing.Point(0, 394);
             this.panelFloor.Name = "panelFloor";
-            this.panelFloor.Size = new System.Drawing.Size(600, 5);
+            this.panelFloor.Size = new System.Drawing.Size(600, 6);
             this.panelFloor.TabIndex = 0;
             this.panelFloor.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelFloor_MouseDown);
             this.panelFloor.MouseEnter += new System.EventHandler(this.panelFloor_MouseEnter);
@@ -167,7 +167,7 @@ namespace WinFormsMDI2
             this.panelLeftFloor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.panelLeftFloor.Location = new System.Drawing.Point(0, 0);
             this.panelLeftFloor.Name = "panelLeftFloor";
-            this.panelLeftFloor.Size = new System.Drawing.Size(5, 5);
+            this.panelLeftFloor.Size = new System.Drawing.Size(6, 6);
             this.panelLeftFloor.TabIndex = 2;
             this.panelLeftFloor.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelLeftFloor_MouseDown);
             this.panelLeftFloor.MouseEnter += new System.EventHandler(this.panelLeftFloor_MouseEnter);
@@ -178,9 +178,9 @@ namespace WinFormsMDI2
             // panelRightFloor
             // 
             this.panelRightFloor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelRightFloor.Location = new System.Drawing.Point(595, 0);
+            this.panelRightFloor.Location = new System.Drawing.Point(594, 0);
             this.panelRightFloor.Name = "panelRightFloor";
-            this.panelRightFloor.Size = new System.Drawing.Size(5, 5);
+            this.panelRightFloor.Size = new System.Drawing.Size(6, 6);
             this.panelRightFloor.TabIndex = 1;
             this.panelRightFloor.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelRightFloor_MouseDown);
             this.panelRightFloor.MouseEnter += new System.EventHandler(this.panelRightFloor_MouseEnter);
@@ -192,9 +192,9 @@ namespace WinFormsMDI2
             // 
             this.panelLeft.BackColor = System.Drawing.Color.DarkGray;
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelLeft.Location = new System.Drawing.Point(0, 5);
+            this.panelLeft.Location = new System.Drawing.Point(0, 6);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(5, 390);
+            this.panelLeft.Size = new System.Drawing.Size(6, 388);
             this.panelLeft.TabIndex = 0;
             this.panelLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelLeft_MouseDown);
             this.panelLeft.MouseEnter += new System.EventHandler(this.panelLeft_MouseEnter);
@@ -206,9 +206,9 @@ namespace WinFormsMDI2
             // 
             this.panelRight.BackColor = System.Drawing.Color.DarkGray;
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelRight.Location = new System.Drawing.Point(595, 5);
+            this.panelRight.Location = new System.Drawing.Point(594, 6);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(5, 390);
+            this.panelRight.Size = new System.Drawing.Size(6, 388);
             this.panelRight.TabIndex = 0;
             this.panelRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelRight_MouseDown);
             this.panelRight.MouseEnter += new System.EventHandler(this.panelRight_MouseEnter);
@@ -219,9 +219,9 @@ namespace WinFormsMDI2
             // panelRightTop
             // 
             this.panelRightTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelRightTop.Location = new System.Drawing.Point(595, 0);
+            this.panelRightTop.Location = new System.Drawing.Point(594, 0);
             this.panelRightTop.Name = "panelRightTop";
-            this.panelRightTop.Size = new System.Drawing.Size(5, 5);
+            this.panelRightTop.Size = new System.Drawing.Size(6, 6);
             this.panelRightTop.TabIndex = 0;
             this.panelRightTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelRightTop_MouseDown);
             this.panelRightTop.MouseEnter += new System.EventHandler(this.panelRightTop_MouseEnter);
@@ -237,7 +237,7 @@ namespace WinFormsMDI2
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(600, 5);
+            this.panelTop.Size = new System.Drawing.Size(600, 6);
             this.panelTop.TabIndex = 1;
             this.panelTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelTop_MouseDown);
             this.panelTop.MouseEnter += new System.EventHandler(this.panelTop_MouseEnter);

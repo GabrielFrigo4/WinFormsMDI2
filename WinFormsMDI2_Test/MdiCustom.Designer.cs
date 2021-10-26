@@ -64,6 +64,7 @@ namespace WinFormsMDI2_Test
             this.Ico = global::WinFormsMDI2_Test.Properties.Resources.Text;
             this.MinimumSize = new System.Drawing.Size(500, 300);
             this.Name = "MdiCustom";
+            this.Resizable = false;
             this.Title = "MdiWinTextBox";
             this.Controls.SetChildIndex(this.richTextBox1, 0);
             this.Controls.SetChildIndex(this.button1, 0);

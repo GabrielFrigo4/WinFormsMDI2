@@ -13,6 +13,7 @@ namespace WinFormsMDI2
         internal bool isMinNotMove = false, notMove = true;
         internal int minInd;
 
+        private bool resizable = true;
         private Image max = Properties.Resources.Maximize, min = Properties.Resources.Minimize, normal = Properties.Resources.Normalize, close = Properties.Resources.Close;
         private Color minEnterColor = Color.LightGray, minDownColor = Color.Gray, minLeaveColor;
         private Color maxEnterColor = Color.LightGray, maxDownColor = Color.Gray, maxLeaveColor;
@@ -21,7 +22,7 @@ namespace WinFormsMDI2
 
         bool isMove = false, isMin = false, isResize = false;
         int mx, my, rx, ry;
-        Point lastLocation, minPos;
+        Point lastLocation, minPos, maxPos;
         Size lastSize, lastMinSize;
         string lastTitle;
 
@@ -79,6 +80,32 @@ namespace WinFormsMDI2
         [DefaultValue("MdiWin")]
         [Description("Is MdiWin Title")]
         public string Title { get { return labelTitle.Text; } set { labelTitle.Text = value; } }
+
+        [DefaultValue(true)]
+        [Description("Is Resizable MdiWin")]
+        public bool Resizable { 
+            get { return resizable; } 
+            set { 
+                if(value != resizable)
+                {
+                    if (value)
+                    {
+                        panelTop.Size = new Size(panelTop.Size.Width, 6);
+                        panelFloor.Size = new Size(panelFloor.Size.Width, 6);
+                        panelLeft.Size = new Size(6, panelLeft.Size.Height);
+                        panelRight.Size = new Size(6, panelRight.Size.Height);
+                    }
+                    else
+                    {
+                        panelTop.Size = new Size(panelTop.Size.Width, 3);
+                        panelFloor.Size = new Size(panelFloor.Size.Width, 3);
+                        panelLeft.Size = new Size(3, panelLeft.Size.Height);
+                        panelRight.Size = new Size(3, panelRight.Size.Height);
+                    }
+                    resizable = value;
+                }
+            } 
+        }
 
         [Description("Is MdiWin Ico")]
         public Image Ico { get { return pictureBoxIco.Image; } set { pictureBoxIco.Image = value; } }
@@ -214,11 +241,16 @@ namespace WinFormsMDI2
         {
             if (Dock != DockStyle.Fill)
             {
-                isResize = true;
+                if(resizable)
+                    isResize = true;
+                else
+                    isResize = false;
+
                 ry = -MousePosition.Y - Size.Height;
                 my = MousePosition.Y - Location.Y;
 
                 minPos = new Point(Location.X + Size.Width - MinimumSize.Width, Location.Y + Size.Height - MinimumSize.Height);
+                maxPos = new Point(Location.X + Size.Width - MaximumSize.Width, Location.Y + Size.Height - MaximumSize.Height);
             }
         }
 
@@ -231,21 +263,29 @@ namespace WinFormsMDI2
         {
             if (isResize)
             {
-                if (minPos.Y >= MousePosition.Y - my)
+                bool minSize = minPos.Y >= MousePosition.Y - my, maxSize = maxPos.Y <= MousePosition.Y - my || !(MaximumSize.Width > MinimumSize.Width && MaximumSize.Height > MinimumSize.Height);
+                if (minSize && maxSize)
                 {
                     Bounds = new Rectangle(Location.X, MousePosition.Y - my, Size.Width, -MousePosition.Y - ry);
                 }
-                else
+                else if(!minSize)
                 {
                     Bounds = new Rectangle(Location.X, minPos.Y, Size.Width, -MousePosition.Y - ry);
                 }
+                else if(!maxSize)
+                {
+                    Bounds = new Rectangle(Location.X, maxPos.Y, Size.Width, -MousePosition.Y - ry);
+                }
             }
-            Cursor.Current = Cursors.SizeNS;
+
+            if (resizable)
+                Cursor.Current = Cursors.SizeNS;
         }
 
         private void panelTop_MouseEnter(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.SizeNS;
+            if (resizable)
+                Cursor.Current = Cursors.SizeNS;
         }
         #endregion
 
@@ -254,7 +294,11 @@ namespace WinFormsMDI2
         {
             if (Dock != DockStyle.Fill)
             {
-                isResize = true;
+                if (resizable)
+                    isResize = true;
+                else
+                    isResize = false;
+
                 ry = MousePosition.Y - Size.Height;
             }
         }
@@ -270,12 +314,15 @@ namespace WinFormsMDI2
             {
                 Size = new Size(Size.Width, MousePosition.Y - ry);
             }
-            Cursor.Current = Cursors.SizeNS;
+
+            if (resizable)
+                Cursor.Current = Cursors.SizeNS;
         }
 
         private void panelFloor_MouseEnter(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.SizeNS;
+            if (resizable)
+                Cursor.Current = Cursors.SizeNS;
         }
         #endregion
 
@@ -284,11 +331,16 @@ namespace WinFormsMDI2
         {
             if (Dock != DockStyle.Fill)
             {
-                isResize = true;
+                if (resizable)
+                    isResize = true;
+                else
+                    isResize = false;
+
                 rx = -MousePosition.X - Size.Width;
                 mx = MousePosition.X - Location.X;
 
                 minPos = new Point(Location.X + Size.Width - MinimumSize.Width, Location.Y + Size.Height - MinimumSize.Height);
+                maxPos = new Point(Location.X + Size.Width - MaximumSize.Width, Location.Y + Size.Height - MaximumSize.Height);
             }
         }
 
@@ -301,21 +353,29 @@ namespace WinFormsMDI2
         {
             if (isResize)
             {
-                if (minPos.X >= MousePosition.X - mx)
+                bool minSize = minPos.X >= MousePosition.X - mx, maxSize = maxPos.X <= MousePosition.X - mx || !(MaximumSize.Width > MinimumSize.Width && MaximumSize.Height > MinimumSize.Height); ;
+                if (minSize && maxSize)
                 {
                     Bounds = new Rectangle(MousePosition.X - mx, Location.Y, -MousePosition.X - rx, Size.Height);
                 }
-                else
+                else if(!minSize)
                 {
                     Bounds = new Rectangle(minPos.X, Location.Y, -MousePosition.X - rx, Size.Height);
                 }
+                else if (!maxSize)
+                {
+                    Bounds = new Rectangle(maxPos.X, Location.Y, -MousePosition.X - rx, Size.Height);
+                }
             }
-            Cursor.Current = Cursors.SizeWE;
+
+            if (resizable)
+                Cursor.Current = Cursors.SizeWE;
         }
 
         private void panelLeft_MouseEnter(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.SizeWE;
+            if (resizable)
+                Cursor.Current = Cursors.SizeWE;
         }
         #endregion
 
@@ -324,7 +384,11 @@ namespace WinFormsMDI2
         {
             if (Dock != DockStyle.Fill)
             {
-                isResize = true;
+                if (resizable)
+                    isResize = true;
+                else
+                    isResize = false;
+
                 rx = MousePosition.X - Size.Width;
             }
         }
@@ -340,12 +404,15 @@ namespace WinFormsMDI2
             {
                 Size = new Size(MousePosition.X - rx, Size.Height);
             }
-            Cursor.Current = Cursors.SizeWE;
+
+            if (resizable)
+                Cursor.Current = Cursors.SizeWE;
         }
 
         private void panelRight_MouseEnter(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.SizeWE;
+            if (resizable)
+                Cursor.Current = Cursors.SizeWE;
         }
         #endregion
 
@@ -354,13 +421,18 @@ namespace WinFormsMDI2
         {
             if (Dock != DockStyle.Fill)
             {
-                isResize = true;
+                if (resizable)
+                    isResize = true;
+                else
+                    isResize = false;
+
                 ry = -MousePosition.Y - Size.Height;
                 my = MousePosition.Y - Location.Y;
                 rx = -MousePosition.X - Size.Width;
                 mx = MousePosition.X - Location.X;
 
                 minPos = new Point(Location.X + Size.Width - MinimumSize.Width, Location.Y + Size.Height - MinimumSize.Height);
+                maxPos = new Point(Location.X + Size.Width - MaximumSize.Width, Location.Y + Size.Height - MaximumSize.Height);
             }
         }
 
@@ -373,29 +445,46 @@ namespace WinFormsMDI2
         {
             if (isResize)
             {
-                if (minPos.Y >= MousePosition.Y - my && minPos.X >= MousePosition.X - mx)
+                bool minSizeX = minPos.X >= MousePosition.X - mx, maxSizeX = maxPos.X <= MousePosition.X - mx || !(MaximumSize.Width > MinimumSize.Width && MaximumSize.Height > MinimumSize.Height); ;
+                bool minSizeY = minPos.Y >= MousePosition.Y - my, maxSizeY = maxPos.Y <= MousePosition.Y - my || !(MaximumSize.Width > MinimumSize.Width && MaximumSize.Height > MinimumSize.Height); ;
+                if (minSizeY && minSizeX && maxSizeY && maxSizeX)
                 {
                     Bounds = new Rectangle(MousePosition.X - mx, MousePosition.Y - my, -MousePosition.X - rx, -MousePosition.Y - ry);
                 }
-                else if (minPos.Y >= MousePosition.Y - my)
+                else if (minSizeY && maxSizeY && maxSizeX)
                 {
                     Bounds = new Rectangle(minPos.X, MousePosition.Y - my, -MousePosition.X - rx, -MousePosition.Y - ry);
                 }
-                else if (minPos.X >= MousePosition.X - mx)
+                else if (minSizeX && maxSizeY && maxSizeX)
                 {
                     Bounds = new Rectangle(MousePosition.X - mx, minPos.Y, -MousePosition.X - rx, -MousePosition.Y - ry);
                 }
-                else
+                else if (maxSizeY && maxSizeX)
                 {
                     Bounds = new Rectangle(minPos.X, minPos.Y, -MousePosition.X - rx, -MousePosition.Y - ry);
                 }
+                else if (minSizeY && minSizeX && maxSizeY)
+                {
+                    Bounds = new Rectangle(maxPos.X, MousePosition.Y - my, -MousePosition.X - rx, -MousePosition.Y - ry);
+                }
+                else if (minSizeY && minSizeX && maxSizeX)
+                {
+                    Bounds = new Rectangle(MousePosition.X - mx, maxPos.Y, -MousePosition.X - rx, -MousePosition.Y - ry);
+                }
+                else if (minSizeY && minSizeX)
+                {
+                    Bounds = new Rectangle(maxPos.X, maxPos.Y, -MousePosition.X - rx, -MousePosition.Y - ry);
+                }
             }
-            Cursor.Current = Cursors.SizeNWSE;
+
+            if (resizable)
+                Cursor.Current = Cursors.SizeNWSE;
         }
 
         private void panelLeftTop_MouseEnter(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.SizeNWSE;
+            if (resizable)
+                Cursor.Current = Cursors.SizeNWSE;
         }
         #endregion
 
@@ -404,7 +493,11 @@ namespace WinFormsMDI2
         {
             if (Dock != DockStyle.Fill)
             {
-                isResize = true;
+                if (resizable)
+                    isResize = true;
+                else
+                    isResize = false;
+
                 ry = -MousePosition.Y - Size.Height;
                 rx = MousePosition.X - Size.Width;
                 my = MousePosition.Y - Location.Y;
@@ -431,12 +524,15 @@ namespace WinFormsMDI2
                     Bounds = new Rectangle(Location.X, minPos.Y, MousePosition.X - rx, -MousePosition.Y - ry);
                 }
             }
-            Cursor.Current = Cursors.SizeNESW;
+
+            if (resizable)
+                Cursor.Current = Cursors.SizeNESW;
         }
 
         private void panelRightTop_MouseEnter(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.SizeNESW;
+            if (resizable)
+                Cursor.Current = Cursors.SizeNESW;
         }
         #endregion
 
@@ -445,7 +541,11 @@ namespace WinFormsMDI2
         {
             if (Dock != DockStyle.Fill)
             {
-                isResize = true;
+                if (resizable)
+                    isResize = true;
+                else
+                    isResize = false;
+
                 rx = MousePosition.X - Size.Width;
                 ry = MousePosition.Y - Size.Height;
             }
@@ -462,12 +562,15 @@ namespace WinFormsMDI2
             {
                 Size = new Size(MousePosition.X - rx, MousePosition.Y - ry);
             }
-            Cursor.Current = Cursors.SizeNWSE;
+
+            if (resizable)
+                Cursor.Current = Cursors.SizeNWSE;
         }
 
         private void panelRightFloor_MouseEnter(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.SizeNWSE;
+            if (resizable)
+                Cursor.Current = Cursors.SizeNWSE;
         }
         #endregion
 
@@ -476,7 +579,11 @@ namespace WinFormsMDI2
         {
             if (Dock != DockStyle.Fill)
             {
-                isResize = true;
+                if (resizable)
+                    isResize = true;
+                else
+                    isResize = false;
+
                 rx = -MousePosition.X - Size.Width;
                 ry = MousePosition.Y - Size.Height;
                 mx = MousePosition.X - Location.X;
@@ -503,12 +610,15 @@ namespace WinFormsMDI2
                     Bounds = new Rectangle(minPos.X, Location.Y, -MousePosition.X - rx, MousePosition.Y - ry);
                 }
             }
-            Cursor.Current = Cursors.SizeNESW;
+
+            if (resizable)
+                Cursor.Current = Cursors.SizeNESW;
         }
 
         private void panelLeftFloor_MouseEnter(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.SizeNESW;
+            if (resizable)
+                Cursor.Current = Cursors.SizeNESW;
         }
         #endregion
 
