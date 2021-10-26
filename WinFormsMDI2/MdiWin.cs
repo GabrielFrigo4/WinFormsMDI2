@@ -13,7 +13,7 @@ namespace WinFormsMDI2
         internal bool isMinNotMove = false, notMove = true;
         internal int minInd;
 
-        private bool resizable = true;
+        private bool resizable = true, maximizeBox = true, minimizeBox = true;
         private Image max = Properties.Resources.Maximize, min = Properties.Resources.Minimize, normal = Properties.Resources.Normalize, close = Properties.Resources.Close;
         private Color minEnterColor = Color.LightGray, minDownColor = Color.Gray, minLeaveColor;
         private Color maxEnterColor = Color.LightGray, maxDownColor = Color.Gray, maxLeaveColor;
@@ -107,6 +107,44 @@ namespace WinFormsMDI2
             } 
         }
 
+        [DefaultValue(true)]
+        [Description("Is Maximize Box MdiWin")]
+        public bool MaximizeBox { 
+            get { return maximizeBox; } 
+            set { 
+                maximizeBox = value; 
+                if(!maximizeBox && !minimizeBox)
+                {
+                    bMax.Visible = false;
+                    bMin.Visible = false;
+                }
+                else if(!bMax.Visible || bMin.Visible)
+                {
+                    bMax.Visible = true;
+                    bMin.Visible = true;
+                }
+            } 
+        }
+
+        [DefaultValue(true)]
+        [Description("Is Minimize Box MdiWin")]
+        public bool MinimizeBox { 
+            get { return minimizeBox; }
+            set { 
+                minimizeBox = value;
+                if (!maximizeBox && !minimizeBox)
+                {
+                    bMax.Visible = false;
+                    bMin.Visible = false;
+                }
+                else if (!bMax.Visible || bMin.Visible)
+                {
+                    bMax.Visible = true;
+                    bMin.Visible = true;
+                }
+            } 
+        }
+
         [Description("Is MdiWin Ico")]
         public Image Ico { get { return pictureBoxIco.Image; } set { pictureBoxIco.Image = value; } }
 
@@ -196,47 +234,49 @@ namespace WinFormsMDI2
 
         private void panelMain_DoubleClick(object sender, EventArgs e)
         {
-            if(Dock == DockStyle.Fill)
+            if (maximizeBox)
             {
-                Dock = DockStyle.None;
-                bMax.Image = max;
-
-                MaximumSize = lastMaxSize;
-                panelTop.Visible = true;
-                panelFloor.Visible = true;
-                panelLeft.Visible = true;
-                panelLeftFloor.Visible = true;
-                panelRight.Visible = true;
-                panelRightFloor.Visible = true;
-            }
-            else
-            {
-                if (isMin)
+                if (Dock == DockStyle.Fill)
                 {
-                    Title = lastTitle;
-                    MinimumSize = lastMinSize;
-                    Bounds = new Rectangle(lastLocation, lastSize);
-                    bMin.Image = min;
-                    isMin = false;
-                    isMinNotMove = false;
+                    Dock = DockStyle.None;
+                    bMax.Image = max;
+
+                    MaximumSize = lastMaxSize;
+                    panelTop.Visible = true;
+                    panelFloor.Visible = true;
+                    panelLeft.Visible = true;
+                    panelLeftFloor.Visible = true;
+                    panelRight.Visible = true;
+                    panelRightFloor.Visible = true;
                 }
                 else
                 {
-                    panelTop.Visible = false;
-                    panelFloor.Visible = false;
-                    panelLeft.Visible = false;
-                    panelLeftFloor.Visible = false;
-                    panelRight.Visible = false;
-                    panelRightFloor.Visible = false;
-                }
+                    if (isMin)
+                    {
+                        Title = lastTitle;
+                        MinimumSize = lastMinSize;
+                        Bounds = new Rectangle(lastLocation, lastSize);
+                        bMin.Image = min;
+                        isMin = false;
+                        isMinNotMove = false;
+                    }
+                    else
+                    {
+                        panelTop.Visible = false;
+                        panelFloor.Visible = false;
+                        panelLeft.Visible = false;
+                        panelLeftFloor.Visible = false;
+                        panelRight.Visible = false;
+                        panelRightFloor.Visible = false;
+                    }
 
-                lastMaxSize = MaximumSize;
-                if (MaximumSize.Width > MinimumSize.Width && MaximumSize.Height > MinimumSize.Height)
-                    MaximumSize = new Size(MaximumSize.Width - 12, MaximumSize.Height - 44);
-                Dock = DockStyle.Fill;
-                bMax.Image = normal;
+                    lastMaxSize = MaximumSize;
+                    if (MaximumSize.Width > MinimumSize.Width && MaximumSize.Height > MinimumSize.Height)
+                        MaximumSize = new Size(MaximumSize.Width - 12, MaximumSize.Height - 44);
+                    Dock = DockStyle.Fill;
+                    bMax.Image = normal;
+                }
             }
-            labelTitle.Select();
         }
         #endregion
 
@@ -636,120 +676,94 @@ namespace WinFormsMDI2
         #region buttons
         private void bMin_Click(object sender, EventArgs e)
         {
-            if (!isMin)
+            if (minimizeBox)
             {
-                int x = 0;
-                minInd = 1;
-
-                MdiWin[] wins = new MdiWin[] { };
-                wins = mdiControl.mdiWins.ToArray();
-
-                Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
-                    if (mw1.Location.Y == mw2.Location.Y)
-                        return mw1.Location.X.CompareTo(mw2.Location.X);
-                    else
-                        return -mw1.Location.Y.CompareTo(mw2.Location.Y);
-                });
-
-                foreach (Control cont in wins)
+                if (!isMin)
                 {
-                    if (cont.Location.X + 226 > mdiControl.Width)
-                        continue;
+                    int x = 0;
+                    minInd = 1;
 
-                    if (x + 226 <= mdiControl.Width)
+                    MdiWin[] wins = new MdiWin[] { };
+                    wins = mdiControl.mdiWins.ToArray();
+
+                    Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
+                        if (mw1.Location.Y == mw2.Location.Y)
+                            return mw1.Location.X.CompareTo(mw2.Location.X);
+                        else
+                            return -mw1.Location.Y.CompareTo(mw2.Location.Y);
+                    });
+
+                    foreach (Control cont in wins)
                     {
-                        if (cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32 * minInd)
+                        if (cont.Location.X + 226 > mdiControl.Width)
+                            continue;
+
+                        if (x + 226 <= mdiControl.Width)
                         {
-                            x += 226;
+                            if (cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32 * minInd)
+                            {
+                                x += 226;
+                            }
+                            if (cont.Location.X > x)
+                            {
+                                break;
+                            }
                         }
-                        if (cont.Location.X > x)
+                        else
                         {
-                            break;
+                            x = 0;
+                            minInd++;
+                            if (cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32 * minInd)
+                            {
+                                x += 226;
+                            }
+                            if (cont.Location.X > x)
+                            {
+                                break;
+                            }
                         }
                     }
-                    else
+
+                    if (Dock == DockStyle.Fill)
                     {
-                        x = 0;
-                        minInd++;
-                        if (cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32 * minInd)
-                        {
-                            x += 226;
-                        }
-                        if (cont.Location.X > x)
-                        {
-                            break;
-                        }
+                        Dock = DockStyle.None;
+                        bMax.Image = max;
+                    }
+
+                    lastTitle = Title;
+                    lastSize = Size;
+                    lastMinSize = MinimumSize;
+                    lastLocation = Location;
+                    MaximumSize = lastMaxSize;
+
+                    panelTop.Visible = false;
+                    panelFloor.Visible = false;
+                    panelLeft.Visible = false;
+                    panelLeftFloor.Visible = false;
+                    panelRight.Visible = false;
+                    panelRightFloor.Visible = false;
+
+                    Title = Title.Substring(0, 3) + "...";
+                    MinimumSize = new Size(0, 0);
+                    Bounds = new Rectangle(x, mdiControl.Height - 32 * minInd, 226, 32);
+                    bMin.Image = normal;
+                    isMin = true;
+                    isMinNotMove = true;
+
+                    if (notMove)
+                    {
+                        notMove = false;
                     }
                 }
-
-                if (Dock == DockStyle.Fill)
+                else
                 {
-                    Dock = DockStyle.None;
-                    bMax.Image = max;
-                }
+                    panelTop.Visible = true;
+                    panelFloor.Visible = true;
+                    panelLeft.Visible = true;
+                    panelLeftFloor.Visible = true;
+                    panelRight.Visible = true;
+                    panelRightFloor.Visible = true;
 
-                lastTitle = Title;
-                lastSize = Size;
-                lastMinSize = MinimumSize;
-                lastLocation = Location;
-                MaximumSize = lastMaxSize;
-
-                panelTop.Visible = false;
-                panelFloor.Visible = false;
-                panelLeft.Visible = false;
-                panelLeftFloor.Visible = false;
-                panelRight.Visible = false;
-                panelRightFloor.Visible = false;
-
-                Title = Title.Substring(0, 3) + "...";
-                MinimumSize = new Size(0, 0);
-                Bounds = new Rectangle(x, mdiControl.Height - 32 * minInd, 226, 32);
-                bMin.Image = normal;
-                isMin = true;
-                isMinNotMove = true;
-
-                if (notMove)
-                {
-                    notMove = false;
-                }
-            }
-            else
-            {
-                panelTop.Visible = true;
-                panelFloor.Visible = true;
-                panelLeft.Visible = true;
-                panelLeftFloor.Visible = true;
-                panelRight.Visible = true;
-                panelRightFloor.Visible = true;
-
-                Title = lastTitle;
-                MinimumSize = lastMinSize;
-                Bounds = new Rectangle(lastLocation, lastSize);
-                bMin.Image = min;
-                isMin = false;
-                isMinNotMove = false;
-            }
-        }
-
-        private void bMax_Click(object sender, EventArgs e)
-        {
-            if (Dock == DockStyle.Fill)
-            {
-                Dock = DockStyle.None;
-                bMax.Image = max;
-
-                MaximumSize = lastMaxSize;
-                panelTop.Visible = true;
-                panelFloor.Visible = true;
-                panelLeft.Visible = true;
-                panelLeftFloor.Visible = true;
-                panelRight.Visible = true;
-                panelRightFloor.Visible = true;
-            }
-            else
-            {
-                if (isMin)
-                {
                     Title = lastTitle;
                     MinimumSize = lastMinSize;
                     Bounds = new Rectangle(lastLocation, lastSize);
@@ -757,21 +771,53 @@ namespace WinFormsMDI2
                     isMin = false;
                     isMinNotMove = false;
                 }
+            }
+        }
+
+        private void bMax_Click(object sender, EventArgs e)
+        {
+            if (maximizeBox)
+            {
+                if (Dock == DockStyle.Fill)
+                {
+                    Dock = DockStyle.None;
+                    bMax.Image = max;
+
+                    MaximumSize = lastMaxSize;
+                    panelTop.Visible = true;
+                    panelFloor.Visible = true;
+                    panelLeft.Visible = true;
+                    panelLeftFloor.Visible = true;
+                    panelRight.Visible = true;
+                    panelRightFloor.Visible = true;
+                }
                 else
                 {
-                    panelTop.Visible = false;
-                    panelFloor.Visible = false;
-                    panelLeft.Visible = false;
-                    panelLeftFloor.Visible = false;
-                    panelRight.Visible = false;
-                    panelRightFloor.Visible = false;
-                }
+                    if (isMin)
+                    {
+                        Title = lastTitle;
+                        MinimumSize = lastMinSize;
+                        Bounds = new Rectangle(lastLocation, lastSize);
+                        bMin.Image = min;
+                        isMin = false;
+                        isMinNotMove = false;
+                    }
+                    else
+                    {
+                        panelTop.Visible = false;
+                        panelFloor.Visible = false;
+                        panelLeft.Visible = false;
+                        panelLeftFloor.Visible = false;
+                        panelRight.Visible = false;
+                        panelRightFloor.Visible = false;
+                    }
 
-                lastMaxSize = MaximumSize;
-                if(MaximumSize.Width > MinimumSize.Width && MaximumSize.Height > MinimumSize.Height)
-                    MaximumSize = new Size(MaximumSize.Width - 12, MaximumSize.Height - 44);
-                Dock = DockStyle.Fill;
-                bMax.Image = normal;
+                    lastMaxSize = MaximumSize;
+                    if (MaximumSize.Width > MinimumSize.Width && MaximumSize.Height > MinimumSize.Height)
+                        MaximumSize = new Size(MaximumSize.Width - 12, MaximumSize.Height - 44);
+                    Dock = DockStyle.Fill;
+                    bMax.Image = normal;
+                }
             }
         }
 
@@ -784,12 +830,14 @@ namespace WinFormsMDI2
 
         private void bMin_MouseLeave(object sender, EventArgs e)
         {
-            bMin.BackColor = minLeaveColor;
+            if (minimizeBox)
+                bMin.BackColor = minLeaveColor;
         }
 
         private void bMax_MouseLeave(object sender, EventArgs e)
         {
-            bMax.BackColor = maxLeaveColor;
+            if (maximizeBox)
+                bMax.BackColor = maxLeaveColor;
         }
 
         private void bClose_MouseLeave(object sender, EventArgs e)
@@ -799,12 +847,14 @@ namespace WinFormsMDI2
 
         private void bMin_MouseEnter(object sender, EventArgs e)
         {
-            bMin.BackColor = minEnterColor;
+            if (minimizeBox)
+                bMin.BackColor = minEnterColor;
         }
 
         private void bMax_MouseEnter(object sender, EventArgs e)
         {
-            bMax.BackColor = maxEnterColor;
+            if (maximizeBox)
+                bMax.BackColor = maxEnterColor;
         }
 
         private void bClose_MouseEnter(object sender, EventArgs e)
@@ -814,12 +864,14 @@ namespace WinFormsMDI2
 
         private void bMin_MouseDown(object sender, MouseEventArgs e)
         {
-            bMin.BackColor = minDownColor;
+            if (minimizeBox)
+                bMin.BackColor = minDownColor;
         }
 
         private void bMax_MouseDown(object sender, MouseEventArgs e)
         {
-            bMax.BackColor = maxDownColor;
+            if (maximizeBox)
+                bMax.BackColor = maxDownColor;
         }
 
         private void bClose_MouseDown(object sender, MouseEventArgs e)

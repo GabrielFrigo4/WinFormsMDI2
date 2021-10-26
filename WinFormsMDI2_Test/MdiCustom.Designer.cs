@@ -62,6 +62,8 @@ namespace WinFormsMDI2_Test
             this.Controls.Add(this.button1);
             this.Controls.Add(this.richTextBox1);
             this.Ico = global::WinFormsMDI2_Test.Properties.Resources.Text;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(500, 300);
             this.Name = "MdiCustom";
             this.Resizable = false;
