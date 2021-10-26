@@ -200,7 +200,7 @@ namespace WinFormsMDI2
             if (useFormText)
                 win.Title = form.Text;
             win.MinimumSize = new Size(form.MinimumSize.Width + 12, form.MinimumSize.Height + 44);
-            if(form.MaximumSize.Width > 0 && form.MaximumSize.Height > 0)
+            if (form.MaximumSize.Width > 0 && form.MaximumSize.Height > 0)
                 win.MaximumSize = new Size(form.MaximumSize.Width + 12, form.MaximumSize.Height + 44);
             form.Dock = DockStyle.Fill;
             win.Controls.Add(form);

@@ -23,7 +23,7 @@ namespace WinFormsMDI2
         bool isMove = false, isMin = false, isResize = false;
         int mx, my, rx, ry;
         Point lastLocation, minPos, maxPos;
-        Size lastSize, lastMinSize;
+        Size lastSize, lastMinSize, lastMaxSize;
         string lastTitle;
 
         public MdiWin()
@@ -201,6 +201,7 @@ namespace WinFormsMDI2
                 Dock = DockStyle.None;
                 bMax.Image = max;
 
+                MaximumSize = lastMaxSize;
                 panelTop.Visible = true;
                 panelFloor.Visible = true;
                 panelLeft.Visible = true;
@@ -229,6 +230,9 @@ namespace WinFormsMDI2
                     panelRightFloor.Visible = false;
                 }
 
+                lastMaxSize = MaximumSize;
+                if (MaximumSize.Width > MinimumSize.Width && MaximumSize.Height > MinimumSize.Height)
+                    MaximumSize = new Size(MaximumSize.Width - 12, MaximumSize.Height - 44);
                 Dock = DockStyle.Fill;
                 bMax.Image = normal;
             }
@@ -688,6 +692,7 @@ namespace WinFormsMDI2
                 lastSize = Size;
                 lastMinSize = MinimumSize;
                 lastLocation = Location;
+                MaximumSize = lastMaxSize;
 
                 panelTop.Visible = false;
                 panelFloor.Visible = false;
@@ -733,6 +738,7 @@ namespace WinFormsMDI2
                 Dock = DockStyle.None;
                 bMax.Image = max;
 
+                MaximumSize = lastMaxSize;
                 panelTop.Visible = true;
                 panelFloor.Visible = true;
                 panelLeft.Visible = true;
@@ -761,6 +767,9 @@ namespace WinFormsMDI2
                     panelRightFloor.Visible = false;
                 }
 
+                lastMaxSize = MaximumSize;
+                if(MaximumSize.Width > MinimumSize.Width && MaximumSize.Height > MinimumSize.Height)
+                    MaximumSize = new Size(MaximumSize.Width - 12, MaximumSize.Height - 44);
                 Dock = DockStyle.Fill;
                 bMax.Image = normal;
             }

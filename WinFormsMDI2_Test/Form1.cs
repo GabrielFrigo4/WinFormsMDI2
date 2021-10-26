@@ -28,15 +28,5 @@ namespace WinFormsMDI2_Test
         {
             mdiControl.CreateMdiWinWithForm(new FormForMDI());
         }
-
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams handleparam = base.CreateParams;
-                handleparam.ExStyle |= 0x02000000;
-                return handleparam;
-            }
-        }
     }
 }
