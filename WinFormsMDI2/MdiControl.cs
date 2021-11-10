@@ -8,7 +8,7 @@ namespace WinFormsMDI2
 {
     public partial class MdiControl : UserControl
     {
-        public List<MdiWin> mdiWins = new List<MdiWin>();
+        public List<IMdiWin> mdiWins = new List<IMdiWin>();
 
         public MdiControl()
         {
@@ -22,16 +22,16 @@ namespace WinFormsMDI2
             var win = new MdiWin();
             win.mdiControl = this;
 
-            MdiWin[] wins = new MdiWin[] { };
+            IMdiWin[] wins = new IMdiWin[] { };
             wins = mdiWins.ToArray();
 
-            Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
-                if (mw1.Location.X - mw1.Location.Y == mw2.Location.X - mw2.Location.Y)
-                    return mw1.Location.X.CompareTo(mw2.Location.X);
-                else if (mw1.notMove && mw2.notMove)
-                    return (mw1.Location.X - mw1.Location.Y).CompareTo(mw2.Location.X - mw2.Location.Y);
+            Array.Sort(wins, delegate (IMdiWin mw1, IMdiWin mw2) {
+                if (((Control)mw1).Location.X - ((Control)mw1).Location.Y == ((Control)mw2).Location.X - ((Control)mw2).Location.Y)
+                    return ((Control)mw1).Location.X.CompareTo(((Control)mw2).Location.X);
+                else if (mw1.NotMove() && mw2.NotMove())
+                    return (((Control)mw1).Location.X - ((Control)mw1).Location.Y).CompareTo(((Control)mw2).Location.X - ((Control)mw2).Location.Y);
                 else
-                    return -Convert.ToInt32(mw1.notMove).CompareTo(Convert.ToInt32(mw2.notMove));
+                    return -Convert.ToInt32(mw1.NotMove()).CompareTo(Convert.ToInt32(mw2.NotMove()));
             });
 
             int cil = 0;
@@ -66,28 +66,28 @@ namespace WinFormsMDI2
             return win;
         }
 
-        public MdiWin CreateMdiWin(Type mdiWinType)
+        public IMdiWin CreateMdiWin(Type mdiWinType)
         {
             int x = 0, y = 0;
-            var win = Activator.CreateInstance(mdiWinType) as MdiWin;
-            win.mdiControl = this;
+            var win = Activator.CreateInstance(mdiWinType) as IMdiWin;
+            win.SetMdiControl(this);
 
-            MdiWin[] wins = new MdiWin[] { };
+            IMdiWin[] wins = new IMdiWin[] { };
             wins = mdiWins.ToArray();
 
-            Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
-                if (mw1.Location.X - mw1.Location.Y == mw2.Location.X - mw2.Location.Y)
-                    return mw1.Location.X.CompareTo(mw2.Location.X);
-                else if (mw1.notMove && mw2.notMove)
-                    return (mw1.Location.X - mw1.Location.Y).CompareTo(mw2.Location.X - mw2.Location.Y);
+            Array.Sort(wins, delegate (IMdiWin mw1, IMdiWin mw2) {
+                if (((Control)mw1).Location.X - ((Control)mw1).Location.Y == ((Control)mw2).Location.X - ((Control)mw2).Location.Y)
+                    return ((Control)mw1).Location.X.CompareTo(((Control)mw2).Location.X);
+                else if (mw1.NotMove() && mw2.NotMove())
+                    return (((Control)mw1).Location.X - ((Control)mw1).Location.Y).CompareTo(((Control)mw2).Location.X - ((Control)mw2).Location.Y);
                 else
-                    return -Convert.ToInt32(mw1.notMove).CompareTo(Convert.ToInt32(mw2.notMove));
+                    return -Convert.ToInt32(mw1.NotMove()).CompareTo(Convert.ToInt32(mw2.NotMove()));
             });
 
             int cil = 0;
             foreach (Control cont in wins)
             {
-                if (y + win.Height > Height)
+                if (y + ((Control)win).Height > Height)
                 {
                     cil++;
                     x = 48 * cil;
@@ -107,9 +107,9 @@ namespace WinFormsMDI2
                 }
             }
 
-            win.Location = new Point(x, y);
+            ((Control)win).Location = new Point(x, y);
 
-            Controls.Add(win);
+            Controls.Add((Control)win);
             mdiWins.Add(win);
 
             FocusMdiWin(win);
@@ -145,16 +145,16 @@ namespace WinFormsMDI2
             form.Show();
             win.mdiControl = this;
 
-            MdiWin[] wins = new MdiWin[] { };
+            IMdiWin[] wins = new IMdiWin[] { };
             wins = mdiWins.ToArray();
 
-            Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
-                if (mw1.Location.X - mw1.Location.Y == mw2.Location.X - mw2.Location.Y)
-                    return mw1.Location.X.CompareTo(mw2.Location.X);
-                else if (mw1.notMove && mw2.notMove)
-                    return (mw1.Location.X - mw1.Location.Y).CompareTo(mw2.Location.X - mw2.Location.Y);
+            Array.Sort(wins, delegate (IMdiWin mw1, IMdiWin mw2) {
+                if (((Control)mw1).Location.X - ((Control)mw1).Location.Y == ((Control)mw2).Location.X - ((Control)mw2).Location.Y)
+                    return ((Control)mw1).Location.X.CompareTo(((Control)mw2).Location.X);
+                else if (mw1.NotMove() && mw2.NotMove())
+                    return (((Control)mw1).Location.X - ((Control)mw1).Location.Y).CompareTo(((Control)mw2).Location.X - ((Control)mw2).Location.Y);
                 else
-                    return -Convert.ToInt32(mw1.notMove).CompareTo(Convert.ToInt32(mw2.notMove));
+                    return -Convert.ToInt32(mw1.NotMove()).CompareTo(Convert.ToInt32(mw2.NotMove()));
             });
 
             int cil = 0;
@@ -189,45 +189,45 @@ namespace WinFormsMDI2
             return win;
         }
 
-        public MdiWin CreateMdiWinWithForm(Type mdiWinStyle, Form form, bool useFormIcon = true, bool useFormText = true)
+        public IMdiWin CreateMdiWinWithForm(Type mdiWinStyle, Form form, bool useFormIcon = true, bool useFormText = true)
         {
             form.FormBorderStyle = FormBorderStyle.None;
             form.TopLevel = false;
 
             int x = 0, y = 0;
 
-            var win = Activator.CreateInstance(mdiWinStyle) as MdiWin;
+            var win = Activator.CreateInstance(mdiWinStyle) as IMdiWin;
             if (useFormIcon)
-                win.Ico = form.Icon.ToBitmap();
+                win.SetIco(form.Icon.ToBitmap());
             if (useFormText)
-                win.Title = form.Text;
-            win.MinimumSize = new Size(form.MinimumSize.Width + 12, form.MinimumSize.Height + 44);
+                win.SetTitle(form.Text);
+            ((Control)win).MinimumSize = new Size(form.MinimumSize.Width + 12, form.MinimumSize.Height + 44);
             if (form.MaximumSize.Width > 0 && form.MaximumSize.Height > 0)
-                win.MaximumSize = new Size(form.MaximumSize.Width + 12, form.MaximumSize.Height + 44);
-            win.MinimizeBox = form.MinimizeBox;
-            win.MaximizeBox = form.MaximizeBox;
+                ((Control)win).MaximumSize = new Size(form.MaximumSize.Width + 12, form.MaximumSize.Height + 44);
+            win.SetMinimizeBox(form.MinimizeBox);
+            win.SetMaximizeBox(form.MaximizeBox);
             form.Dock = DockStyle.Fill;
-            win.Controls.Add(form);
+            ((Control)win).Controls.Add(form);
             form.BringToFront();
             form.Show();
-            win.mdiControl = this;
+            win.SetMdiControl(this);
 
-            MdiWin[] wins = new MdiWin[] { };
+            IMdiWin[] wins = new IMdiWin[] { };
             wins = mdiWins.ToArray();
 
-            Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
-                if (mw1.Location.X - mw1.Location.Y == mw2.Location.X - mw2.Location.Y)
-                    return mw1.Location.X.CompareTo(mw2.Location.X);
-                else if (mw1.notMove && mw2.notMove)
-                    return (mw1.Location.X - mw1.Location.Y).CompareTo(mw2.Location.X - mw2.Location.Y);
+            Array.Sort(wins, delegate (IMdiWin mw1, IMdiWin mw2) {
+                if (((Control)mw1).Location.X - ((Control)mw1).Location.Y == ((Control)mw2).Location.X - ((Control)mw2).Location.Y)
+                    return ((Control)mw1).Location.X.CompareTo(((Control)mw2).Location.X);
+                else if (mw1.NotMove() && mw2.NotMove())
+                    return (((Control)mw1).Location.X - ((Control)mw1).Location.Y).CompareTo(((Control)mw2).Location.X - ((Control)mw2).Location.Y);
                 else
-                    return -Convert.ToInt32(mw1.notMove).CompareTo(Convert.ToInt32(mw2.notMove));
+                    return -Convert.ToInt32(mw1.NotMove()).CompareTo(Convert.ToInt32(mw2.NotMove()));
             });
 
             int cil = 0;
             foreach (Control cont in wins)
             {
-                if (y + win.Height > Height)
+                if (y + ((Control)win).Height > Height)
                 {
                     cil++;
                     x = 48 * cil;
@@ -247,9 +247,9 @@ namespace WinFormsMDI2
                 }
             }
 
-            win.Location = new Point(x, y);
+            ((Control)win).Location = new Point(x, y);
 
-            Controls.Add(win);
+            Controls.Add((Control)win);
             mdiWins.Add(win);
 
             FocusMdiWin(win);
@@ -262,18 +262,18 @@ namespace WinFormsMDI2
             return (MdiWinStyle)(object)win;
         }
 
-        public void FocusMdiWin(MdiWin win)
+        public void FocusMdiWin(IMdiWin win)
         {
-            Controls.SetChildIndex(win,0);
+            Controls.SetChildIndex((Control)win,0);
         }
 
-        private void MdiControI_Resize(object sender, EventArgs e)
+        private void MdiControl_Resize(object sender, EventArgs e)
         {
-            foreach (MdiWin win in mdiWins)
+            foreach (IMdiWin win in mdiWins)
             {
-                if (win.isMinNotMove)
+                if (win.IsMinNotMove())
                 {
-                    win.Location = new Point(win.Location.X, Height - 32 * win.minInd);
+                    ((Control)win).Location = new Point(((Control)win).Location.X, Height - 32 * win.MinInd());
                 }
             }
         }

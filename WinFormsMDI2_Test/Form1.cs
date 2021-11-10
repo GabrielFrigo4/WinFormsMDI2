@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinFormsMDI2.Themes;
+using WinFormsMDI2;
 
 namespace WinFormsMDI2_Test
 {
@@ -17,16 +10,29 @@ namespace WinFormsMDI2_Test
         {
             InitializeComponent();
             mdiControl.CreateMdiWin();
+            mdiControl.CreateMdiWin().MdiTheme = Theme.Dark;
             mdiControl.CreateMdiWin(typeof(MdiCustom));
             mdiControl.CreateMdiWin<MdiCustom>();
+
             mdiControl.CreateMdiWinWithForm(new FormForMDI());
-            mdiControl.CreateMdiWinWithForm(typeof(MdiDarkTheme), new FormForMDI());
-            mdiControl.CreateMdiWinWithForm<MdiDarkTheme>(new FormForMDI());
+            mdiControl.CreateMdiWinWithForm(new FormForMDI()).MdiTheme = Theme.Dark;
+            mdiControl.CreateMdiWinWithForm(typeof(MdiWinThemeCustom), new FormForMDI());
+            mdiControl.CreateMdiWinWithForm<MdiWinThemeCustom>(new FormForMDI());
         }
 
         private void createMDI_Click(object sender, EventArgs e)
         {
             mdiControl.CreateMdiWinWithForm(new FormForMDI());
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams handleparam = base.CreateParams;
+                handleparam.ExStyle |= 0x02000000;
+                return handleparam;
+            }
         }
     }
 }

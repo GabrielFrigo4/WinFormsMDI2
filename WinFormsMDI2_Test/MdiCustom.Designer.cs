@@ -58,15 +58,11 @@ namespace WinFormsMDI2_Test
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ControlBarColor = System.Drawing.SystemColors.ActiveBorder;
             this.Controls.Add(this.button1);
             this.Controls.Add(this.richTextBox1);
             this.Ico = global::WinFormsMDI2_Test.Properties.Resources.Text;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(500, 300);
             this.Name = "MdiCustom";
-            this.Resizable = false;
             this.Title = "MdiWinTextBox";
             this.Controls.SetChildIndex(this.richTextBox1, 0);
             this.Controls.SetChildIndex(this.button1, 0);

@@ -38,7 +38,7 @@ namespace WinFormsMDI2
             this.DoubleBuffered = true;
             this.Name = "MdiControI";
             this.Size = new System.Drawing.Size(200, 200);
-            this.Resize += new System.EventHandler(this.MdiControI_Resize);
+            this.Resize += new System.EventHandler(this.MdiControl_Resize);
             this.ResumeLayout(false);
 
         }

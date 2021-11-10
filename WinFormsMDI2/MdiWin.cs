@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace WinFormsMDI2
 {
-    public partial class MdiWin : UserControl
+    public partial class MdiWin : UserControl, IMdiWin
     {
         public MdiControl mdiControl;
         internal bool isMinNotMove = false, notMove = true;
@@ -15,10 +15,11 @@ namespace WinFormsMDI2
 
         private bool resizable = true, maximizeBox = true, minimizeBox = true;
         private Image max = Properties.Resources.Maximize, min = Properties.Resources.Minimize, normal = Properties.Resources.Normalize, close = Properties.Resources.Close;
-        private Color minEnterColor = Color.LightGray, minDownColor = Color.Gray, minLeaveColor;
-        private Color maxEnterColor = Color.LightGray, maxDownColor = Color.Gray, maxLeaveColor;
-        private Color closeEnterColor = Color.FromArgb(255, 90, 90), closeDownColor = Color.FromArgb(255, 20, 20), closeLeaveColor;
+        private Color minEnterColor = Color.LightGray, minDownColor = Color.Gray, minLeaveColor = SystemColors.ControlLightLight;
+        private Color maxEnterColor = Color.LightGray, maxDownColor = Color.Gray, maxLeaveColor = SystemColors.ControlLightLight;
+        private Color closeEnterColor = Color.FromArgb(255, 90, 90), closeDownColor = Color.FromArgb(255, 20, 20), closeLeaveColor = SystemColors.ControlLightLight;
         private Color borderColor;
+        private Theme theme = Theme.Light;
 
         bool isMove = false, isMin = false, isResize = false;
         int mx, my, rx, ry;
@@ -201,6 +202,61 @@ namespace WinFormsMDI2
         [DefaultValue(typeof(Color), "Black")]
         [Description("Is MdiWin Title")]
         public Color TitleColor { get { return labelTitle.ForeColor; } set { labelTitle.ForeColor = value; } }
+
+        [DefaultValue(typeof(Theme), "Light")]
+        [Description("Is MdiWin Theme")]
+        public Theme MdiTheme
+        {
+            get
+            {
+                return theme;
+            }
+            set
+            {
+                theme = value;
+                switch (theme)
+                {
+                    case Theme.Light:
+                        BackColor = SystemColors.Control;
+                        TitleColor = SystemColors.ControlText;
+                        ControlBarColor = SystemColors.ControlLightLight;
+                        MinimizeEnterColor = Color.LightGray;
+                        MinimizeDownColor = Color.Gray;
+                        MinimizeLeaveColor = SystemColors.ControlLightLight;
+                        MaximizeEnterColor = Color.LightGray;
+                        MaximizeDownColor = Color.Gray;
+                        MaximizeLeaveColor = SystemColors.ControlLightLight;
+                        CloseEnterColor = Color.FromArgb(255, 90, 90);
+                        CloseDownColor = Color.FromArgb(255, 20, 20);
+                        CloseLeaveColor = SystemColors.ControlLightLight;
+                        BorderColor = Color.DarkGray;
+                        CloseImage = Properties.Resources.Close;
+                        NormalizeImage = Properties.Resources.Normalize;
+                        MinimizeImage = Properties.Resources.Minimize;
+                        MaximizeImage = Properties.Resources.Maximize;
+                        break;
+                    case Theme.Dark:
+                        BackColor = Color.FromArgb(60, 60, 60);
+                        TitleColor = Color.White;
+                        ControlBarColor = Color.FromArgb(40, 40, 40);
+                        MinimizeEnterColor = Color.FromArgb(80, 80, 80);
+                        MinimizeDownColor = Color.FromArgb(120, 120, 120);
+                        MinimizeLeaveColor = Color.FromArgb(40, 40, 40);
+                        MaximizeEnterColor = Color.FromArgb(80, 80, 80);
+                        MaximizeDownColor = Color.FromArgb(120, 120, 120);
+                        MaximizeLeaveColor = Color.FromArgb(40, 40, 40);
+                        CloseEnterColor = Color.FromArgb(180, 0, 0);
+                        CloseDownColor = Color.FromArgb(255, 40, 40);
+                        CloseLeaveColor = Color.FromArgb(40, 40, 40);
+                        BorderColor = Color.FromArgb(20, 20, 20);
+                        CloseImage = Properties.Resources.CloseWhite;
+                        NormalizeImage = Properties.Resources.NormalizeWhite;
+                        MinimizeImage = Properties.Resources.MinimizeWhite;
+                        MaximizeImage = Properties.Resources.MaximizeWhite;
+                        break;
+                }
+            }
+        }
         #endregion
 
         #region panelMain
@@ -683,14 +739,14 @@ namespace WinFormsMDI2
                     int x = 0;
                     minInd = 1;
 
-                    MdiWin[] wins = new MdiWin[] { };
+                    IMdiWin[] wins = new IMdiWin[] { };
                     wins = mdiControl.mdiWins.ToArray();
 
-                    Array.Sort(wins, delegate (MdiWin mw1, MdiWin mw2) {
-                        if (mw1.Location.Y == mw2.Location.Y)
-                            return mw1.Location.X.CompareTo(mw2.Location.X);
+                    Array.Sort(wins, delegate (IMdiWin mw1, IMdiWin mw2) {
+                        if (((Control)mw1).Location.Y == ((Control)mw2).Location.Y)
+                            return ((Control)mw1).Location.X.CompareTo(((Control)mw2).Location.X);
                         else
-                            return -mw1.Location.Y.CompareTo(mw2.Location.Y);
+                            return -((Control)mw1).Location.Y.CompareTo(((Control)mw2).Location.Y);
                     });
 
                     foreach (Control cont in wins)
@@ -879,5 +935,49 @@ namespace WinFormsMDI2
             bClose.BackColor = closeDownColor;
         }
         #endregion
+
+        #region IMdiWin
+        bool IMdiWin.NotMove()
+        {
+            return notMove;
+        }
+        void IMdiWin.SetMdiControl(MdiControl mdiControl)
+        {
+            this.mdiControl = mdiControl;
+        }
+
+        bool IMdiWin.IsMinNotMove()
+        {
+            return isMinNotMove;
+        }
+        int IMdiWin.MinInd()
+        {
+            return minInd;
+        }
+
+        void IMdiWin.SetIco(Image ico)
+        {
+            Ico = ico;
+        }
+        void IMdiWin.SetTitle(string title)
+        {
+            Title = title;
+        }
+
+        void IMdiWin.SetMinimizeBox(bool minimizeBox)
+        {
+            MinimizeBox = minimizeBox;
+        }
+        void IMdiWin.SetMaximizeBox(bool maximizeBox)
+        {
+            MaximizeBox = maximizeBox;
+        }
+        #endregion
+    }
+
+    public enum Theme
+    {
+        Light,
+        Dark,
     }
 }
