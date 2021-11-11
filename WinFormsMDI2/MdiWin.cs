@@ -238,17 +238,17 @@ namespace WinFormsMDI2
                     case Theme.Dark:
                         BackColor = Color.FromArgb(60, 60, 60);
                         TitleColor = Color.White;
-                        ControlBarColor = Color.FromArgb(40, 40, 40);
+                        ControlBarColor = Color.FromArgb(35, 35, 35);
                         MinimizeEnterColor = Color.FromArgb(80, 80, 80);
                         MinimizeDownColor = Color.FromArgb(120, 120, 120);
-                        MinimizeLeaveColor = Color.FromArgb(40, 40, 40);
+                        MinimizeLeaveColor = Color.FromArgb(35, 35, 35);
                         MaximizeEnterColor = Color.FromArgb(80, 80, 80);
                         MaximizeDownColor = Color.FromArgb(120, 120, 120);
-                        MaximizeLeaveColor = Color.FromArgb(40, 40, 40);
+                        MaximizeLeaveColor = Color.FromArgb(35, 35, 35);
                         CloseEnterColor = Color.FromArgb(180, 0, 0);
                         CloseDownColor = Color.FromArgb(255, 40, 40);
-                        CloseLeaveColor = Color.FromArgb(40, 40, 40);
-                        BorderColor = Color.FromArgb(20, 20, 20);
+                        CloseLeaveColor = Color.FromArgb(35, 35, 35);
+                        BorderColor = Color.FromArgb(14, 14, 14);
                         CloseImage = Properties.Resources.CloseWhite;
                         NormalizeImage = Properties.Resources.NormalizeWhite;
                         MinimizeImage = Properties.Resources.MinimizeWhite;
