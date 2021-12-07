@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <Description>It is already known that microsoft has basically discontinued the MDI system. it's been more than 8 years since she stopped updating it... This project aims to bring a new efficient/free/opensoure/customizable MDI system to replace the old system</Description>
     <RepositoryUrl>https://github.com/GabrielFrigo4/WinFormsMDI2</RepositoryUrl>

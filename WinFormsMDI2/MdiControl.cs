@@ -116,7 +116,7 @@ namespace WinFormsMDI2
             return win;
         }
 
-        public MdiWinType CreateMdiWin<MdiWinType>()
+        public MdiWinType CreateMdiWin<MdiWinType>() where MdiWinType : class, IMdiWin
         {
             var win = CreateMdiWin(typeof(MdiWinType));
             return (MdiWinType)(object)win;
@@ -256,7 +256,7 @@ namespace WinFormsMDI2
             return win;
         }
 
-        public MdiWinStyle CreateMdiWinWithForm<MdiWinStyle>(Form form, bool useFormIcon = true, bool useFormText = true)
+        public MdiWinStyle CreateMdiWinWithForm<MdiWinStyle>(Form form, bool useFormIcon = true, bool useFormText = true) where MdiWinStyle : class, IMdiWin
         {
             var win = CreateMdiWinWithForm(typeof(MdiWinStyle), form, useFormIcon, useFormText);
             return (MdiWinStyle)(object)win;
