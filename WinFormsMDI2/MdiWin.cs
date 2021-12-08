@@ -282,23 +282,29 @@ namespace WinFormsMDI2
             {
                 Point newMousePosition = new Point(MousePosition.X - mx, MousePosition.Y - my), newPosition = newMousePosition;
 
-                if(newMousePosition.X < 0)
+                if(Width < mdiControl.Width)
                 {
-                    newPosition.X = 0;
+                    if(newMousePosition.X < 0)
+                    {
+                        newPosition.X = 0;
+                    }
+                    else if (newMousePosition.X + Width > mdiControl.Width)
+                    {
+                        newPosition.X = mdiControl.Width - Width;
+                    }
                 }
-                else if (newMousePosition.X + Width > mdiControl.Width)
+  
+                if(Height < mdiControl.Height)
                 {
-                    newPosition.X = mdiControl.Width - Width;
-                }
-
-                if (newMousePosition.Y < 0)
-                {
-                    newPosition.Y = 0;
-                }
-                else if (newMousePosition.Y + Height > mdiControl.Height)
-                {
-                    newPosition.Y = mdiControl.Height - Height;
-                }
+                    if (newMousePosition.Y < 0)
+                    {
+                        newPosition.Y = 0;
+                    }
+                    else if (newMousePosition.Y + Height > mdiControl.Height)
+                    {
+                        newPosition.Y = mdiControl.Height - Height;
+                    }
+                } 
 
                 Location = newPosition;
 
