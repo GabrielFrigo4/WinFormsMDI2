@@ -10,8 +10,8 @@ namespace WinFormsMDI2
     public partial class MdiWin : UserControl, IMdiWin
     {
         public MdiControl mdiControl;
-        internal bool isMinNotMove = false, notMove = true;
-        internal int minInd;
+        private bool isMinNotMove = false, notMove = true;
+        private int minInd;
 
         private bool resizable = true, maximizeBox = true, minimizeBox = true;
         private Image max = Properties.Resources.Maximize, min = Properties.Resources.Minimize, normal = Properties.Resources.Normalize, close = Properties.Resources.Close;
@@ -280,7 +280,28 @@ namespace WinFormsMDI2
         {
             if (isMove)
             {
-                Location = new Point(MousePosition.X - mx, MousePosition.Y - my);
+                Point newMousePosition = new Point(MousePosition.X - mx, MousePosition.Y - my), newPosition = newMousePosition;
+
+                if(newMousePosition.X < 0)
+                {
+                    newPosition.X = 0;
+                }
+                else if (newMousePosition.X + Width > mdiControl.Width)
+                {
+                    newPosition.X = mdiControl.Width - Width;
+                }
+
+                if (newMousePosition.Y < 0)
+                {
+                    newPosition.Y = 0;
+                }
+                else if (newMousePosition.Y + Height > mdiControl.Height)
+                {
+                    newPosition.Y = mdiControl.Height - Height;
+                }
+
+                Location = newPosition;
+
                 if (notMove)
                 {
                     notMove = false;

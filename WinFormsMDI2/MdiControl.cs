@@ -18,7 +18,6 @@ namespace WinFormsMDI2
 
         public MdiWin CreateMdiWin()
         {
-            int x = 0, y = 0;
             var win = new MdiWin();
             win.mdiControl = this;
 
@@ -34,10 +33,10 @@ namespace WinFormsMDI2
                     return -Convert.ToInt32(mw1.NotMove()).CompareTo(Convert.ToInt32(mw2.NotMove()));
             });
 
-            int cil = 0;
+            int x = 0, y = 0, cil = 0;
             foreach (Control cont in wins)
             {
-                if (y + win.Height > Height)
+                if (y + win.Height + 44 > Height)
                 {
                     cil++;
                     x = 48 * cil;
@@ -68,7 +67,6 @@ namespace WinFormsMDI2
 
         public IMdiWin CreateMdiWin(Type mdiWinType)
         {
-            int x = 0, y = 0;
             var win = Activator.CreateInstance(mdiWinType) as IMdiWin;
             win.SetMdiControl(this);
 
@@ -84,10 +82,10 @@ namespace WinFormsMDI2
                     return -Convert.ToInt32(mw1.NotMove()).CompareTo(Convert.ToInt32(mw2.NotMove()));
             });
 
-            int cil = 0;
+            int x = 0, y = 0, cil = 0;
             foreach (Control cont in wins)
             {
-                if (y + ((Control)win).Height > Height)
+                if (y + ((Control)win).Height + 44 > Height)
                 {
                     cil++;
                     x = 48 * cil;
@@ -116,18 +114,16 @@ namespace WinFormsMDI2
             return win;
         }
 
-        public MdiWinType CreateMdiWin<MdiWinType>() where MdiWinType : class, IMdiWin
+        public MdiWinType CreateMdiWin<MdiWinType>() where MdiWinType : Control, IMdiWin
         {
             var win = CreateMdiWin(typeof(MdiWinType));
-            return (MdiWinType)(object)win;
+            return (MdiWinType)win;
         }
 
         public MdiWin CreateMdiWinWithForm(Form form, bool useFormIcon = true, bool useFormText= true)
         {
             form.FormBorderStyle = FormBorderStyle.None;
             form.TopLevel = false;
-
-            int x = 0, y = 0;
 
             var win = new MdiWin();
             if(useFormIcon)
@@ -157,10 +153,10 @@ namespace WinFormsMDI2
                     return -Convert.ToInt32(mw1.NotMove()).CompareTo(Convert.ToInt32(mw2.NotMove()));
             });
 
-            int cil = 0;
+            int x = 0, y = 0, cil = 0;
             foreach (Control cont in wins)
             {
-                if (y + win.Height > Height)
+                if (y + win.Height + 44 > Height)
                 {
                     cil++;
                     x = 48 * cil;
@@ -194,8 +190,6 @@ namespace WinFormsMDI2
             form.FormBorderStyle = FormBorderStyle.None;
             form.TopLevel = false;
 
-            int x = 0, y = 0;
-
             var win = Activator.CreateInstance(mdiWinStyle) as IMdiWin;
             if (useFormIcon)
                 win.SetIco(form.Icon.ToBitmap());
@@ -224,10 +218,10 @@ namespace WinFormsMDI2
                     return -Convert.ToInt32(mw1.NotMove()).CompareTo(Convert.ToInt32(mw2.NotMove()));
             });
 
-            int cil = 0;
+            int x = 0, y = 0, cil = 0;
             foreach (Control cont in wins)
             {
-                if (y + ((Control)win).Height > Height)
+                if (y + ((Control)win).Height + 44 > Height)
                 {
                     cil++;
                     x = 48 * cil;
@@ -256,10 +250,10 @@ namespace WinFormsMDI2
             return win;
         }
 
-        public MdiWinStyle CreateMdiWinWithForm<MdiWinStyle>(Form form, bool useFormIcon = true, bool useFormText = true) where MdiWinStyle : class, IMdiWin
+        public MdiWinStyle CreateMdiWinWithForm<MdiWinStyle>(Form form, bool useFormIcon = true, bool useFormText = true) where MdiWinStyle : Control, IMdiWin
         {
             var win = CreateMdiWinWithForm(typeof(MdiWinStyle), form, useFormIcon, useFormText);
-            return (MdiWinStyle)(object)win;
+            return (MdiWinStyle)win;
         }
 
         public void FocusMdiWin(IMdiWin win)
