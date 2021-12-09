@@ -13,6 +13,8 @@ namespace WinFormsMDI2_Test
             mdiControl.CreateMdiWin().MdiTheme = Theme.Dark;
             mdiControl.CreateMdiWin(typeof(MdiCustom));
             mdiControl.CreateMdiWin<MdiCustom>();
+            mdiControl.CreateMdiWin(typeof(MdiThemeSwitch));
+            mdiControl.CreateMdiWin<MdiThemeSwitch>();
 
             mdiControl.CreateMdiWinWithForm(new FormForMDI());
             mdiControl.CreateMdiWinWithForm(new FormForMDI()).MdiTheme = Theme.Dark;

@@ -234,6 +234,9 @@ namespace WinFormsMDI2
                         NormalizeImage = Properties.Resources.Normalize;
                         MinimizeImage = Properties.Resources.Minimize;
                         MaximizeImage = Properties.Resources.Maximize;
+                        bMin.BackColor = MinimizeLeaveColor;
+                        bMax.BackColor = MaximizeLeaveColor;
+                        bClose.BackColor = closeLeaveColor;
                         break;
                     case Theme.Dark:
                         BackColor = Color.FromArgb(60, 60, 60);
@@ -253,6 +256,9 @@ namespace WinFormsMDI2
                         NormalizeImage = Properties.Resources.NormalizeWhite;
                         MinimizeImage = Properties.Resources.MinimizeWhite;
                         MaximizeImage = Properties.Resources.MaximizeWhite;
+                        bMin.BackColor = MinimizeLeaveColor;
+                        bMax.BackColor = MaximizeLeaveColor;
+                        bClose.BackColor = CloseLeaveColor;
                         break;
                 }
             }
