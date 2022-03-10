@@ -7,6 +7,7 @@ using System.Windows.Forms;
 namespace WinFormsMDI2;
 public partial class MdiControl : UserControl
 {
+    #region Public
     public List<IMdiWin> mdiWins = new List<IMdiWin>();
 
     public MdiControl()
@@ -20,42 +21,18 @@ public partial class MdiControl : UserControl
         var win = new MdiWin();
         win.mdiControl = this;
 
-        IMdiWin[] wins = new IMdiWin[] { };
-        wins = mdiWins.ToArray();
-
-        Array.Sort(wins, delegate (IMdiWin mw1, IMdiWin mw2) {
-            if (((Control)mw1).Location.X - ((Control)mw1).Location.Y == ((Control)mw2).Location.X - ((Control)mw2).Location.Y)
-                return ((Control)mw1).Location.X.CompareTo(((Control)mw2).Location.X);
-            else if (mw1.NotMove() && mw2.NotMove())
-                return (((Control)mw1).Location.X - ((Control)mw1).Location.Y).CompareTo(((Control)mw2).Location.X - ((Control)mw2).Location.Y);
-            else
-                return -Convert.ToInt32(mw1.NotMove()).CompareTo(Convert.ToInt32(mw2.NotMove()));
-        });
-
-        int x = 0, y = 0, cil = 0;
-        foreach (Control cont in wins)
+        IMdiWin[] all_wins = mdiWins.ToArray();
+        List<IMdiWin> listWinsDontMove = new List<IMdiWin>();
+        foreach (IMdiWin subwin in all_wins)
         {
-            if (y + win.Height + 44 > Height)
+            if (subwin.NotMove())
             {
-                cil++;
-                x = 48 * cil;
-                y = 0;
-            }
-            else
-            {
-                if (cont.Location.X == x && cont.Location.Y == y)
-                {
-                    x += 48;
-                    y += 48;
-                }
-                if (cont.Location.X > x || cont.Location.Y > y)
-                {
-                    break;
-                }
+                listWinsDontMove.Add(subwin);
             }
         }
-
-        win.Location = new Point(x, y);
+        IMdiWin[] wins = listWinsDontMove.ToArray();
+        Array.Sort(wins, SortMdiWin);
+        win.Location = GetWinStartPosition(win, wins);
 
         Controls.Add(win);
         mdiWins.Add(win);
@@ -69,42 +46,18 @@ public partial class MdiControl : UserControl
         var win = Activator.CreateInstance(mdiWinType) as IMdiWin;
         win.SetMdiControl(this);
 
-        IMdiWin[] wins = new IMdiWin[] { };
-        wins = mdiWins.ToArray();
-
-        Array.Sort(wins, delegate (IMdiWin mw1, IMdiWin mw2) {
-            if (((Control)mw1).Location.X - ((Control)mw1).Location.Y == ((Control)mw2).Location.X - ((Control)mw2).Location.Y)
-                return ((Control)mw1).Location.X.CompareTo(((Control)mw2).Location.X);
-            else if (mw1.NotMove() && mw2.NotMove())
-                return (((Control)mw1).Location.X - ((Control)mw1).Location.Y).CompareTo(((Control)mw2).Location.X - ((Control)mw2).Location.Y);
-            else
-                return -Convert.ToInt32(mw1.NotMove()).CompareTo(Convert.ToInt32(mw2.NotMove()));
-        });
-
-        int x = 0, y = 0, cil = 0;
-        foreach (Control cont in wins)
+        IMdiWin[] all_wins = mdiWins.ToArray();
+        List<IMdiWin> listWinsDontMove = new List<IMdiWin>();
+        foreach (IMdiWin subwin in all_wins)
         {
-            if (y + ((Control)win).Height + 44 > Height)
+            if (subwin.NotMove())
             {
-                cil++;
-                x = 48 * cil;
-                y = 0;
-            }
-            else
-            {
-                if (cont.Location.X == x && cont.Location.Y == y)
-                {
-                    x += 48;
-                    y += 48;
-                }
-                if (cont.Location.X > x || cont.Location.Y > y)
-                {
-                    break;
-                }
+                listWinsDontMove.Add(subwin);
             }
         }
-
-        ((Control)win).Location = new Point(x, y);
+        IMdiWin[] wins = listWinsDontMove.ToArray();
+        Array.Sort(wins, SortMdiWin);
+        ((Control)win).Location = GetWinStartPosition(win, wins);
 
         Controls.Add((Control)win);
         mdiWins.Add(win);
@@ -140,42 +93,18 @@ public partial class MdiControl : UserControl
         form.Show();
         win.mdiControl = this;
 
-        IMdiWin[] wins = new IMdiWin[] { };
-        wins = mdiWins.ToArray();
-
-        Array.Sort(wins, delegate (IMdiWin mw1, IMdiWin mw2) {
-            if (((Control)mw1).Location.X - ((Control)mw1).Location.Y == ((Control)mw2).Location.X - ((Control)mw2).Location.Y)
-                return ((Control)mw1).Location.X.CompareTo(((Control)mw2).Location.X);
-            else if (mw1.NotMove() && mw2.NotMove())
-                return (((Control)mw1).Location.X - ((Control)mw1).Location.Y).CompareTo(((Control)mw2).Location.X - ((Control)mw2).Location.Y);
-            else
-                return -Convert.ToInt32(mw1.NotMove()).CompareTo(Convert.ToInt32(mw2.NotMove()));
-        });
-
-        int x = 0, y = 0, cil = 0;
-        foreach (Control cont in wins)
+        IMdiWin[] all_wins = mdiWins.ToArray();
+        List<IMdiWin> listWinsDontMove = new List<IMdiWin>();
+        foreach (IMdiWin subwin in all_wins)
         {
-            if (y + win.Height + 44 > Height)
+            if (subwin.NotMove())
             {
-                cil++;
-                x = 48 * cil;
-                y = 0;
-            }
-            else
-            {
-                if (cont.Location.X == x && cont.Location.Y == y)
-                {
-                    x += 48;
-                    y += 48;
-                }
-                if (cont.Location.X > x || cont.Location.Y > y)
-                {
-                    break;
-                }
+                listWinsDontMove.Add(subwin);
             }
         }
-
-        win.Location = new Point(x, y);
+        IMdiWin[] wins = listWinsDontMove.ToArray();
+        Array.Sort(wins, SortMdiWin);
+        win.Location = GetWinStartPosition(win, wins);
 
         Controls.Add(win);
         mdiWins.Add(win);
@@ -205,42 +134,18 @@ public partial class MdiControl : UserControl
         form.Show();
         win.SetMdiControl(this);
 
-        IMdiWin[] wins = new IMdiWin[] { };
-        wins = mdiWins.ToArray();
-
-        Array.Sort(wins, delegate (IMdiWin mw1, IMdiWin mw2) {
-            if (((Control)mw1).Location.X - ((Control)mw1).Location.Y == ((Control)mw2).Location.X - ((Control)mw2).Location.Y)
-                return ((Control)mw1).Location.X.CompareTo(((Control)mw2).Location.X);
-            else if (mw1.NotMove() && mw2.NotMove())
-                return (((Control)mw1).Location.X - ((Control)mw1).Location.Y).CompareTo(((Control)mw2).Location.X - ((Control)mw2).Location.Y);
-            else
-                return -Convert.ToInt32(mw1.NotMove()).CompareTo(Convert.ToInt32(mw2.NotMove()));
-        });
-
-        int x = 0, y = 0, cil = 0;
-        foreach (Control cont in wins)
+        IMdiWin[] all_wins = mdiWins.ToArray();
+        List<IMdiWin> listWinsDontMove = new List<IMdiWin>();
+        foreach (IMdiWin subwin in all_wins)
         {
-            if (y + ((Control)win).Height + 44 > Height)
+            if (subwin.NotMove())
             {
-                cil++;
-                x = 48 * cil;
-                y = 0;
-            }
-            else
-            {
-                if (cont.Location.X == x && cont.Location.Y == y)
-                {
-                    x += 48;
-                    y += 48;
-                }
-                if (cont.Location.X > x || cont.Location.Y > y)
-                {
-                    break;
-                }
+                listWinsDontMove.Add(subwin);
             }
         }
-
-        ((Control)win).Location = new Point(x, y);
+        IMdiWin[] wins = listWinsDontMove.ToArray();
+        Array.Sort(wins, SortMdiWin);
+        ((Control)win).Location = GetWinStartPosition(win, wins);
 
         Controls.Add((Control)win);
         mdiWins.Add(win);
@@ -259,6 +164,63 @@ public partial class MdiControl : UserControl
     {
         Controls.SetChildIndex((Control)win,0);
     }
+    #endregion
+
+    #region Private
+    int SortMdiWin(IMdiWin mw1, IMdiWin mw2)
+    {
+        if (mw1 is Control cmw1 && mw2 is Control cmw2)
+        {
+            if (cmw1.Location.X - cmw1.Location.Y == cmw2.Location.X - cmw2.Location.Y && mw1.NotMove() && mw2.NotMove())
+            {
+                return cmw1.Location.X.CompareTo(cmw2.Location.X);
+            }
+            else if (mw1.NotMove() && mw2.NotMove())
+            {
+                return (cmw1.Location.X - cmw1.Location.Y).CompareTo(cmw2.Location.X - cmw2.Location.Y);
+            }
+            else
+            {
+                return -Convert.ToInt32(mw1.NotMove()).CompareTo(Convert.ToInt32(mw2.NotMove()));
+            }
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    private Point GetWinStartPosition(IMdiWin win, IMdiWin[] wins)
+    {
+        if(win is not Control) return default;
+
+        int x = 0, y = 0, cil = 0;
+        foreach (IMdiWin subwin in wins)
+        {
+            if (subwin is not Control) continue;
+            Control cont = (Control)subwin;
+
+            if (y + ((Control)win).Height + 44 > Height)
+            {
+                cil++;
+                x = 48 * cil;
+                y = 0;
+            }
+            else if(cont.Location.Y + ((Control)win).Height + 44 <= Height)
+            {
+                if (cont.Location.X == x && cont.Location.Y == y)
+                {
+                    x += 48;
+                    y += 48;
+                }
+                if (cont.Location.X > x || cont.Location.Y > y)
+                {
+                    break;
+                }
+            }
+        }
+        return new Point(x, y);
+    }
 
     private void MdiControl_Resize(object sender, EventArgs e)
     {
@@ -270,20 +232,18 @@ public partial class MdiControl : UserControl
             }
         }
     }
-
-    private bool removeScreenFlickering = true;
+    #endregion
 
     #region behaviors
     [DefaultValue(true)]
     [Description("Is Remove Screen Flickering")]
-    public bool RemoveScreenFlickering { get { return removeScreenFlickering; } set { removeScreenFlickering = value; } }
-    #endregion
-
+    public bool removeScreenFlickering = false;
+    public bool RemoveScreenFlickering { get => removeScreenFlickering; set => removeScreenFlickering = value; }
     protected override CreateParams CreateParams
     {
         get
         {
-            if (removeScreenFlickering)
+            if (RemoveScreenFlickering)
             {
                 CreateParams handleparam = base.CreateParams;
                 handleparam.ExStyle |= 0x02000000;
@@ -295,4 +255,5 @@ public partial class MdiControl : UserControl
             }
         }
     }
+    #endregion
 }

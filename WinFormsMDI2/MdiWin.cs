@@ -25,6 +25,10 @@ public partial class MdiWin : UserControl, IMdiWin
     Size lastSize, lastMinSize, lastMaxSize;
     string lastTitle;
 
+    #region Event
+    //public event EventHandler<EventArgs> MdiChange;
+    #endregion
+
     public MdiWin()
     {
         BackColor = Color.FromArgb(240, 240, 240);
@@ -315,7 +319,7 @@ public partial class MdiWin : UserControl, IMdiWin
             if (notMove)
             {
                 notMove = false;
-            }  
+            }
         }
     }
 
