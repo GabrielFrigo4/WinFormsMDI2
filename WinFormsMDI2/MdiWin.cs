@@ -227,7 +227,6 @@ public partial class MdiWin : UserControl, IMdiWin
                     CloseEnterColor = Color.FromArgb(255, 90, 90);
                     CloseDownColor = Color.FromArgb(255, 20, 20);
                     CloseLeaveColor = SystemColors.ControlLightLight;
-                    BorderColor = Color.DarkGray;
                     CloseImage = Properties.Resources.Close;
                     NormalizeImage = Properties.Resources.Normalize;
                     MinimizeImage = Properties.Resources.Minimize;
@@ -235,6 +234,14 @@ public partial class MdiWin : UserControl, IMdiWin
                     bMin.BackColor = MinimizeLeaveColor;
                     bMax.BackColor = MaximizeLeaveColor;
                     bClose.BackColor = closeLeaveColor;
+                    if (mdiFocus == true)
+                    {
+                        BorderColor = Color.DarkGray;
+                    }
+                    else if (mdiFocus == false)
+                    {
+                        BorderColor = Color.White;
+                    }
                     break;
                 case MdiThemeMode.Dark:
                     BackColor = Color.FromArgb(60, 60, 60);
@@ -249,7 +256,6 @@ public partial class MdiWin : UserControl, IMdiWin
                     CloseEnterColor = Color.FromArgb(180, 0, 0);
                     CloseDownColor = Color.FromArgb(255, 40, 40);
                     CloseLeaveColor = Color.FromArgb(35, 35, 35);
-                    BorderColor = Color.FromArgb(14, 14, 14);
                     CloseImage = Properties.Resources.CloseWhite;
                     NormalizeImage = Properties.Resources.NormalizeWhite;
                     MinimizeImage = Properties.Resources.MinimizeWhite;
@@ -257,6 +263,14 @@ public partial class MdiWin : UserControl, IMdiWin
                     bMin.BackColor = MinimizeLeaveColor;
                     bMax.BackColor = MaximizeLeaveColor;
                     bClose.BackColor = CloseLeaveColor;
+                    if (mdiFocus == true)
+                    {
+                        BorderColor = Color.FromArgb(14, 14, 14);
+                    }
+                    else if (mdiFocus == false)
+                    {
+                        BorderColor = Color.FromArgb(35, 35, 35);
+                    }
                     break;
             }
         }
