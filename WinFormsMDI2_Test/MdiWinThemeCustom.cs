@@ -99,6 +99,7 @@ namespace WinFormsMDI2_Test
         void IMdiWin.SetTitle(string title) { }
         void IMdiWin.SetMinimizeBox(bool minimizeBox) { }
         void IMdiWin.SetMaximizeBox(bool maximizeBox) { }
+        bool IMdiWin.MdiFocus { get; set; }
         #endregion
     }
 }

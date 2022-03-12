@@ -14,4 +14,6 @@ public interface IMdiWin
 
     void SetMinimizeBox(bool minimizeBox);
     void SetMaximizeBox(bool maximizeBox);
+
+    bool MdiFocus { get; set; }
 }

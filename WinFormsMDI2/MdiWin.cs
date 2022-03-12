@@ -8,7 +8,7 @@ namespace WinFormsMDI2;
 public partial class MdiWin : UserControl, IMdiWin
 {
     public MdiControl mdiControl;
-    private bool isMinNotMove = false, notMove = true;
+    private bool isMinNotMove = false, notMove = true, mdiFocus = true;
     private int minInd;
 
     private bool resizable = true, maximizeBox = true, minimizeBox = true;
@@ -24,10 +24,6 @@ public partial class MdiWin : UserControl, IMdiWin
     Point lastLocation, minPos, maxPos;
     Size lastSize, lastMinSize, lastMaxSize;
     string lastTitle;
-
-    #region Event
-    //public event EventHandler<EventArgs> MdiChange;
-    #endregion
 
     public MdiWin()
     {
@@ -290,9 +286,9 @@ public partial class MdiWin : UserControl, IMdiWin
         {
             Point newMousePosition = new Point(MousePosition.X - mx, MousePosition.Y - my), newPosition = newMousePosition;
 
-            if(Width < mdiControl.Width)
+            if (Width < mdiControl.Width)
             {
-                if(newMousePosition.X < 0)
+                if (newMousePosition.X < 0)
                 {
                     newPosition.X = 0;
                 }
@@ -302,7 +298,7 @@ public partial class MdiWin : UserControl, IMdiWin
                 }
             }
 
-            if(Height < mdiControl.Height)
+            if (Height < mdiControl.Height)
             {
                 if (newMousePosition.Y < 0)
                 {
@@ -312,7 +308,7 @@ public partial class MdiWin : UserControl, IMdiWin
                 {
                     newPosition.Y = mdiControl.Height - Height;
                 }
-            } 
+            }
 
             Location = newPosition;
 
@@ -1006,6 +1002,38 @@ public partial class MdiWin : UserControl, IMdiWin
     void IMdiWin.SetMaximizeBox(bool maximizeBox)
     {
         MaximizeBox = maximizeBox;
+    }
+
+    bool IMdiWin.MdiFocus 
+    {
+        get => mdiFocus;
+
+        set
+        {
+            if(theme == MdiThemeMode.Light)
+            {
+                if (mdiFocus != value && value == true)
+                {
+                    BorderColor = Color.DarkGray;
+                }
+                else if (mdiFocus != value && value == false)
+                {
+                    BorderColor = Color.White;
+                }
+            }
+            else if (theme == MdiThemeMode.Dark)
+            {
+                if (mdiFocus != value && value == true)
+                {
+                    BorderColor = Color.FromArgb(14, 14, 14);
+                }
+                else if (mdiFocus != value && value == false)
+                {
+                    BorderColor = Color.FromArgb(35, 35, 35);
+                }
+            }
+            mdiFocus = value;
+        }
     }
     #endregion
 }

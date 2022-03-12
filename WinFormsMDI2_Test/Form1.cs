@@ -19,6 +19,12 @@ public partial class Form1 : Form
         mdiControl.CreateMdiWinWithForm(new FormForMDI()).MdiTheme = MdiThemeMode.Dark;
         mdiControl.CreateMdiWinWithForm(typeof(MdiWinThemeCustom), new FormForMDI());
         mdiControl.CreateMdiWinWithForm<MdiWinThemeCustom>(new FormForMDI());
+
+        for (int i = 0; i < 8; i++)
+        {
+            MdiWin mdi = mdiControl.CreateMdiWin();
+            mdi.MdiTheme = MdiThemeMode.Light;
+        }
     }
 
     private void createMDI_Click(object sender, EventArgs e)

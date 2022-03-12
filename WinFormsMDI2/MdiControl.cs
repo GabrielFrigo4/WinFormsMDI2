@@ -162,7 +162,13 @@ public partial class MdiControl : UserControl
 
     public void FocusMdiWin(IMdiWin win)
     {
+        win.MdiFocus = true;
         Controls.SetChildIndex((Control)win,0);
+        foreach(IMdiWin subwin in mdiWins)
+        {
+            if (subwin == win) continue;
+            subwin.MdiFocus = false;
+        }
     }
     #endregion
 
@@ -171,17 +177,13 @@ public partial class MdiControl : UserControl
     {
         if (mw1 is Control cmw1 && mw2 is Control cmw2)
         {
-            if (cmw1.Location.X - cmw1.Location.Y == cmw2.Location.X - cmw2.Location.Y && mw1.NotMove() && mw2.NotMove())
+            if (cmw1.Location.X - cmw1.Location.Y == cmw2.Location.X - cmw2.Location.Y)
             {
                 return cmw1.Location.X.CompareTo(cmw2.Location.X);
             }
-            else if (mw1.NotMove() && mw2.NotMove())
-            {
-                return (cmw1.Location.X - cmw1.Location.Y).CompareTo(cmw2.Location.X - cmw2.Location.Y);
-            }
             else
             {
-                return -Convert.ToInt32(mw1.NotMove()).CompareTo(Convert.ToInt32(mw2.NotMove()));
+                return (cmw1.Location.X - cmw1.Location.Y).CompareTo(cmw2.Location.X - cmw2.Location.Y);
             }
         }
         else
@@ -192,31 +194,30 @@ public partial class MdiControl : UserControl
 
     private Point GetWinStartPosition(IMdiWin win, IMdiWin[] wins)
     {
+        const int MOVE = 48;
         if(win is not Control) return default;
+        Control winCont = win as Control;
 
         int x = 0, y = 0, cil = 0;
         foreach (IMdiWin subwin in wins)
         {
             if (subwin is not Control) continue;
-            Control cont = (Control)subwin;
+            Control cont = subwin as Control;
 
-            if (y + ((Control)win).Height + 44 > Height)
-            {
-                cil++;
-                x = 48 * cil;
-                y = 0;
-            }
-            else if(cont.Location.Y + ((Control)win).Height + 44 <= Height)
+            if (cont.Location.Y + cont.Height <= Height)
             {
                 if (cont.Location.X == x && cont.Location.Y == y)
                 {
-                    x += 48;
-                    y += 48;
+                    x += MOVE;
+                    y += MOVE;
                 }
-                if (cont.Location.X > x || cont.Location.Y > y)
-                {
-                    break;
-                }
+            }
+
+            if (y + winCont.Height > Height)
+            {
+                cil++;
+                x = MOVE * cil;
+                y = 0;
             }
         }
         return new Point(x, y);
@@ -226,15 +227,15 @@ public partial class MdiControl : UserControl
     {
         foreach (IMdiWin win in mdiWins)
         {
-            if (win.IsMinNotMove())
+            if (win.IsMinNotMove() && win is Control control)
             {
-                ((Control)win).Location = new Point(((Control)win).Location.X, Height - 32 * win.MinInd());
+                control.Location = new Point(((Control)win).Location.X, Height - 32 * win.MinInd());
             }
         }
     }
     #endregion
 
-    #region behaviors
+    #region Behaviors
     [DefaultValue(true)]
     [Description("Is Remove Screen Flickering")]
     public bool removeScreenFlickering = false;
