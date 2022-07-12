@@ -18,10 +18,6 @@
 
   <ItemGroup>
     <None Remove="Resources\Arquivo.png" />
-    <None Include="..\..\..\..\..\..\..\OneDrive\Imagens\Saved Pictures\Ico\WinFormsMDI2.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +33,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="WinFormsMDI2.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

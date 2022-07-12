@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsMDI2", "WinFormsMDI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsMDI2_Test", "WinFormsMDI2_Test\WinFormsMDI2_Test.csproj", "{3A36A439-C836-4DB4-BCA0-AB5FBDBC3B2C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{E1388F2E-200E-4651-A601-8AC30EF2B4C2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwitchTheme", "Examples\SwitchTheme\SwitchTheme.csproj", "{6E9FD083-CFBC-4082-B39B-C507A61741DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +25,16 @@ Global
 		{3A36A439-C836-4DB4-BCA0-AB5FBDBC3B2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A36A439-C836-4DB4-BCA0-AB5FBDBC3B2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A36A439-C836-4DB4-BCA0-AB5FBDBC3B2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E9FD083-CFBC-4082-B39B-C507A61741DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E9FD083-CFBC-4082-B39B-C507A61741DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E9FD083-CFBC-4082-B39B-C507A61741DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E9FD083-CFBC-4082-B39B-C507A61741DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6E9FD083-CFBC-4082-B39B-C507A61741DD} = {E1388F2E-200E-4651-A601-8AC30EF2B4C2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB9B27EF-FD16-4CBF-9B1C-625C4EF4CA56}

@@ -8,10 +8,11 @@ namespace WinFormsMDI2;
 public partial class MdiControl : UserControl
 {
     #region Public
-    public List<IMdiWin> mdiWins = new List<IMdiWin>();
+    public List<IMdiWin> MdiWins { get; private set; }
 
     public MdiControl()
     {
+        MdiWins = new();
         BackColor = Color.FromArgb(230, 230, 230);
         InitializeComponent();
     }
@@ -21,7 +22,7 @@ public partial class MdiControl : UserControl
         var win = new MdiWin();
         win.mdiControl = this;
 
-        IMdiWin[] all_wins = mdiWins.ToArray();
+        IMdiWin[] all_wins = MdiWins.ToArray();
         List<IMdiWin> listWinsDontMove = new List<IMdiWin>();
         foreach (IMdiWin subwin in all_wins)
         {
@@ -35,7 +36,7 @@ public partial class MdiControl : UserControl
         win.Location = GetWinStartPosition(win, wins);
 
         Controls.Add(win);
-        mdiWins.Add(win);
+        MdiWins.Add(win);
 
         FocusMdiWin(win);
         return win;
@@ -46,7 +47,7 @@ public partial class MdiControl : UserControl
         var win = Activator.CreateInstance(mdiWinType) as IMdiWin;
         win.SetMdiControl(this);
 
-        IMdiWin[] all_wins = mdiWins.ToArray();
+        IMdiWin[] all_wins = MdiWins.ToArray();
         List<IMdiWin> listWinsDontMove = new List<IMdiWin>();
         foreach (IMdiWin subwin in all_wins)
         {
@@ -60,7 +61,7 @@ public partial class MdiControl : UserControl
         ((Control)win).Location = GetWinStartPosition(win, wins);
 
         Controls.Add((Control)win);
-        mdiWins.Add(win);
+        MdiWins.Add(win);
 
         FocusMdiWin(win);
         return win;
@@ -93,7 +94,7 @@ public partial class MdiControl : UserControl
         form.Show();
         win.mdiControl = this;
 
-        IMdiWin[] all_wins = mdiWins.ToArray();
+        IMdiWin[] all_wins = MdiWins.ToArray();
         List<IMdiWin> listWinsDontMove = new List<IMdiWin>();
         foreach (IMdiWin subwin in all_wins)
         {
@@ -107,18 +108,18 @@ public partial class MdiControl : UserControl
         win.Location = GetWinStartPosition(win, wins);
 
         Controls.Add(win);
-        mdiWins.Add(win);
+        MdiWins.Add(win);
 
         FocusMdiWin(win);
         return win;
     }
 
-    public IMdiWin CreateMdiWinWithForm(Type mdiWinStyle, Form form, bool useFormIcon = true, bool useFormText = true)
+    public IMdiWin CreateMdiWinWithForm(Type MdiWinstyle, Form form, bool useFormIcon = true, bool useFormText = true)
     {
         form.FormBorderStyle = FormBorderStyle.None;
         form.TopLevel = false;
 
-        var win = Activator.CreateInstance(mdiWinStyle) as IMdiWin;
+        var win = Activator.CreateInstance(MdiWinstyle) as IMdiWin;
         if (useFormIcon)
             win.SetIco(form.Icon.ToBitmap());
         if (useFormText)
@@ -134,7 +135,7 @@ public partial class MdiControl : UserControl
         form.Show();
         win.SetMdiControl(this);
 
-        IMdiWin[] all_wins = mdiWins.ToArray();
+        IMdiWin[] all_wins = MdiWins.ToArray();
         List<IMdiWin> listWinsDontMove = new List<IMdiWin>();
         foreach (IMdiWin subwin in all_wins)
         {
@@ -148,23 +149,23 @@ public partial class MdiControl : UserControl
         ((Control)win).Location = GetWinStartPosition(win, wins);
 
         Controls.Add((Control)win);
-        mdiWins.Add(win);
+        MdiWins.Add(win);
 
         FocusMdiWin(win);
         return win;
     }
 
-    public MdiWinStyle CreateMdiWinWithForm<MdiWinStyle>(Form form, bool useFormIcon = true, bool useFormText = true) where MdiWinStyle : Control, IMdiWin
+    public MdiWinstyle CreateMdiWinWithForm<MdiWinstyle>(Form form, bool useFormIcon = true, bool useFormText = true) where MdiWinstyle : Control, IMdiWin
     {
-        var win = CreateMdiWinWithForm(typeof(MdiWinStyle), form, useFormIcon, useFormText);
-        return (MdiWinStyle)win;
+        var win = CreateMdiWinWithForm(typeof(MdiWinstyle), form, useFormIcon, useFormText);
+        return (MdiWinstyle)win;
     }
 
     public void FocusMdiWin(IMdiWin win)
     {
         win.MdiFocus = true;
         Controls.SetChildIndex((Control)win,0);
-        foreach(IMdiWin subwin in mdiWins)
+        foreach(IMdiWin subwin in MdiWins)
         {
             if (subwin == win) continue;
             subwin.MdiFocus = false;
@@ -225,7 +226,7 @@ public partial class MdiControl : UserControl
 
     private void MdiControl_Resize(object sender, EventArgs e)
     {
-        foreach (IMdiWin win in mdiWins)
+        foreach (IMdiWin win in MdiWins)
         {
             if (win.IsMinNotMove() && win is Control control)
             {

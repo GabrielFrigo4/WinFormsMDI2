@@ -785,7 +785,7 @@ public partial class MdiWin : UserControl, IMdiWin
                 minInd = 1;
 
                 IMdiWin[] wins = new IMdiWin[] { };
-                wins = mdiControl.mdiWins.ToArray();
+                wins = mdiControl.MdiWins.ToArray();
 
                 Array.Sort(wins, delegate (IMdiWin mw1, IMdiWin mw2) {
                     if (((Control)mw1).Location.Y == ((Control)mw2).Location.Y)
@@ -925,7 +925,7 @@ public partial class MdiWin : UserControl, IMdiWin
     private void bClose_Click(object sender, EventArgs e)
     {
         mdiControl.Controls.Remove(this);
-        mdiControl.mdiWins.Remove(this);
+        mdiControl.MdiWins.Remove(this);
         Dispose();
     }
 
