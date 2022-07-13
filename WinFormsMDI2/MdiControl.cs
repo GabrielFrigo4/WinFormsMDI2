@@ -19,11 +19,13 @@ public partial class MdiControl : UserControl
 
     public MdiWin CreateMdiWin()
     {
-        var win = new MdiWin();
-        win.mdiControl = this;
+        MdiWin win = new()
+        {
+            MdiControl = this
+        };
 
         IMdiWin[] all_wins = MdiWins.ToArray();
-        List<IMdiWin> listWinsDontMove = new List<IMdiWin>();
+        List<IMdiWin> listWinsDontMove = new();
         foreach (IMdiWin subwin in all_wins)
         {
             if (subwin.NotMove())
@@ -44,11 +46,13 @@ public partial class MdiControl : UserControl
 
     public IMdiWin CreateMdiWin(Type mdiWinType)
     {
-        var win = Activator.CreateInstance(mdiWinType) as IMdiWin;
-        win.SetMdiControl(this);
+        if (Activator.CreateInstance(mdiWinType) is not IMdiWin win) 
+            throw new Exception($"It is not possible to create an instance using the type {mdiWinType.Name}");
+
+        win.MdiControl = this;
 
         IMdiWin[] all_wins = MdiWins.ToArray();
-        List<IMdiWin> listWinsDontMove = new List<IMdiWin>();
+        List<IMdiWin> listWinsDontMove = new();
         foreach (IMdiWin subwin in all_wins)
         {
             if (subwin.NotMove())
@@ -78,7 +82,7 @@ public partial class MdiControl : UserControl
         form.FormBorderStyle = FormBorderStyle.None;
         form.TopLevel = false;
 
-        var win = new MdiWin();
+        MdiWin win = new();
         if(useFormIcon)
             win.Ico = form.Icon.ToBitmap();
         if (useFormText)
@@ -92,10 +96,10 @@ public partial class MdiControl : UserControl
         win.Controls.Add(form);
         form.BringToFront();
         form.Show();
-        win.mdiControl = this;
+        win.MdiControl = this;
 
         IMdiWin[] all_wins = MdiWins.ToArray();
-        List<IMdiWin> listWinsDontMove = new List<IMdiWin>();
+        List<IMdiWin> listWinsDontMove = new();
         foreach (IMdiWin subwin in all_wins)
         {
             if (subwin.NotMove())
@@ -114,12 +118,14 @@ public partial class MdiControl : UserControl
         return win;
     }
 
-    public IMdiWin CreateMdiWinWithForm(Type MdiWinstyle, Form form, bool useFormIcon = true, bool useFormText = true)
+    public IMdiWin CreateMdiWinWithForm(Type mdiWinstyle, Form form, bool useFormIcon = true, bool useFormText = true)
     {
         form.FormBorderStyle = FormBorderStyle.None;
         form.TopLevel = false;
 
-        var win = Activator.CreateInstance(MdiWinstyle) as IMdiWin;
+        if (Activator.CreateInstance(mdiWinstyle) is not IMdiWin win)
+            throw new Exception($"It is not possible to create an instance using the type {mdiWinstyle.Name}");
+
         if (useFormIcon)
             win.SetIco(form.Icon.ToBitmap());
         if (useFormText)
@@ -133,10 +139,10 @@ public partial class MdiControl : UserControl
         ((Control)win).Controls.Add(form);
         form.BringToFront();
         form.Show();
-        win.SetMdiControl(this);
+        win.MdiControl = this;
 
         IMdiWin[] all_wins = MdiWins.ToArray();
-        List<IMdiWin> listWinsDontMove = new List<IMdiWin>();
+        List<IMdiWin> listWinsDontMove = new();
         foreach (IMdiWin subwin in all_wins)
         {
             if (subwin.NotMove())
@@ -196,14 +202,12 @@ public partial class MdiControl : UserControl
     private Point GetWinStartPosition(IMdiWin win, IMdiWin[] wins)
     {
         const int MOVE = 48;
-        if(win is not Control) return default;
-        Control winCont = win as Control;
+        if(win is not Control winCont) return default;
 
         int x = 0, y = 0, cil = 0;
         foreach (IMdiWin subwin in wins)
         {
-            if (subwin is not Control) continue;
-            Control cont = subwin as Control;
+            if (subwin is not Control cont) continue;
 
             if (cont.Location.Y + cont.Height <= Height)
             {

@@ -8,13 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MdiForm
+namespace MdiForm;
+public partial class Form2 : Form
 {
-    public partial class Form2 : Form
+    public Form2()
     {
-        public Form2()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

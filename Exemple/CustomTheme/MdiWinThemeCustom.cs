@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Security.Permissions;
 using WinFormsMDI2;
 
-namespace WinFormsMDI2_Test;
+namespace CustomTheme;
 public partial class MdiWinThemeCustom : UserControl, IMdiWin
 {
+    private bool isMax = false;
+
     internal bool notMove = true, isMove = false;
     internal int mx, my;
+
     private MdiControl? mdiControl;
     public MdiControl MdiControl
     {
@@ -35,16 +29,19 @@ public partial class MdiWinThemeCustom : UserControl, IMdiWin
     public MdiWinThemeCustom()
     {
         InitializeComponent();
+        panelMain.Select();
     }
 
     private void MdiWin_MouseDown()
     {
-        mdiControl.FocusMdiWin(this);
+        MdiControl.FocusMdiWin(this);
+        panelMain.Select();
     }
 
     private void MdiWin_MouseDown(object sender, MouseEventArgs e)
     {
         MdiWin_MouseDown();
+        panelMain.Select();
     }
 
     private void panelMain_MouseDown(object sender, MouseEventArgs e)
@@ -68,7 +65,51 @@ public partial class MdiWinThemeCustom : UserControl, IMdiWin
             {
                 notMove = false;
             }
+            DrawBounds();
         }
+    }
+
+    private void bClose_Click(object sender, EventArgs e)
+    {
+        MdiControl.Controls.Remove(this);
+        MdiControl.MdiWins.Remove(this);
+        Dispose();
+    }
+
+    private void bNormalMax_Click(object sender, EventArgs e)
+    {
+        isMax = !isMax;
+        if (isMax)
+        {
+            bNormalMax.BackColor = Color.Green;
+            Dock = DockStyle.Fill;
+        }
+        else
+        {
+            bNormalMax.BackColor = Color.Orange;
+            Dock = DockStyle.None;
+        }
+        DrawBounds();
+    }
+
+    private void MdiWinThemeCustom_Paint(object sender, PaintEventArgs e)
+    {
+        int left = 0, right = Right - Left, top = Bottom - Top, botton = Height;
+        Graphics g = e.Graphics;
+        g.Clear(BackColor);
+        g.DrawLine(Pens.Black, left, top, left, 0);
+        g.DrawLine(Pens.Black, left, botton - 1, right, botton - 1);
+        g.DrawLine(Pens.Black, right - 1, top, right - 1, 0);
+    }
+
+    private void MdiWinThemeCustom_Resize(object sender, EventArgs e)
+    {
+        DrawBounds();
+    }
+
+    private void DrawBounds()
+    {
+        InvokePaint(this, new PaintEventArgs(CreateGraphics(), DisplayRectangle));
     }
 
     #region behaviors
@@ -102,7 +143,6 @@ public partial class MdiWinThemeCustom : UserControl, IMdiWin
     {
         return notMove;
     }
-
     bool IMdiWin.IsMinNotMove() { return false; }
     int IMdiWin.MinInd() { return 0; }
     void IMdiWin.SetIco(Image ico) { }

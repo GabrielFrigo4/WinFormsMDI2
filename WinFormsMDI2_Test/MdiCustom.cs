@@ -8,13 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WinFormsMDI2_Test
+namespace WinFormsMDI2_Test;
+public partial class MdiCustom : WinFormsMDI2.MdiWin
 {
-    public partial class MdiCustom : WinFormsMDI2.MdiWin
+    public MdiCustom()
     {
-        public MdiCustom()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

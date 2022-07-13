@@ -4,7 +4,7 @@ namespace WinFormsMDI2;
 public interface IMdiWin
 {
     bool NotMove();
-    void SetMdiControl(MdiControl mdiControl);
+    MdiControl MdiControl { get; set; }
 
     bool IsMinNotMove();
     int MinInd();

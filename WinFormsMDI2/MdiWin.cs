@@ -7,7 +7,6 @@ using System.Windows.Forms;
 namespace WinFormsMDI2;
 public partial class MdiWin : UserControl, IMdiWin
 {
-    public MdiControl mdiControl;
     private bool isMinNotMove = false, notMove = true, mdiFocus = true;
     private int minInd;
 
@@ -23,7 +22,24 @@ public partial class MdiWin : UserControl, IMdiWin
     int mx, my, rx, ry;
     Point lastLocation, minPos, maxPos;
     Size lastSize, lastMinSize, lastMaxSize;
-    string lastTitle;
+    string lastTitle = string.Empty;
+
+    private MdiControl? mdiControl;
+    public MdiControl MdiControl
+    {
+        get
+        {
+            if (mdiControl is not null)
+                return mdiControl;
+            else
+                throw new Exception("MdiControl is null");
+        }
+
+        set
+        {
+            mdiControl = value;
+        }
+    }
 
     public MdiWin()
     {
@@ -43,10 +59,10 @@ public partial class MdiWin : UserControl, IMdiWin
 
     private void MdiWin_MouseDown()
     {
-        mdiControl.FocusMdiWin(this);
+        MdiControl.FocusMdiWin(this);
     }
 
-    private void MdiWin_MouseDown(object sender, MouseEventArgs e)
+    private void MdiWin_MouseDown(object? sender, MouseEventArgs e)
     {
         MdiWin_MouseDown();
     }
@@ -278,7 +294,7 @@ public partial class MdiWin : UserControl, IMdiWin
     #endregion
 
     #region panelMain
-    private void panelMain_MouseDown(object sender, MouseEventArgs e)
+    private void panelMain_MouseDown(object? sender, MouseEventArgs e)
     {
         if (Dock != DockStyle.Fill)
         {
@@ -289,38 +305,38 @@ public partial class MdiWin : UserControl, IMdiWin
         }
     }
 
-    private void panelMain_MouseUp(object sender, MouseEventArgs e)
+    private void panelMain_MouseUp(object? sender, MouseEventArgs e)
     {
         isMove = false;
     }
 
-    private void panelMain_MouseMove(object sender, MouseEventArgs e)
+    private void panelMain_MouseMove(object? sender, MouseEventArgs e)
     {
         if (isMove)
         {
             Point newMousePosition = new Point(MousePosition.X - mx, MousePosition.Y - my), newPosition = newMousePosition;
 
-            if (Width < mdiControl.Width)
+            if (Width < MdiControl.Width)
             {
                 if (newMousePosition.X < 0)
                 {
                     newPosition.X = 0;
                 }
-                else if (newMousePosition.X + Width > mdiControl.Width)
+                else if (newMousePosition.X + Width > MdiControl.Width)
                 {
-                    newPosition.X = mdiControl.Width - Width;
+                    newPosition.X = MdiControl.Width - Width;
                 }
             }
 
-            if (Height < mdiControl.Height)
+            if (Height < MdiControl.Height)
             {
                 if (newMousePosition.Y < 0)
                 {
                     newPosition.Y = 0;
                 }
-                else if (newMousePosition.Y + Height > mdiControl.Height)
+                else if (newMousePosition.Y + Height > MdiControl.Height)
                 {
-                    newPosition.Y = mdiControl.Height - Height;
+                    newPosition.Y = MdiControl.Height - Height;
                 }
             }
 
@@ -333,7 +349,7 @@ public partial class MdiWin : UserControl, IMdiWin
         }
     }
 
-    private void panelMain_DoubleClick(object sender, EventArgs e)
+    private void panelMain_DoubleClick(object? sender, EventArgs e)
     {
         if (maximizeBox)
         {
@@ -382,7 +398,7 @@ public partial class MdiWin : UserControl, IMdiWin
     #endregion
 
     #region panelTop
-    private void panelTop_MouseDown(object sender, MouseEventArgs e)
+    private void panelTop_MouseDown(object? sender, MouseEventArgs e)
     {
         if (Dock != DockStyle.Fill)
         {
@@ -399,12 +415,12 @@ public partial class MdiWin : UserControl, IMdiWin
         }
     }
 
-    private void panelTop_MouseUp(object sender, MouseEventArgs e)
+    private void panelTop_MouseUp(object? sender, MouseEventArgs e)
     {
         isResize = false;
     }
 
-    private void panelTop_MouseMove(object sender, MouseEventArgs e)
+    private void panelTop_MouseMove(object? sender, MouseEventArgs e)
     {
         if (isResize)
         {
@@ -427,7 +443,7 @@ public partial class MdiWin : UserControl, IMdiWin
             Cursor.Current = Cursors.SizeNS;
     }
 
-    private void panelTop_MouseEnter(object sender, EventArgs e)
+    private void panelTop_MouseEnter(object? sender, EventArgs e)
     {
         if (resizable)
             Cursor.Current = Cursors.SizeNS;
@@ -435,7 +451,7 @@ public partial class MdiWin : UserControl, IMdiWin
     #endregion
 
     #region panelFloor
-    private void panelFloor_MouseDown(object sender, MouseEventArgs e)
+    private void panelFloor_MouseDown(object? sender, MouseEventArgs e)
     {
         if (Dock != DockStyle.Fill)
         {
@@ -448,12 +464,12 @@ public partial class MdiWin : UserControl, IMdiWin
         }
     }
 
-    private void panelFloor_MouseUp(object sender, MouseEventArgs e)
+    private void panelFloor_MouseUp(object? sender, MouseEventArgs e)
     {
         isResize = false;
     }
 
-    private void panelFloor_MouseMove(object sender, MouseEventArgs e)
+    private void panelFloor_MouseMove(object? sender, MouseEventArgs e)
     {
         if (isResize)
         {
@@ -464,7 +480,7 @@ public partial class MdiWin : UserControl, IMdiWin
             Cursor.Current = Cursors.SizeNS;
     }
 
-    private void panelFloor_MouseEnter(object sender, EventArgs e)
+    private void panelFloor_MouseEnter(object? sender, EventArgs e)
     {
         if (resizable)
             Cursor.Current = Cursors.SizeNS;
@@ -472,7 +488,7 @@ public partial class MdiWin : UserControl, IMdiWin
     #endregion
 
     #region panelLeft
-    private void panelLeft_MouseDown(object sender, MouseEventArgs e)
+    private void panelLeft_MouseDown(object? sender, MouseEventArgs e)
     {
         if (Dock != DockStyle.Fill)
         {
@@ -489,12 +505,12 @@ public partial class MdiWin : UserControl, IMdiWin
         }
     }
 
-    private void panelLeft_MouseUp(object sender, MouseEventArgs e)
+    private void panelLeft_MouseUp(object? sender, MouseEventArgs e)
     {
         isResize = false;
     }
 
-    private void panelLeft_MouseMove(object sender, MouseEventArgs e)
+    private void panelLeft_MouseMove(object? sender, MouseEventArgs e)
     {
         if (isResize)
         {
@@ -517,7 +533,7 @@ public partial class MdiWin : UserControl, IMdiWin
             Cursor.Current = Cursors.SizeWE;
     }
 
-    private void panelLeft_MouseEnter(object sender, EventArgs e)
+    private void panelLeft_MouseEnter(object? sender, EventArgs e)
     {
         if (resizable)
             Cursor.Current = Cursors.SizeWE;
@@ -525,7 +541,7 @@ public partial class MdiWin : UserControl, IMdiWin
     #endregion
 
     #region panelRight
-    private void panelRight_MouseDown(object sender, MouseEventArgs e)
+    private void panelRight_MouseDown(object? sender, MouseEventArgs e)
     {
         if (Dock != DockStyle.Fill)
         {
@@ -538,12 +554,12 @@ public partial class MdiWin : UserControl, IMdiWin
         }
     }
 
-    private void panelRight_MouseUp(object sender, MouseEventArgs e)
+    private void panelRight_MouseUp(object? sender, MouseEventArgs e)
     {
         isResize = false;
     }
 
-    private void panelRight_MouseMove(object sender, MouseEventArgs e)
+    private void panelRight_MouseMove(object? sender, MouseEventArgs e)
     {
         if (isResize)
         {
@@ -554,7 +570,7 @@ public partial class MdiWin : UserControl, IMdiWin
             Cursor.Current = Cursors.SizeWE;
     }
 
-    private void panelRight_MouseEnter(object sender, EventArgs e)
+    private void panelRight_MouseEnter(object? sender, EventArgs e)
     {
         if (resizable)
             Cursor.Current = Cursors.SizeWE;
@@ -562,7 +578,7 @@ public partial class MdiWin : UserControl, IMdiWin
     #endregion
 
     #region panelLeftTop
-    private void panelLeftTop_MouseDown(object sender, MouseEventArgs e)
+    private void panelLeftTop_MouseDown(object? sender, MouseEventArgs e)
     {
         if (Dock != DockStyle.Fill)
         {
@@ -581,12 +597,12 @@ public partial class MdiWin : UserControl, IMdiWin
         }
     }
 
-    private void panelLeftTop_MouseUp(object sender, MouseEventArgs e)
+    private void panelLeftTop_MouseUp(object? sender, MouseEventArgs e)
     {
         isResize = false;
     }
 
-    private void panelLeftTop_MouseMove(object sender, MouseEventArgs e)
+    private void panelLeftTop_MouseMove(object? sender, MouseEventArgs e)
     {
         if (isResize)
         {
@@ -626,7 +642,7 @@ public partial class MdiWin : UserControl, IMdiWin
             Cursor.Current = Cursors.SizeNWSE;
     }
 
-    private void panelLeftTop_MouseEnter(object sender, EventArgs e)
+    private void panelLeftTop_MouseEnter(object? sender, EventArgs e)
     {
         if (resizable)
             Cursor.Current = Cursors.SizeNWSE;
@@ -634,7 +650,7 @@ public partial class MdiWin : UserControl, IMdiWin
     #endregion
 
     #region panelRightTop
-    private void panelRightTop_MouseDown(object sender, MouseEventArgs e)
+    private void panelRightTop_MouseDown(object? sender, MouseEventArgs e)
     {
         if (Dock != DockStyle.Fill)
         {
@@ -651,12 +667,12 @@ public partial class MdiWin : UserControl, IMdiWin
         }
     }
 
-    private void panelRightTop_MouseUp(object sender, MouseEventArgs e)
+    private void panelRightTop_MouseUp(object? sender, MouseEventArgs e)
     {
         isResize = false;
     }
 
-    private void panelRightTop_MouseMove(object sender, MouseEventArgs e)
+    private void panelRightTop_MouseMove(object? sender, MouseEventArgs e)
     {
         if (isResize)
         {
@@ -674,7 +690,7 @@ public partial class MdiWin : UserControl, IMdiWin
             Cursor.Current = Cursors.SizeNESW;
     }
 
-    private void panelRightTop_MouseEnter(object sender, EventArgs e)
+    private void panelRightTop_MouseEnter(object? sender, EventArgs e)
     {
         if (resizable)
             Cursor.Current = Cursors.SizeNESW;
@@ -682,7 +698,7 @@ public partial class MdiWin : UserControl, IMdiWin
     #endregion
 
     #region panelRightFloor
-    private void panelRightFloor_MouseDown(object sender, MouseEventArgs e)
+    private void panelRightFloor_MouseDown(object? sender, MouseEventArgs e)
     {
         if (Dock != DockStyle.Fill)
         {
@@ -696,12 +712,12 @@ public partial class MdiWin : UserControl, IMdiWin
         }
     }
 
-    private void panelRightFloor_MouseUp(object sender, MouseEventArgs e)
+    private void panelRightFloor_MouseUp(object? sender, MouseEventArgs e)
     {
         isResize = false;
     }
 
-    private void panelRightFloor_MouseMove(object sender, MouseEventArgs e)
+    private void panelRightFloor_MouseMove(object? sender, MouseEventArgs e)
     {
         if (isResize)
         {
@@ -712,7 +728,7 @@ public partial class MdiWin : UserControl, IMdiWin
             Cursor.Current = Cursors.SizeNWSE;
     }
 
-    private void panelRightFloor_MouseEnter(object sender, EventArgs e)
+    private void panelRightFloor_MouseEnter(object? sender, EventArgs e)
     {
         if (resizable)
             Cursor.Current = Cursors.SizeNWSE;
@@ -720,7 +736,7 @@ public partial class MdiWin : UserControl, IMdiWin
     #endregion
 
     #region panelLeftFloor
-    private void panelLeftFloor_MouseDown(object sender, MouseEventArgs e)
+    private void panelLeftFloor_MouseDown(object? sender, MouseEventArgs e)
     {
         if (Dock != DockStyle.Fill)
         {
@@ -737,12 +753,12 @@ public partial class MdiWin : UserControl, IMdiWin
         }
     }
 
-    private void panelLeftFloor_MouseUp(object sender, MouseEventArgs e)
+    private void panelLeftFloor_MouseUp(object? sender, MouseEventArgs e)
     {
         isResize = false;
     }
 
-    private void panelLeftFloor_MouseMove(object sender, MouseEventArgs e)
+    private void panelLeftFloor_MouseMove(object? sender, MouseEventArgs e)
     {
         if (isResize)
         {
@@ -760,7 +776,7 @@ public partial class MdiWin : UserControl, IMdiWin
             Cursor.Current = Cursors.SizeNESW;
     }
 
-    private void panelLeftFloor_MouseEnter(object sender, EventArgs e)
+    private void panelLeftFloor_MouseEnter(object? sender, EventArgs e)
     {
         if (resizable)
             Cursor.Current = Cursors.SizeNESW;
@@ -768,14 +784,14 @@ public partial class MdiWin : UserControl, IMdiWin
     #endregion
 
     #region panelAll
-    private void panelAll_MouseLeave(object sender, EventArgs e)
+    private void panelAll_MouseLeave(object? sender, EventArgs e)
     {
         Cursor.Current = Cursors.Default;
     }
     #endregion
 
     #region buttons
-    private void bMin_Click(object sender, EventArgs e)
+    private void bMin_Click(object? sender, EventArgs e)
     {
         if (minimizeBox)
         {
@@ -785,7 +801,7 @@ public partial class MdiWin : UserControl, IMdiWin
                 minInd = 1;
 
                 IMdiWin[] wins = new IMdiWin[] { };
-                wins = mdiControl.MdiWins.ToArray();
+                wins = MdiControl.MdiWins.ToArray();
 
                 Array.Sort(wins, delegate (IMdiWin mw1, IMdiWin mw2) {
                     if (((Control)mw1).Location.Y == ((Control)mw2).Location.Y)
@@ -796,12 +812,12 @@ public partial class MdiWin : UserControl, IMdiWin
 
                 foreach (Control cont in wins)
                 {
-                    if (cont.Location.X + 226 > mdiControl.Width)
+                    if (cont.Location.X + 226 > MdiControl.Width)
                         continue;
 
-                    if (x + 226 <= mdiControl.Width)
+                    if (x + 226 <= MdiControl.Width)
                     {
-                        if (cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32 * minInd)
+                        if (cont.Location.X == x && cont.Location.Y == MdiControl.Height - 32 * minInd)
                         {
                             x += 226;
                         }
@@ -814,7 +830,7 @@ public partial class MdiWin : UserControl, IMdiWin
                     {
                         x = 0;
                         minInd++;
-                        if (cont.Location.X == x && cont.Location.Y == mdiControl.Height - 32 * minInd)
+                        if (cont.Location.X == x && cont.Location.Y == MdiControl.Height - 32 * minInd)
                         {
                             x += 226;
                         }
@@ -846,7 +862,7 @@ public partial class MdiWin : UserControl, IMdiWin
 
                 Title = Title.Substring(0, 3) + "...";
                 MinimumSize = new Size(0, 0);
-                Bounds = new Rectangle(x, mdiControl.Height - 32 * minInd, 226, 32);
+                Bounds = new Rectangle(x, MdiControl.Height - 32 * minInd, 226, 32);
                 bMin.Image = normal;
                 isMin = true;
                 isMinNotMove = true;
@@ -875,7 +891,7 @@ public partial class MdiWin : UserControl, IMdiWin
         }
     }
 
-    private void bMax_Click(object sender, EventArgs e)
+    private void bMax_Click(object? sender, EventArgs e)
     {
         if (maximizeBox)
         {
@@ -922,60 +938,60 @@ public partial class MdiWin : UserControl, IMdiWin
         }
     }
 
-    private void bClose_Click(object sender, EventArgs e)
+    private void bClose_Click(object? sender, EventArgs e)
     {
-        mdiControl.Controls.Remove(this);
-        mdiControl.MdiWins.Remove(this);
+        MdiControl.Controls.Remove(this);
+        MdiControl.MdiWins.Remove(this);
         Dispose();
     }
 
-    private void bMin_MouseLeave(object sender, EventArgs e)
+    private void bMin_MouseLeave(object? sender, EventArgs e)
     {
         if (minimizeBox)
             bMin.BackColor = minLeaveColor;
     }
 
-    private void bMax_MouseLeave(object sender, EventArgs e)
+    private void bMax_MouseLeave(object? sender, EventArgs e)
     {
         if (maximizeBox)
             bMax.BackColor = maxLeaveColor;
     }
 
-    private void bClose_MouseLeave(object sender, EventArgs e)
+    private void bClose_MouseLeave(object? sender, EventArgs e)
     {
         bClose.BackColor = closeLeaveColor;
     }
 
-    private void bMin_MouseEnter(object sender, EventArgs e)
+    private void bMin_MouseEnter(object? sender, EventArgs e)
     {
         if (minimizeBox)
             bMin.BackColor = minEnterColor;
     }
 
-    private void bMax_MouseEnter(object sender, EventArgs e)
+    private void bMax_MouseEnter(object? sender, EventArgs e)
     {
         if (maximizeBox)
             bMax.BackColor = maxEnterColor;
     }
 
-    private void bClose_MouseEnter(object sender, EventArgs e)
+    private void bClose_MouseEnter(object? sender, EventArgs e)
     {
         bClose.BackColor = closeEnterColor;
     }
 
-    private void bMin_MouseDown(object sender, MouseEventArgs e)
+    private void bMin_MouseDown(object? sender, MouseEventArgs e)
     {
         if (minimizeBox)
             bMin.BackColor = minDownColor;
     }
 
-    private void bMax_MouseDown(object sender, MouseEventArgs e)
+    private void bMax_MouseDown(object? sender, MouseEventArgs e)
     {
         if (maximizeBox)
             bMax.BackColor = maxDownColor;
     }
 
-    private void bClose_MouseDown(object sender, MouseEventArgs e)
+    private void bClose_MouseDown(object? sender, MouseEventArgs e)
     {
         bClose.BackColor = closeDownColor;
     }
@@ -985,10 +1001,6 @@ public partial class MdiWin : UserControl, IMdiWin
     bool IMdiWin.NotMove()
     {
         return notMove;
-    }
-    void IMdiWin.SetMdiControl(MdiControl mdiControl)
-    {
-        this.mdiControl = mdiControl;
     }
 
     bool IMdiWin.IsMinNotMove()

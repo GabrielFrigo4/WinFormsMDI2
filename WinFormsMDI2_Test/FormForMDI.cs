@@ -8,13 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WinFormsMDI2_Test
+namespace WinFormsMDI2_Test;
+
+public partial class FormForMDI : Form
 {
-    public partial class FormForMDI : Form
+    public FormForMDI()
     {
-        public FormForMDI()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }
