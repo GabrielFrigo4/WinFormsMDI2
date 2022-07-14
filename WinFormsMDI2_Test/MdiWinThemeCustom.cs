@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsMDI2;
 
@@ -39,7 +33,7 @@ public partial class MdiWinThemeCustom : UserControl, IMdiWin
 
     private void MdiWin_MouseDown()
     {
-        mdiControl.FocusMdiWin(this);
+        MdiControl.FocusMdiWin(this);
     }
 
     private void MdiWin_MouseDown(object sender, MouseEventArgs e)

@@ -74,7 +74,7 @@ namespace WinFormsMDI2
             // 
             this.bMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bMin.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.bMin.Image = global::WinFormsMDI2.Properties.Resources.Minimize;
+            this.bMin.Image = global::WinFormsMDI2.Properties.Resources.MinimizeBlack;
             this.bMin.Location = new System.Drawing.Point(450, 0);
             this.bMin.Name = "bMin";
             this.bMin.Size = new System.Drawing.Size(46, 32);
@@ -89,7 +89,7 @@ namespace WinFormsMDI2
             // 
             this.bMax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bMax.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.bMax.Image = global::WinFormsMDI2.Properties.Resources.Maximize;
+            this.bMax.Image = global::WinFormsMDI2.Properties.Resources.MaximizeBlack;
             this.bMax.Location = new System.Drawing.Point(496, 0);
             this.bMax.Name = "bMax";
             this.bMax.Size = new System.Drawing.Size(46, 32);
@@ -104,7 +104,7 @@ namespace WinFormsMDI2
             // 
             this.bClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bClose.Font = new System.Drawing.Font("Segoe UI Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.bClose.Image = global::WinFormsMDI2.Properties.Resources.Close;
+            this.bClose.Image = global::WinFormsMDI2.Properties.Resources.CloseBlack;
             this.bClose.Location = new System.Drawing.Point(542, 0);
             this.bClose.Name = "bClose";
             this.bClose.Size = new System.Drawing.Size(46, 32);

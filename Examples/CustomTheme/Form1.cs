@@ -8,6 +8,6 @@ public partial class Form1 : Form
 
     private void bCreateWin_Click(object sender, EventArgs e)
     {
-        mdiControl.CreateMdiWin<MdiWinThemeCustom>();
+        mdiControl.CreateMdiWin<MdiWinThemeCustom>();       //create a mdi window using MdiWinThemeCustom theme
     }
 }

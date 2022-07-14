@@ -5,41 +5,24 @@ using System.Security.Permissions;
 using System.Windows.Forms;
 
 namespace WinFormsMDI2;
-public partial class MdiWin : UserControl, IMdiWin
+public partial class MdiWin : AbstractMdiWin
 {
     private bool isMinNotMove = false, notMove = true, mdiFocus = true;
     private int minInd;
 
     private bool resizable = true, maximizeBox = true, minimizeBox = true;
-    private Image max = Properties.Resources.Maximize, min = Properties.Resources.Minimize, normal = Properties.Resources.Normalize, close = Properties.Resources.Close;
+    private Image max = Properties.Resources.MaximizeBlack, min = Properties.Resources.MinimizeBlack, normal = Properties.Resources.NormalizeBlack, close = Properties.Resources.CloseBlack;
     private Color minEnterColor = Color.LightGray, minDownColor = Color.Gray, minLeaveColor = SystemColors.ControlLightLight;
     private Color maxEnterColor = Color.LightGray, maxDownColor = Color.Gray, maxLeaveColor = SystemColors.ControlLightLight;
     private Color closeEnterColor = Color.FromArgb(255, 90, 90), closeDownColor = Color.FromArgb(255, 20, 20), closeLeaveColor = SystemColors.ControlLightLight;
     private Color borderColor;
     private MdiThemeMode theme = MdiThemeMode.Light;
 
-    bool isMove = false, isMin = false, isResize = false;
+    bool isMove = false, isMin = false, isMax = false, isResize = false;
     int mx, my, rx, ry;
     Point lastLocation, minPos, maxPos;
     Size lastSize, lastMinSize, lastMaxSize;
     string lastTitle = string.Empty;
-
-    private MdiControl? mdiControl;
-    public MdiControl MdiControl
-    {
-        get
-        {
-            if (mdiControl is not null)
-                return mdiControl;
-            else
-                throw new Exception("MdiControl is null");
-        }
-
-        set
-        {
-            mdiControl = value;
-        }
-    }
 
     public MdiWin()
     {
@@ -166,14 +149,24 @@ public partial class MdiWin : UserControl, IMdiWin
     [Description("Is Close Image")]
     public Image CloseImage { get { return close; } set { close = bClose.Image = value; } }
 
-    [Description("Is Normalize Image")]
-    public Image NormalizeImage { get { return normal; } set { normal = value; } }
-
     [Description("Is Minimize Image")]
     public Image MinimizeImage { get { return min; } set { min = bMin.Image = value; } }
 
+    [Description("Is Normalize Image")]
+    public Image NormalizeImage { get { return normal; } set {
+            normal = value; 
+            if(isMax)
+                bMax.Image = value;
+        } 
+    }
+
     [Description("Is Maximize Image")]
-    public Image MaximizeImage { get { return max; } set { max = bMax.Image = value; } }
+    public Image MaximizeImage { get { return max; } set { 
+            max = value;
+            if (!isMax)
+                bMax.Image = value;
+        } 
+    }
 
     [Description("Is Minimize Enter Color")]
     public Color MinimizeEnterColor { get { return minEnterColor; } set { minEnterColor = value; } }
@@ -243,10 +236,10 @@ public partial class MdiWin : UserControl, IMdiWin
                     CloseEnterColor = Color.FromArgb(255, 90, 90);
                     CloseDownColor = Color.FromArgb(255, 20, 20);
                     CloseLeaveColor = SystemColors.ControlLightLight;
-                    CloseImage = Properties.Resources.Close;
-                    NormalizeImage = Properties.Resources.Normalize;
-                    MinimizeImage = Properties.Resources.Minimize;
-                    MaximizeImage = Properties.Resources.Maximize;
+                    CloseImage = Properties.Resources.CloseBlack;
+                    NormalizeImage = Properties.Resources.NormalizeBlack;
+                    MinimizeImage = Properties.Resources.MinimizeBlack;
+                    MaximizeImage = Properties.Resources.MaximizeBlack;
                     bMin.BackColor = MinimizeLeaveColor;
                     bMax.BackColor = MaximizeLeaveColor;
                     bClose.BackColor = closeLeaveColor;
@@ -841,10 +834,11 @@ public partial class MdiWin : UserControl, IMdiWin
                     }
                 }
 
-                if (Dock == DockStyle.Fill)
+                if (isMax)
                 {
                     Dock = DockStyle.None;
                     bMax.Image = max;
+                    isMax = false;
                 }
 
                 lastTitle = Title;
@@ -895,7 +889,7 @@ public partial class MdiWin : UserControl, IMdiWin
     {
         if (maximizeBox)
         {
-            if (Dock == DockStyle.Fill)
+            if (isMax)
             {
                 Dock = DockStyle.None;
                 bMax.Image = max;
@@ -907,6 +901,7 @@ public partial class MdiWin : UserControl, IMdiWin
                 panelLeftFloor.Visible = true;
                 panelRight.Visible = true;
                 panelRightFloor.Visible = true;
+                isMax = false;
             }
             else
             {
@@ -934,6 +929,7 @@ public partial class MdiWin : UserControl, IMdiWin
                     MaximumSize = new Size(MaximumSize.Width - 12, MaximumSize.Height - 44);
                 Dock = DockStyle.Fill;
                 bMax.Image = normal;
+                isMax = true;
             }
         }
     }
@@ -998,39 +994,39 @@ public partial class MdiWin : UserControl, IMdiWin
     #endregion
 
     #region IMdiWin
-    bool IMdiWin.NotMove()
+    public override bool NotMove()
     {
         return notMove;
     }
 
-    bool IMdiWin.IsMinNotMove()
+    public override bool IsMinNotMove()
     {
         return isMinNotMove;
     }
-    int IMdiWin.MinInd()
+    public override int MinInd()
     {
         return minInd;
     }
 
-    void IMdiWin.SetIco(Image ico)
+    public override void SetIco(Image ico)
     {
         Ico = ico;
     }
-    void IMdiWin.SetTitle(string title)
+    public override void SetTitle(string title)
     {
         Title = title;
     }
 
-    void IMdiWin.SetMinimizeBox(bool minimizeBox)
+    public override void SetMinimizeBox(bool minimizeBox)
     {
         MinimizeBox = minimizeBox;
     }
-    void IMdiWin.SetMaximizeBox(bool maximizeBox)
+    public override void SetMaximizeBox(bool maximizeBox)
     {
         MaximizeBox = maximizeBox;
     }
 
-    bool IMdiWin.MdiFocus 
+    public override bool MdiFocus 
     {
         get => mdiFocus;
 

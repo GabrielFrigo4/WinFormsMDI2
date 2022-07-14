@@ -19,7 +19,7 @@ namespace WinFormsMDI2.Properties {
     // através de uma ferramenta como ResGen ou Visual Studio.
     // Para adicionar ou remover um associado, edite o arquivo .ResX e execute ResGen novamente
     // com a opção /str, ou recrie o projeto do VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -63,9 +63,9 @@ namespace WinFormsMDI2.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Close {
+        internal static System.Drawing.Bitmap CloseBlack {
             get {
-                object obj = ResourceManager.GetObject("Close", resourceCulture);
+                object obj = ResourceManager.GetObject("CloseBlack", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace WinFormsMDI2.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Maximize {
+        internal static System.Drawing.Bitmap MaximizeBlack {
             get {
-                object obj = ResourceManager.GetObject("Maximize", resourceCulture);
+                object obj = ResourceManager.GetObject("MaximizeBlack", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace WinFormsMDI2.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Minimize {
+        internal static System.Drawing.Bitmap MinimizeBlack {
             get {
-                object obj = ResourceManager.GetObject("Minimize", resourceCulture);
+                object obj = ResourceManager.GetObject("MinimizeBlack", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace WinFormsMDI2.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Normalize {
+        internal static System.Drawing.Bitmap NormalizeBlack {
             get {
-                object obj = ResourceManager.GetObject("Normalize", resourceCulture);
+                object obj = ResourceManager.GetObject("NormalizeBlack", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
