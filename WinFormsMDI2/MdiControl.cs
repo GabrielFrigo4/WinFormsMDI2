@@ -28,7 +28,7 @@ public partial class MdiControl : UserControl
         List<IMdiWin> listWinsDontMove = new();
         foreach (IMdiWin subwin in all_wins)
         {
-            if (subwin.NotMove())
+            if (subwin.NotMove)
             {
                 listWinsDontMove.Add(subwin);
             }
@@ -55,7 +55,7 @@ public partial class MdiControl : UserControl
         List<IMdiWin> listWinsDontMove = new();
         foreach (IMdiWin subwin in all_wins)
         {
-            if (subwin.NotMove())
+            if (subwin.NotMove)
             {
                 listWinsDontMove.Add(subwin);
             }
@@ -102,7 +102,7 @@ public partial class MdiControl : UserControl
         List<IMdiWin> listWinsDontMove = new();
         foreach (IMdiWin subwin in all_wins)
         {
-            if (subwin.NotMove())
+            if (subwin.NotMove)
             {
                 listWinsDontMove.Add(subwin);
             }
@@ -145,7 +145,7 @@ public partial class MdiControl : UserControl
         List<IMdiWin> listWinsDontMove = new();
         foreach (IMdiWin subwin in all_wins)
         {
-            if (subwin.NotMove())
+            if (subwin.NotMove)
             {
                 listWinsDontMove.Add(subwin);
             }
@@ -232,9 +232,9 @@ public partial class MdiControl : UserControl
     {
         foreach (IMdiWin win in MdiWins)
         {
-            if (win.IsMinNotMove() && win is Control control)
+            if (win.IsMinNotMove && win is Control control)
             {
-                control.Location = new Point(((Control)win).Location.X, Height - 32 * win.MinInd());
+                control.Location = new Point(((Control)win).Location.X, Height - 32 * win.MinInd);
             }
         }
     }
@@ -243,7 +243,7 @@ public partial class MdiControl : UserControl
     #region Behaviors
     [DefaultValue(true)]
     [Description("Is Remove Screen Flickering")]
-    public bool removeScreenFlickering = false;
+    public bool removeScreenFlickering = true;
     public bool RemoveScreenFlickering { get => removeScreenFlickering; set => removeScreenFlickering = value; }
     protected override CreateParams CreateParams
     {

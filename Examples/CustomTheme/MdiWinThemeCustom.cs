@@ -139,12 +139,10 @@ public partial class MdiWinThemeCustom : UserControl, IMdiWin
     #endregion
 
     #region IMdiWin
-    bool IMdiWin.NotMove()
-    {
-        return notMove;
-    }
-    bool IMdiWin.IsMinNotMove() { return false; }
-    int IMdiWin.MinInd() { return 0; }
+    bool IMdiWin.NotMove { get { return notMove; } }
+
+    bool IMdiWin.IsMinNotMove { get { return false; } }
+    int IMdiWin.MinInd { get; }
     void IMdiWin.SetIco(Image ico) { }
     void IMdiWin.SetTitle(string title) { }
     void IMdiWin.SetMinimizeBox(bool minimizeBox) { }

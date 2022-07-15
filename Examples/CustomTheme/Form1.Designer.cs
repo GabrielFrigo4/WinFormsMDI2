@@ -50,7 +50,7 @@
             this.mdiControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.mdiControl.Location = new System.Drawing.Point(12, 47);
             this.mdiControl.Name = "mdiControl";
-            this.mdiControl.RemoveScreenFlickering = false;
+            this.mdiControl.RemoveScreenFlickering = true;
             this.mdiControl.Size = new System.Drawing.Size(858, 494);
             this.mdiControl.TabIndex = 1;
             // 

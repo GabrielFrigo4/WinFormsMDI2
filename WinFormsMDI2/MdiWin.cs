@@ -7,8 +7,7 @@ using System.Windows.Forms;
 namespace WinFormsMDI2;
 public partial class MdiWin : AbstractMdiWin
 {
-    private bool isMinNotMove = false, notMove = true, mdiFocus = true;
-    private int minInd;
+    private bool mdiFocus = true;
 
     private bool resizable = true, maximizeBox = true, minimizeBox = true;
     private Image max = Properties.Resources.MaximizeBlack, min = Properties.Resources.MinimizeBlack, normal = Properties.Resources.NormalizeBlack, close = Properties.Resources.CloseBlack;
@@ -18,7 +17,7 @@ public partial class MdiWin : AbstractMdiWin
     private Color borderColor;
     private MdiThemeMode theme = MdiThemeMode.Light;
 
-    bool isMove = false, isMin = false, isMax = false, isResize = false;
+    bool isMin = false, isMax = false, isResize = false;
     int mx, my, rx, ry;
     Point lastLocation, minPos, maxPos;
     Size lastSize, lastMinSize, lastMaxSize;
@@ -291,8 +290,8 @@ public partial class MdiWin : AbstractMdiWin
     {
         if (Dock != DockStyle.Fill)
         {
-            isMove = true;
-            isMinNotMove = false;
+            IsMove = true;
+            IsMinNotMove = false;
             mx = MousePosition.X - Location.X;
             my = MousePosition.Y - Location.Y;
         }
@@ -300,12 +299,12 @@ public partial class MdiWin : AbstractMdiWin
 
     private void panelMain_MouseUp(object? sender, MouseEventArgs e)
     {
-        isMove = false;
+        IsMove = false;
     }
 
     private void panelMain_MouseMove(object? sender, MouseEventArgs e)
     {
-        if (isMove)
+        if (IsMove)
         {
             Point newMousePosition = new Point(MousePosition.X - mx, MousePosition.Y - my), newPosition = newMousePosition;
 
@@ -335,9 +334,9 @@ public partial class MdiWin : AbstractMdiWin
 
             Location = newPosition;
 
-            if (notMove)
+            if (NotMove)
             {
-                notMove = false;
+                NotMove = false;
             }
         }
     }
@@ -368,7 +367,7 @@ public partial class MdiWin : AbstractMdiWin
                     Bounds = new Rectangle(lastLocation, lastSize);
                     bMin.Image = min;
                     isMin = false;
-                    isMinNotMove = false;
+                    IsMinNotMove = false;
                 }
                 else
                 {
@@ -791,7 +790,7 @@ public partial class MdiWin : AbstractMdiWin
             if (!isMin)
             {
                 int x = 0;
-                minInd = 1;
+                MinInd = 1;
 
                 IMdiWin[] wins = new IMdiWin[] { };
                 wins = MdiControl.MdiWins.ToArray();
@@ -810,7 +809,7 @@ public partial class MdiWin : AbstractMdiWin
 
                     if (x + 226 <= MdiControl.Width)
                     {
-                        if (cont.Location.X == x && cont.Location.Y == MdiControl.Height - 32 * minInd)
+                        if (cont.Location.X == x && cont.Location.Y == MdiControl.Height - 32 * MinInd)
                         {
                             x += 226;
                         }
@@ -822,8 +821,8 @@ public partial class MdiWin : AbstractMdiWin
                     else
                     {
                         x = 0;
-                        minInd++;
-                        if (cont.Location.X == x && cont.Location.Y == MdiControl.Height - 32 * minInd)
+                        MinInd++;
+                        if (cont.Location.X == x && cont.Location.Y == MdiControl.Height - 32 * MinInd)
                         {
                             x += 226;
                         }
@@ -856,14 +855,14 @@ public partial class MdiWin : AbstractMdiWin
 
                 Title = Title.Substring(0, 3) + "...";
                 MinimumSize = new Size(0, 0);
-                Bounds = new Rectangle(x, MdiControl.Height - 32 * minInd, 226, 32);
+                Bounds = new Rectangle(x, MdiControl.Height - 32 * MinInd, 226, 32);
                 bMin.Image = normal;
                 isMin = true;
-                isMinNotMove = true;
+                IsMinNotMove = true;
 
-                if (notMove)
+                if (NotMove)
                 {
-                    notMove = false;
+                    NotMove = false;
                 }
             }
             else
@@ -880,7 +879,7 @@ public partial class MdiWin : AbstractMdiWin
                 Bounds = new Rectangle(lastLocation, lastSize);
                 bMin.Image = min;
                 isMin = false;
-                isMinNotMove = false;
+                IsMinNotMove = false;
             }
         }
     }
@@ -912,7 +911,7 @@ public partial class MdiWin : AbstractMdiWin
                     Bounds = new Rectangle(lastLocation, lastSize);
                     bMin.Image = min;
                     isMin = false;
-                    isMinNotMove = false;
+                    IsMinNotMove = false;
                 }
                 else
                 {
@@ -994,20 +993,6 @@ public partial class MdiWin : AbstractMdiWin
     #endregion
 
     #region IMdiWin
-    public override bool NotMove()
-    {
-        return notMove;
-    }
-
-    public override bool IsMinNotMove()
-    {
-        return isMinNotMove;
-    }
-    public override int MinInd()
-    {
-        return minInd;
-    }
-
     public override void SetIco(Image ico)
     {
         Ico = ico;

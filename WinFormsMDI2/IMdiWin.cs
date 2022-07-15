@@ -3,11 +3,11 @@
 namespace WinFormsMDI2;
 public interface IMdiWin
 {
-    bool NotMove();
     MdiControl MdiControl { get; set; }
 
-    bool IsMinNotMove();
-    int MinInd();
+    bool IsMinNotMove { get; }
+    bool NotMove { get; }
+    int MinInd { get; }
 
     void SetIco(Image ico);
     void SetTitle(string title);
