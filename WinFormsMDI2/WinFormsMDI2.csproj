@@ -13,7 +13,7 @@
     <Version>2.1.0</Version>
     <Authors>Gabriel Frigo</Authors>
     <PackageProjectUrl>https://github.com/GabrielFrigo4/WinFormsMDI2</PackageProjectUrl>
-    <PackageReleaseNotes>Fixed Bugs;  SelectColor Change Added; Add Abtract</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed Bugs;  SelectColor Change Added; Add AbstractMdiWin</PackageReleaseNotes>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
   </PropertyGroup>
