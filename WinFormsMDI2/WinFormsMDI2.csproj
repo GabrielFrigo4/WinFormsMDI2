@@ -6,14 +6,14 @@
     <Description>It is already known that microsoft has basically discontinued the MDI system. it's been more than 8 years since she stopped updating it... This project aims to bring a new efficient/free/opensoure/customizable MDI system to replace the old system</Description>
     <RepositoryUrl>https://github.com/GabrielFrigo4/WinFormsMDI2</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
-    <PackageTags>#form #mdi #WinFormsMDI #.netcore #.net5 #.net6</PackageTags>
+    <PackageTags>#form #mdi #WinFormsMDI #.net6</PackageTags>
     <Copyright>MIT</Copyright>
     <PackageIcon>WinFormsMDI2.png</PackageIcon>
     <PackageIconUrl />
     <Version>2.1.0</Version>
     <Authors>Gabriel Frigo</Authors>
     <PackageProjectUrl>https://github.com/GabrielFrigo4/WinFormsMDI2</PackageProjectUrl>
-    <PackageReleaseNotes>Fixed Bugs;  SelectColor Change Added</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed Bugs;  SelectColor Change Added; Add Abtract</PackageReleaseNotes>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
   </PropertyGroup>
