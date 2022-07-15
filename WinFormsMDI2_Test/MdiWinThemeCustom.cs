@@ -1,105 +1,46 @@
-﻿using System;
-using System.Drawing;
-using System.Security.Permissions;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using WinFormsMDI2;
 
 namespace WinFormsMDI2_Test;
-public partial class MdiWinThemeCustom : UserControl, IMdiWin
+public partial class MdiWinThemeCustom : AbstractMdiWin
 {
-    internal bool notMove = true, isMove = false;
     internal int mx, my;
-    private MdiControl? mdiControl;
-    public MdiControl MdiControl
-    {
-        get
-        {
-            if (mdiControl is not null)
-                return mdiControl;
-            else
-                throw new Exception("MdiControl is null");
-        }
-
-        set
-        {
-            mdiControl = value;
-        }
-    }
 
     public MdiWinThemeCustom()
     {
         InitializeComponent();
     }
 
-    private void MdiWin_MouseDown()
-    {
-        MdiControl.FocusMdiWin(this);
-    }
-
-    private void MdiWin_MouseDown(object sender, MouseEventArgs e)
-    {
-        MdiWin_MouseDown();
-    }
-
     private void panelMain_MouseDown(object sender, MouseEventArgs e)
     {
-        isMove = true;
+        IsMove = true;
         mx = MousePosition.X - Location.X;
         my = MousePosition.Y - Location.Y;
     }
 
     private void panelMain_MouseUp(object sender, MouseEventArgs e)
     {
-        isMove = false;
+        IsMove = false;
     }
 
     private void panelMain_MouseMove(object sender, MouseEventArgs e)
     {
-        if (isMove)
+        if (IsMove)
         {
             Location = new Point(MousePosition.X - mx, MousePosition.Y - my);
-            if (notMove)
+            if (NotMove)
             {
-                notMove = false;
+                NotMove = false;
             }
         }
     }
 
-    #region behaviors
-#pragma warning disable SYSLIB0003 // O tipo ou membro é obsoleto
-    [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-#pragma warning restore SYSLIB0003 // O tipo ou membro é obsoleto
-    protected override void WndProc(ref Message m)
-    {
-        // 0x210 is WM_PARENTNOTIFY
-        // 513 is WM_LBUTTONCLICK
-        if (m.Msg == 0x210 && m.WParam.ToInt32() == 513)
-        {
-            // get the clicked position
-            var x = (int)(m.LParam.ToInt32() & 0xFFFF);
-            var y = (int)(m.LParam.ToInt32() >> 16);
-
-            // get the clicked control
-            var childControl = this.GetChildAtPoint(new Point(x, y));
-
-            // call onClick (which fires Click event)
-            MdiWin_MouseDown();
-
-            // do something else...
-        }
-        base.WndProc(ref m);
-    }
-    #endregion
-
-    #region IMdiWin
-    bool IMdiWin.NotMove { get { return notMove; } }
-
-    bool IMdiWin.IsMinNotMove { get { return false; } }
-    int IMdiWin.MinInd { get; }
-    void IMdiWin.SetIco(Image ico) { }
-    void IMdiWin.SetTitle(string title) { }
-    void IMdiWin.SetMinimizeBox(bool minimizeBox) { }
-    void IMdiWin.SetMaximizeBox(bool maximizeBox) { }
-    bool IMdiWin.MdiFocus { get; set; }
+    #region AbstractMdiWin
+    public override void SetIco(Image ico) { }
+    public override void SetTitle(string title) { }
+    public override void SetMinimizeBox(bool minimizeBox) { }
+    public override void SetMaximizeBox(bool maximizeBox) { }
+    public override bool MdiFocus { get; set; }
     #endregion
 }

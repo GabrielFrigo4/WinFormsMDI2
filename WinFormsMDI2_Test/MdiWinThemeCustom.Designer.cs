@@ -52,7 +52,6 @@ namespace WinFormsMDI2_Test
             this.Controls.Add(this.panelMain);
             this.Name = "MdiWinThemeCustom";
             this.Size = new System.Drawing.Size(360, 234);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MdiWin_MouseDown);
             this.ResumeLayout(false);
 
         }

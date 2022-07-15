@@ -82,7 +82,6 @@ namespace CustomTheme
             this.Name = "MdiWinThemeCustom";
             this.Size = new System.Drawing.Size(360, 234);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MdiWinThemeCustom_Paint);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MdiWin_MouseDown);
             this.Resize += new System.EventHandler(this.MdiWinThemeCustom_Resize);
             this.panelMain.ResumeLayout(false);
             this.ResumeLayout(false);

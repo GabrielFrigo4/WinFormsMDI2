@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Security.Permissions;
 using System.Windows.Forms;
 
 namespace WinFormsMDI2;
@@ -39,41 +38,7 @@ public partial class MdiWin : AbstractMdiWin
         pictureBoxIco.DoubleClick += panelMain_DoubleClick;
     }
 
-    private void MdiWin_MouseDown()
-    {
-        MdiControl.FocusMdiWin(this);
-    }
-
-    private void MdiWin_MouseDown(object? sender, MouseEventArgs e)
-    {
-        MdiWin_MouseDown();
-    }
-
     #region behaviors
-#pragma warning disable SYSLIB0003 // O tipo ou membro é obsoleto
-    [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-#pragma warning restore SYSLIB0003 // O tipo ou membro é obsoleto
-    protected override void WndProc(ref Message m)
-    {
-        // 0x210 is WM_PARENTNOTIFY
-        // 513 is WM_LBUTTONCLICK
-        if (m.Msg == 0x210 && m.WParam.ToInt32() == 513)
-        {
-            // get the clicked position
-            var x = (int)(m.LParam.ToInt32() & 0xFFFF);
-            var y = (int)(m.LParam.ToInt32() >> 16);
-
-            // get the clicked control
-            var childControl = this.GetChildAtPoint(new Point(x, y));
-
-            // call onClick (which fires Click event)
-            MdiWin_MouseDown();
-
-            // do something else...
-        }
-        base.WndProc(ref m);
-    }
-
     [DefaultValue("MdiWin")]
     [Description("Is MdiWin Title")]
     public string Title { get { return labelTitle.Text; } set { labelTitle.Text = value; } }
@@ -992,7 +957,7 @@ public partial class MdiWin : AbstractMdiWin
     }
     #endregion
 
-    #region IMdiWin
+    #region AbstractMdiWin
     public override void SetIco(Image ico)
     {
         Ico = ico;
