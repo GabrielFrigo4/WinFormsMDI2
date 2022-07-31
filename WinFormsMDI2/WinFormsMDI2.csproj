@@ -16,6 +16,7 @@
     <PackageReleaseNotes>Fixed Bugs;  SelectColor Change Added; Add AbstractMdiWin</PackageReleaseNotes>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
